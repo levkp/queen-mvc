@@ -1,5 +1,6 @@
 package prog21assignment.presentation;
 
+import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import prog21assignment.domain.Concert;
@@ -9,6 +10,8 @@ import prog21assignment.service.AlbumService;
 import prog21assignment.service.ConcertService;
 import prog21assignment.service.SongService;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -21,11 +24,14 @@ public class View {
     private final SongService songService;
     private final AlbumService albumService;
     private final ConcertService concertService;
+    private final GsonBuilder gb;
 
     @Autowired
     public View(SongService songService, AlbumService albumService, ConcertService concertService) {
         quit = false;
         sc = new Scanner(System.in);
+        gb = new GsonBuilder();
+        gb.setPrettyPrinting();
         this.songService = songService;
         this.albumService = albumService;
         this.concertService = concertService;
@@ -67,7 +73,10 @@ public class View {
                 listGenres();
                 int genreChoice = sc.nextInt();
                 System.out.println("Songs that contain the genre of your choice: ");
-                filterSongsOnGenre(choice).forEach(System.out::println);
+                List<Song> result = filterSongsOnGenre(choice);
+                result.forEach(System.out::println);
+//                System.out.println("Saving result to songs.json...");
+//                saveToJson(result, "songs");
                 break;
             case 3:
                 concertService.getAllConcerts().forEach(System.out::println);
@@ -80,15 +89,10 @@ public class View {
                 if (!input.equals(""))
                     minAttendance = Integer.parseInt(input);
 
-                System.out.print("\nChoose a genre, or leave empty: ");
-                listGenres();
-                input = sc.nextLine();
-                if (!input.equals("")) {
-                    genreChoice = Integer.parseInt(input);
-                } else {
-                    genreChoice = -1;
-                }
-//                filterConcerts(minAttendance, genreChoice);
+                System.out.print("\nEnter the location of the concert (or a part of it), or leave empty: ");
+                String location = sc.nextLine();
+
+                filterConcerts(minAttendance, location).forEach(System.out::println);
         }
     }
 
@@ -101,21 +105,24 @@ public class View {
                 .collect(Collectors.toList());
     }
 
-    /*
-    public List<Concert> filterConcerts(int minAttendance, int genreOrdinal) {
 
-        if (genreOrdinal )
-
-        Genre g = Genre.values()[genreOrdinal];
-        return DataFactory.concerts.stream()
+    public List<Concert> filterConcerts(int minAttendance, String location) {
+        return concertService.getAllConcerts().stream()
             .filter(c -> c.getAttendance() >= minAttendance)
-            .filter(c -> c.getPlayedSongs().stream().anyMatch(s -> s.getGenres().contains(g)))
+            .filter(c -> location == null || c.getLocation().contains(location))
             .collect(Collectors.toList());
     }
 
-     */
-
     public static void listGenres() {
         Arrays.stream(Genre.values()).forEach(g -> System.out.print(g.ordinal() + ": " + g.readable() + " "));
+    }
+
+    public static void saveToJson(List queryResult, String filename) {
+        try {
+            FileWriter fw = new FileWriter(filename + ".json");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Saving result to json failed.");
+        }
     }
 }

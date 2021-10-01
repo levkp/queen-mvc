@@ -11,7 +11,7 @@ public class Song {
     private final List<Genre> genres;
     private final YearMonth finishedRecording;
     private final Album album;
-    private final List<Concert> playedAt;
+    private final transient List<Concert> playedAt;
 
     public Song(String title, double length, List<Genre> genres, YearMonth finishedRecording, Album album) {
         this.title = title;

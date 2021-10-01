@@ -45,10 +45,9 @@ public class Concert {
         return playedSongs;
     }
 
-    //Todo: add played songs
     @Override
     public String toString() {
-        return String.format("Name: %-30s │ Location: %-35s │ Attendance: %-5d │ Date: %s │ Played songs: ",
+        return String.format("Name: %-30s │ Location: %-35s │ Attendance: %-5d │ Date: %s  ",
                 name, location, attendance, date);
     }
 }
