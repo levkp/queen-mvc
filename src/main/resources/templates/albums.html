@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{base.title}">Albums</title>
+    <link href="table.css" type="text/css">
+</head>
+<style>
+    table, table td {
+        border: 1px solid black;
+    }
+
+    th {
+        background: cadetblue;
+        text-align: left;
+    }
+</style>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Release</th>
+                <th>Number of songs</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--/*@thymesVar id="albums" type=""*/-->
+            <tr th:each="album, iter : ${albums}" th:with="i=0">
+                <td th:text="${iter.index + 1}">0</td>
+                <td th:text="${album.title}">Title</td>
+                <td th:text="${album.release}">N/A</td>
+                <td th:text="${album.getSongs().size()}">0</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

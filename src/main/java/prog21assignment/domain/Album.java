@@ -31,14 +31,4 @@ public class Album {
     public List<Song> getSongs() {
         return songs;
     }
-
-    // Todo: make toString() pretty
-    @Override
-    public String toString() {
-        return "Album{" +
-                "title='" + title + '\'' +
-                ", release=" + release +
-                ", songs=" + songs +
-                '}';
-    }
 }
