@@ -20,8 +20,7 @@ public class ConcertServiceImpl implements ConcertService {
 
     @Override
     public Concert addConcert(int attendance, String name, String location, LocalDate date) {
-        Concert c = new Concert(attendance, name, location, date);
-        return repository.createConcert(c);
+        return repository.createConcert(new Concert(attendance, name, location, date));
     }
 
     @Override

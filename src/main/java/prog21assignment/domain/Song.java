@@ -50,14 +50,16 @@ public class Song {
         return album;
     }
 
+    public String genresToString() {
+        // Todo: replace with reduce or something?
+        StringBuilder sb = new StringBuilder();
+        genres.forEach(g -> sb.append(g.readable()).append(", "));
+        return sb.toString();
+    }
+
     @Override
     public String toString() {
-
-        // Todo: replace with reduce()
-        StringBuilder songGenres = new StringBuilder();
-        genres.forEach(g -> songGenres.append(g.readable()).append(", "));
-
         return String.format("Title: %-25s │ Length: %d:%d │ Genres: %-35s │ Album: %-20s │ Finished recording: %s",
-                title, (int)length, (int)(length % 1 * 10), songGenres, album.getTitle(), finishedRecording.toString());
+                title, (int)length, (int)(length % 1 * 10), genresToString(), album.getTitle(), finishedRecording.toString());
     }
 }

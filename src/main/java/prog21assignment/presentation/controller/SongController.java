@@ -1,4 +1,4 @@
-package prog21assignment.presentation;
+package prog21assignment.presentation.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

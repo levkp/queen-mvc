@@ -1,5 +1,7 @@
 package prog21assignment.repository;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import prog21assignment.domain.Album;
 import prog21assignment.domain.Genre;
@@ -11,10 +13,11 @@ import java.util.List;
 
 @Component
 public class HardcodedSongRepository implements SongRepository {
-
     private static final List<Song> songs = new ArrayList<>();
+    private static final Logger log = LoggerFactory.getLogger(HardcodedSongRepository.class);
 
     static {
+        log.debug("Seeding song repository...");
         seed();
     }
 

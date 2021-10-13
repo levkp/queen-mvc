@@ -1,4 +1,4 @@
-package prog21assignment.presentation;
+package prog21assignment.presentation.controller;
 
 
 import org.slf4j.Logger;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import prog21assignment.domain.Album;
+import prog21assignment.presentation.dto.AlbumDTO;
 import prog21assignment.service.AlbumService;
 
 @Component
@@ -38,10 +39,8 @@ public class AlbumController {
     }
 
     @PostMapping("/add")
-    public String handleNewAlbum(Album a) {
-
-//        service.addAlbum()
+    public String processNewAlbum(AlbumDTO dto) {
+        service.addAlbum(dto.title, dto.getParsedRelease());
         return "redirect:/albums";
     }
-
 }

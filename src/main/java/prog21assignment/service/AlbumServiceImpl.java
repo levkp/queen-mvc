@@ -19,8 +19,7 @@ public class AlbumServiceImpl implements AlbumService {
 
     @Override
     public Album addAlbum(String title, LocalDate release) {
-        Album a = new Album(title, release);
-        return repository.createAlbum(a);
+        return repository.createAlbum(new Album(title, release));
     }
 
     @Override

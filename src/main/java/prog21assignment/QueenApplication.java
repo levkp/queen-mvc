@@ -9,14 +9,9 @@ import prog21assignment.presentation.ConsoleAppView;
 public class QueenApplication {
 
     public static void main(String[] args) {
-
-        // Web app
-//        SpringApplication.run(QueenApplication.class, args);
-
-        // Console app
         ConfigurableApplicationContext context = SpringApplication.run(QueenApplication.class, args);
-        ConsoleAppView v = context.getBean(ConsoleAppView.class);
-        v.showMenu();
-        context.close();
+//        ConsoleAppView v = context.getBean(ConsoleAppView.class);
+//        v.showMenu();
+//        context.close();
     }
 }

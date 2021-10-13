@@ -1,6 +1,6 @@
 package prog21assignment.domain;
 
-public enum     Genre {
+public enum Genre {
     HARD_ROCK,
     HEAVY_METAL,
     PROGRESSIVE_ROCK,

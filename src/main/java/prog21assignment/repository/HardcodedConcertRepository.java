@@ -1,5 +1,7 @@
 package prog21assignment.repository;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import prog21assignment.domain.Concert;
 
@@ -10,13 +12,14 @@ import java.util.List;
 @Component
 public class HardcodedConcertRepository implements ConcertRepository {
     private static final List<Concert> concerts = new ArrayList<>();
+    private static final Logger log = LoggerFactory.getLogger(HardcodedConcertRepository.class);
 
     static {
+        log.debug("Seeding concert repository...");
         seed();
     }
 
     private static void seed() {
-
         Concert shaManchester = new Concert(1904, "Sheer Heart Attack Manchester", "Palace Theatre, Manchester",
                 LocalDate.of(1974, 10, 31));
         Concert shaHanley = new Concert(1364, "Sheer Heart Attack Shanley", "Victoria Hall, Shanley",
