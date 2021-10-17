@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add song</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+          crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous">
+    </script>
+</head>
+
+<body>
+<div class="container">
+    <div class="row">
+        <div th:insert="~{navbar :: navbar}"></div>
+    </div>
+    <div class="row mt-3">
+        <h1>Add a new song</h1>
+    </div>
+    <div class="row" style="width: 50%;">
+        <form method="post">
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" class="form-control" id="title" name="title">
+            </div>
+
+            <div class="mb-3">
+                <label for="length" class="form-label">Length</label>
+                <input type="number" class="form-control" id="length" name="length">
+            </div>
+
+            <div class="mb-3">
+
+                <label for="genre-multiselect">Choose genres</label>
+                <div id="genre-multiselect">
+                    <div th:each="genre : ${genres}">
+
+                        <input class="form-check-input" type="checkbox" th:id="'genre-' + ${genre.ordinal}">
+                        <label class="form-check-label" th:for="'genre' + ${genre.ordinal}" th:text="${genre.readable}">
+                            Genre
+                        </label>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="recorded">Finished recording</label>
+                <input type="text" class="form-control" id="recorded" name="recorded">
+            </div>
+
+
+
+            <div class="mb-3">
+                <label for="album">Album</label>
+                <select class="form-select" id="album">
+                    <option th:each="album : ${albums}" th:text="${album.title}">Album title</option>
+                </select>
+            </div>
+
+            <input type="submit" class="btn btn-dark" value="Add">
+        </form>
+    </div>
+</div>
+</body>
+</html>

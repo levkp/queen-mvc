@@ -20,6 +20,7 @@ public class AlbumDTO {
         log.debug("AlbumDTO parameterized constructor invoked");
         this.title = title;
         this.release = release;
+        log.debug(String.format("%s set as title for AlbumDTO", title));
     }
 
     public String getTitle() {
@@ -39,7 +40,6 @@ public class AlbumDTO {
     }
 
     public LocalDate getParsedRelease() {
-        log.debug(String.format("%s set as title for AlbumDTO", title));
         log.debug(String.format("Parsing %s to LocalDate...", release));
         return LocalDate.parse(release);
     }

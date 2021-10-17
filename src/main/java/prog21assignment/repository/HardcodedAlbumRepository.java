@@ -20,16 +20,16 @@ public class HardcodedAlbumRepository implements AlbumRepository {
     }
 
     private static void seed() {
-        Album queen = new Album("Queen",  LocalDate.of(1973, 7, 13));
-        Album queenII = new Album("Queen II",  LocalDate.of(1974, 3, 8));
-        Album sheerHeartAttack = new Album("Sheer Heart Attack",  LocalDate.of(1974, 11, 8));
-        Album jazz = new Album("Jazz", LocalDate.of(1978, 11, 10));
-
-        albums.addAll(List.of(queen, queenII, sheerHeartAttack, jazz));
+        HardcodedAlbumRepository repository = new HardcodedAlbumRepository();
+        repository.createAlbum(new Album("Queen",  LocalDate.of(1973, 7, 13)));
+        repository.createAlbum(new Album("Queen II",  LocalDate.of(1974, 3, 8)));
+        repository.createAlbum(new Album("Sheer Heart Attack",  LocalDate.of(1974, 11, 8)));
+        repository.createAlbum(new Album("Jazz", LocalDate.of(1978, 11, 10)));
     }
 
     @Override
     public Album createAlbum(Album a) {
+        a.setId(albums.size());
         albums.add(a);
         return a;
     }

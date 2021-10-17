@@ -15,7 +15,6 @@ import prog21assignment.service.SongService;
 @Component
 @RequestMapping("/albums")
 public class AlbumController {
-
     private final AlbumService albumService;
     private final SongService songService;
     private static final Logger log = LoggerFactory.getLogger(AlbumController.class);
@@ -36,8 +35,8 @@ public class AlbumController {
     @GetMapping("/add")
     public String addAlbum(Model m) {
         m.addAttribute("songs", songService.getAllSongs());
-        log.debug("Returning addalbum view");
-        return "addalbum";
+        log.debug("Returning add_album view");
+        return "add_album";
     }
 
     @PostMapping("/add")

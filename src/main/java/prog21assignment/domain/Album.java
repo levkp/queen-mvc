@@ -4,8 +4,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "FieldCanBeLocal"})
 public class Album {
+    private int id;
     private final String title;
     private final LocalDate release;
     private final transient List<Song> songs;
@@ -30,5 +31,9 @@ public class Album {
 
     public List<Song> getSongs() {
         return songs;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
