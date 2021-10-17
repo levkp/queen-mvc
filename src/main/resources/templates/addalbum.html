@@ -11,19 +11,65 @@
             integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
             crossorigin="anonymous">
     </script>
+    <script>
+        window.onload = function () {
+            let showSongListButton = document.getElementById("song-list-btn");
+            let songList = document.getElementById("song-list");
+            let listHidden = true;
+
+            showSongListButton.onclick = function () {
+                showSongListButton.textContent =
+                    showSongListButton.textContent.replace(listHidden ? "see" : "hide", listHidden ? "hide" : "see");
+                songList.style.display = listHidden ? "inherit" : "none";
+                listHidden = !listHidden;
+            };
+        }
+    </script>
 </head>
+
 <body>
-    <form method="post">
-        <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
-            <input type="text" class="form-control" id="title" name="title">
+    <div class="container">
+        <div class="row">
+            <div th:insert="~{navbar :: navbar}"></div>
         </div>
-        <div class="mb-3">
-            <label for="release" class="form-label">Release date</label>
-            <input type="text" class="form-control" id="release" name="release">
-            <div id="release-help" class="form-text">Format: DD/MM/YYY</div>
+        <div class="row mt-3">
+            <h1>Add a new album</h1>
         </div>
-        <input type="submit" class="btn btn-primary" value="Add">
-    </form>
+        <div class="row" style="width: 50%;">
+            <form method="post">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="title" name="title">
+                </div>
+
+                <div class="mb-3">
+                    <label for="release" class="form-label">Release date</label>
+                    <input type="text" class="form-control" id="release" name="release">
+                    <div id="release-help" class="form-text">Format: YYYY-MM-DD</div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="song-list-btn">Select songs</label>
+
+                    <div class="mb-3">
+                        <button type="button" class="btn btn-success" id="song-list-btn" th:text="'Click to see ' + ${songs.size} + ' songs'">
+                            Click to see songs
+                        </button>
+                    </div>
+
+                    <div id="song-list" style="display: none;">
+                        <div class="form-check" th:each="song, iter : ${songs}">
+                            <input class="form-check-input" type="checkbox" th:id="'song-select-' + ${iter}">
+                            <label class="form-check-label" th:for="'song-select-' + ${iter}" th:text="${song.title}">
+                                Title
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <input type="submit" class="btn btn-dark" value="Add">
+            </form>
+        </div>
+    </div>
 </body>
 </html>

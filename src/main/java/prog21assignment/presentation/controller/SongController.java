@@ -24,6 +24,6 @@ public class SongController {
     public String showAllSongs(Model m) {
         m.addAttribute("songs", service.getAllSongs());
         log.debug("Returning songs view");
-        return "songs";
+        return "songs_table";
     }
 }

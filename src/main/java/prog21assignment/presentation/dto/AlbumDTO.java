@@ -13,7 +13,7 @@ public class AlbumDTO {
     private static final Logger log = LoggerFactory.getLogger(AlbumDTO.class);
 
     public AlbumDTO() {
-        log.debug("Default AlbumDTO constructor invoked");
+        log.debug("AlbumDTO default constructor invoked");
     }
 
     public AlbumDTO(String title, String release) {

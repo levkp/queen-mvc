@@ -3,6 +3,7 @@ package prog21assignment.domain;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 @SuppressWarnings("unused")
 public class Song {
@@ -51,10 +52,9 @@ public class Song {
     }
 
     public String genresToString() {
-        // Todo: replace with reduce or something?
-        StringBuilder sb = new StringBuilder();
-        genres.forEach(g -> sb.append(g.readable()).append(", "));
-        return sb.toString();
+        StringJoiner sj = new StringJoiner(", ");
+        genres.forEach(g -> sj.add(g.readable()));
+        return sj.toString();
     }
 
     @Override
