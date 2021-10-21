@@ -4,11 +4,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings({"unused", "FieldCanBeLocal"})
-public class Album {
-    private int id;
-    private final String title;
-    private final LocalDate release;
+@SuppressWarnings("unused")
+public class Album extends QueenEntity {
+    private String title;
+    private LocalDate release;
     private final transient List<Song> songs;
 
     public Album(String title, LocalDate release) {
@@ -33,7 +32,11 @@ public class Album {
         return songs;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setRelease(LocalDate release) {
+        this.release = release;
     }
 }

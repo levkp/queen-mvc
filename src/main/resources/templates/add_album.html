@@ -11,20 +11,8 @@
             integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
             crossorigin="anonymous">
     </script>
-    <script>
-        window.onload = function () {
-            let showSongListButton = document.getElementById("song-list-btn");
-            let songList = document.getElementById("song-list");
-            let listHidden = true;
 
-            showSongListButton.onclick = function () {
-                showSongListButton.textContent =
-                    showSongListButton.textContent.replace(listHidden ? "see" : "hide", listHidden ? "hide" : "see");
-                songList.style.display = listHidden ? "inherit" : "none";
-                listHidden = !listHidden;
-            };
-        }
-    </script>
+    <script src="../static/js/song_select.js" th:src="@{/js/song_select.js}"></script>
 </head>
 
 <body>
@@ -54,15 +42,13 @@
                     <div class="mb-3">
                         <button type="button" class="btn btn-success" id="song-list-btn" th:text="'Click to see ' + ${songs.size} + ' songs'">
                             Click to see songs
-                        </button>
+q                        </button>
                     </div>
 
                     <div id="song-list" style="display: none;">
-                        <div class="form-check" th:each="song, iter : ${songs}">
-                            <input class="form-check-input" type="checkbox" th:id="'song-select-' + ${iter}">
-                            <label class="form-check-label" th:for="'song-select-' + ${iter}" th:text="${song.title}">
-                                Title
-                            </label>
+                        <div class="form-check" th:each="song : ${songs}">
+                            <input type="checkbox" class="form-check-input" name="songIds" th:value="${song.id}">
+                            <label class="form-check-label" th:text="${song.title}">Title</label>
                         </div>
                     </div>
                 </div>

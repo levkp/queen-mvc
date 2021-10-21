@@ -19,6 +19,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.webjars:bootstrap:5.1.2'
+    implementation 'org.webjars:webjars-locator:0.42'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

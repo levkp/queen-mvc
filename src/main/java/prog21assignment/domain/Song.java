@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.StringJoiner;
 
 @SuppressWarnings("unused")
-public class Song {
-    private final String title;
-    private final double length;
-    private final List<Genre> genres;
-    private final YearMonth finishedRecording;
-    private final Album album;
+public class Song extends QueenEntity {
+    private String title;
+    private double length;
+    private List<Genre> genres;
+    private YearMonth finishedRecording;
+    private Album album;
     private final transient List<Concert> playedAt;
 
     public Song(String title, double length, List<Genre> genres, YearMonth finishedRecording, Album album) {
@@ -31,12 +31,12 @@ public class Song {
         genres.addAll(List.of(g));
     }
 
-    public double getLength() {
-        return length;
-    }
-
     public String getTitle() {
         return title;
+    }
+
+    public double getLength() {
+        return length;
     }
 
     public List<Genre> getGenres() {
@@ -49,6 +49,30 @@ public class Song {
 
     public Album getAlbum() {
         return album;
+    }
+
+    public List<Concert> getConcerts() {
+        return playedAt;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setLength(double length) {
+        this.length = length;
+    }
+
+    public void setGenres(List<Genre> genres) {
+        this.genres = genres;
+    }
+
+    public void setFinishedRecording(YearMonth finishedRecording) {
+        this.finishedRecording = finishedRecording;
+    }
+
+    public void setAlbum(Album album) {
+        this.album = album;
     }
 
     public String genresToString() {

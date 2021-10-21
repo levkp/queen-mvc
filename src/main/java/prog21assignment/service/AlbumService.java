@@ -9,4 +9,5 @@ import java.util.List;
 public interface AlbumService {
     Album addAlbum(String title, LocalDate release);
     List<Album> getAllAlbums();
+    Album findById(int id);
 }

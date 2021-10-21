@@ -11,4 +11,5 @@ import java.util.List;
 public interface SongService {
     Song addSong(String title, double length, List<Genre> genres, YearMonth finishedRecording, Album album);
     List<Song> getAllSongs();
+    Song findById(int id);
 }

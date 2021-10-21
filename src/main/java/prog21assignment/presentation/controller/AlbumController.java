@@ -4,14 +4,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import prog21assignment.domain.Album;
 import prog21assignment.presentation.dto.AlbumDTO;
 import prog21assignment.service.AlbumService;
 import prog21assignment.service.SongService;
 
+import java.util.Optional;
+
+@Controller // Todo: what does the controller annotation do, really?
 @Component
 @RequestMapping("/albums")
 public class AlbumController {
@@ -41,7 +47,27 @@ public class AlbumController {
 
     @PostMapping("/add")
     public String processNewAlbum(AlbumDTO dto) {
-        albumService.addAlbum(dto.title, dto.getParsedRelease());
+        Album a = albumService.addAlbum(dto.title, dto.getParsedRelease());
+        dto.getSongIds().forEach(id -> a.addSong(songService.findById(id)));
+        log.info("dto songs size: " + dto.getSongIds().size());
         return "redirect:/albums";
+    }
+
+    @GetMapping("/{id}")
+    public String readAlbum(Model m, @PathVariable int id) {
+
+        log.debug("Searching for album with id " + id);
+
+        Optional<Album> o = albumService.getAllAlbums().stream()
+                .filter(a -> a.getId() == id)
+                .findFirst();
+
+        if (o.isEmpty()) {
+            return "404";
+        }
+
+        m.addAttribute("album", o.get());
+        log.debug("Returning album_detailed view");
+        return "album_detailed";
     }
 }

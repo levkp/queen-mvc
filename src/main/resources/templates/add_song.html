@@ -30,7 +30,8 @@
 
             <div class="mb-3">
                 <label for="length" class="form-label">Length</label>
-                <input type="number" class="form-control" id="length" name="length">
+                <input type="number" step="any" class="form-control" id="length" name="length">
+
             </div>
 
             <div class="mb-3">
@@ -38,12 +39,8 @@
                 <label for="genre-multiselect">Choose genres</label>
                 <div id="genre-multiselect">
                     <div th:each="genre : ${genres}">
-
-                        <input class="form-check-input" type="checkbox" th:id="'genre-' + ${genre.ordinal}">
-                        <label class="form-check-label" th:for="'genre' + ${genre.ordinal}" th:text="${genre.readable}">
-                            Genre
-                        </label>
-
+                        <input type="checkbox" name="genreOrdinals" class="form-check-input" th:value="${genre.ordinal}">
+                        <label class="form-check-label" th:text="${genre.readable}">Genre</label>
                     </div>
                 </div>
             </div>
@@ -53,12 +50,10 @@
                 <input type="text" class="form-control" id="recorded" name="recorded">
             </div>
 
-
-
             <div class="mb-3">
                 <label for="album">Album</label>
-                <select class="form-select" id="album">
-                    <option th:each="album : ${albums}" th:text="${album.title}">Album title</option>
+                <select class="form-select" id="album" name="albumId">
+                    <option th:each="album : ${albums}" th:text="${album.title}" th:value="${album.id}">Album title</option>
                 </select>
             </div>
 

@@ -10,9 +10,10 @@ import prog21assignment.domain.Song;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
-public class HardcodedSongRepository implements SongRepository {
+public class HardcodedSongRepository implements QueenEntityRepository<Song> {
     private static final List<Song> songs = new ArrayList<>();
     private static final Logger log = LoggerFactory.getLogger(HardcodedSongRepository.class);
 
@@ -109,13 +110,32 @@ public class HardcodedSongRepository implements SongRepository {
     }
 
     @Override
-    public Song createSong(Song s) {
+    public Song create(Song s) {
+        s.setId(songs.size());
         songs.add(s);
         return s;
     }
 
     @Override
-    public List<Song> readSongs() {
+    public List<Song> read() {
         return songs;
+    }
+
+    @Override
+    public void update(Song song) {
+
+    }
+
+    @Override
+    public void delete(Song song) {
+
+    }
+
+    @Override
+    public Song findById(int id) {
+        Optional<Song> o = songs.stream()
+                .filter(s -> s.getId() == id)
+                .findFirst();
+        return o.isEmpty() ? null : o.get();
     }
 }

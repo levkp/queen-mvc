@@ -8,9 +8,10 @@ import prog21assignment.domain.Concert;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
-public class HardcodedConcertRepository implements ConcertRepository {
+public class HardcodedConcertRepository implements QueenEntityRepository<Concert> {
     private static final List<Concert> concerts = new ArrayList<>();
     private static final Logger log = LoggerFactory.getLogger(HardcodedConcertRepository.class);
 
@@ -35,10 +36,10 @@ public class HardcodedConcertRepository implements ConcertRepository {
                 .filter(a -> a.getTitle().equals("Sheer Heart Attack"))
                 .findAny()
                 .ifPresent(a -> a.getSongs().forEach(s -> {
-                    shaManchester.addPlayedSong(s);
-                    shaHanley.addPlayedSong(s);
-                    shaLiverpool.addPlayedSong(s);
-                    shaLeeds.addPlayedSong(s);
+                    shaManchester.addSongs(s);
+                    shaHanley.addSongs(s);
+                    shaLiverpool.addSongs(s);
+                    shaLeeds.addSongs(s);
                     s.addConcert(shaManchester, shaHanley, shaLiverpool, shaLeeds);
                 }));
 
@@ -46,7 +47,7 @@ public class HardcodedConcertRepository implements ConcertRepository {
                 .filter(a -> a.getTitle().equals("Queen"))
                 .findAny()
                 .ifPresent(a -> a.getSongs().forEach(s -> {
-                    shaManchester.addPlayedSong(s);
+                    shaManchester.addSongs(s);
                     s.addConcert(shaManchester);
                 }));
 
@@ -54,7 +55,7 @@ public class HardcodedConcertRepository implements ConcertRepository {
                 .filter(a -> a.getTitle().equals("Queen II"))
                 .findAny()
                 .ifPresent(a -> a.getSongs().forEach(s -> {
-                    shaHanley.addPlayedSong(s);
+                    shaHanley.addSongs(s);
                     s.addConcert(shaHanley);
                 }));
 
@@ -62,20 +63,39 @@ public class HardcodedConcertRepository implements ConcertRepository {
                 .filter(a -> a.getTitle().equals("Jazz"))
                 .findAny()
                 .ifPresent(a -> a.getSongs().forEach(s -> {
-                    shaLiverpool.addPlayedSong(s);
-                    shaLeeds.addPlayedSong(s);
+                    shaLiverpool.addSongs(s);
+                    shaLeeds.addSongs(s);
                     s.addConcert(shaLiverpool, shaLeeds);
                 }));
     }
 
     @Override
-    public Concert createConcert(Concert c) {
+    public Concert create(Concert c) {
+        c.setId(concerts.size());
         concerts.add(c);
         return c;
     }
 
     @Override
-    public List<Concert> readConcerts() {
+    public List<Concert> read() {
         return concerts;
+    }
+
+    @Override
+    public void update(Concert concert) {
+
+    }
+
+    @Override
+    public void delete(Concert concert) {
+
+    }
+
+    @Override
+    public Concert findById(int id) {
+        Optional<Concert> o = concerts.stream()
+                .filter(c -> c.getId() == id)
+                .findFirst();
+        return o.isEmpty() ? null : o.get();
     }
 }

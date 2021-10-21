@@ -26,25 +26,33 @@
                     <th>Length</th>
                     <th>Genres</th>
                     <th>Finished recording</th>
+                    <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                <!--/*@thymesVar id="songs" type=""*/-->
                 <tr th:each="song, iter : ${songs}" th:with="i=0">
                     <td th:text="${iter.index + 1}">0</td>
                     <td th:text="${song.title}">Title</td>
                     <td th:text="${song.length}">Length</td>
                     <td th:text="${song.genresToString()}">Genres</td>
                     <td th:text="${song.finishedRecording}">Finished recording</td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <a th:href="'/songs/' + ${song.id}">
+                                <button type="button" class="btn btn-primary">Read</button>
+                            </a>
+                            <button type="button" class="btn btn-dark">Update</button>
+                            <button type="button" class="btn btn-danger">Delete</button>
+                        </div>
+                    </td>
                 </tr>
                 </tbody>
             </table>
         </div>
         <div class="row">
             <a href="/songs/add">
-                <button type="button" class="btn btn-dark" style="width: 25%;">Add new</button>
+                <button type="button" class="btn btn-dark" style="width: 25%;">Create</button>
             </a>
-<!--                <div th:insert="~{addnew_btn :: addnew_btn}"></div>-->
         </div>
     </div>
 </body>

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import prog21assignment.domain.Album;
 import prog21assignment.domain.Genre;
 import prog21assignment.domain.Song;
-import prog21assignment.repository.SongRepository;
+import prog21assignment.repository.QueenEntityRepository;
 
 import java.time.YearMonth;
 import java.util.List;
@@ -13,20 +13,25 @@ import java.util.List;
 @Component
 public class SongServiceImpl implements SongService {
 
-    private final SongRepository repository;
+    private final QueenEntityRepository<Song> repository;
 
     @Autowired
-    public SongServiceImpl(SongRepository repository) {
+    public SongServiceImpl(QueenEntityRepository<Song> repository) {
         this.repository = repository;
     }
 
     @Override
     public Song addSong(String title, double length, List<Genre> genres, YearMonth finishedRecording, Album album) {
-        return repository.createSong(new Song(title, length, genres, finishedRecording, album));
+        return repository.create(new Song(title, length, genres, finishedRecording, album));
     }
 
     @Override
     public List<Song> getAllSongs() {
-        return repository.readSongs();
+        return repository.read();
+    }
+
+    @Override
+    public Song findById(int id) {
+        return repository.findById(id);
     }
 }

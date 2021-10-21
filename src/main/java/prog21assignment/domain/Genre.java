@@ -1,15 +1,15 @@
 package prog21assignment.domain;
 
 public enum Genre {
+    ART_ROCK,
+    AVANT_POP,
+    GLAM_ROCK,
     HARD_ROCK,
     HEAVY_METAL,
-    PROGRESSIVE_ROCK,
-    ART_ROCK,
-    GLAM_ROCK,
-    AVANT_POP,
+    OPERA,
     POWER_POP,
-    SOFT_ROCK,
-    OPERA;
+    PROGRESSIVE_ROCK,
+    SOFT_ROCK;
 
     public String readable() {
         return toString().charAt(0) + toString().toLowerCase().replace('_', ' ').substring(1);

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import prog21assignment.domain.Concert;
 import prog21assignment.domain.Genre;
+import prog21assignment.domain.QueenEntity;
 import prog21assignment.domain.Song;
 import prog21assignment.service.AlbumService;
 import prog21assignment.service.ConcertService;
@@ -126,7 +127,7 @@ public class ConsoleAppView {
         Arrays.stream(Genre.values()).forEach(g -> System.out.print(g.ordinal() + ": " + g.readable() + " "));
     }
 
-    public static void saveToJson(List queryResult, String filename) {
+    public static void saveToJson(List<? extends QueenEntity> queryResult, String filename) {
         System.out.println("Saving query results...");
         try {
             FileWriter fw = new FileWriter(filename + ".json");
