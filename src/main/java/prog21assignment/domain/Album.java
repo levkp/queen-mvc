@@ -1,8 +1,7 @@
 package prog21assignment.domain;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @SuppressWarnings("unused")
 public class Album extends QueenEntity {
@@ -39,4 +38,21 @@ public class Album extends QueenEntity {
     public void setRelease(LocalDate release) {
         this.release = release;
     }
+
+    public String getGenresAsString() {
+        HashSet<Genre> genres = new HashSet<>();
+        songs.forEach(s -> genres.addAll(s.getGenres()));
+
+        StringJoiner sj = new StringJoiner(", ");
+        genres.forEach(g -> sj.add(g.readable()));
+
+        return sj.toString();
+    }
+
+    // Remove all blanks and de-capitalise the first character
+    public String titleToCoverPath() {
+        String s = title.replace(" ", "").toLowerCase();
+        return s;
+    }
+
 }

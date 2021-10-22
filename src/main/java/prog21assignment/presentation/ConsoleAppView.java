@@ -76,7 +76,7 @@ public class ConsoleAppView {
             case 0 -> quit = true;
 
             case 1 -> {
-                List<Song> result = songService.getAllSongs();
+                List<Song> result = songService.read();
                 result.forEach(System.out::println);
                 saveToJson(result, "songs");
             }
@@ -88,7 +88,7 @@ public class ConsoleAppView {
                 saveToJson(result, "songsWithGenreFilter");
             }
             case 3 -> {
-                List<Concert> result = concertService.getAllConcerts();
+                List<Concert> result = concertService.read();
                 result.forEach(System.out::println);
                 saveToJson(result, "concerts");
             }
@@ -107,7 +107,7 @@ public class ConsoleAppView {
     }
 
     public List<Song> filterSongsOnGenre(int choice) {
-        return songService.getAllSongs().stream()
+        return songService.read().stream()
                 .filter(s -> s.getGenres().stream()
                         .map(Enum::ordinal)
                         .collect(Collectors.toList())
@@ -117,7 +117,7 @@ public class ConsoleAppView {
 
 
     public List<Concert> filterConcerts(int minAttendance, String location) {
-        return concertService.getAllConcerts().stream()
+        return concertService.read().stream()
             .filter(c -> c.getAttendance() >= minAttendance)
             .filter(c -> location == null || c.getLocation().contains(location))
             .collect(Collectors.toList());

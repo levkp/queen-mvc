@@ -7,7 +7,7 @@ import java.util.List;
 
 @SuppressWarnings("unused")
 public interface AlbumService {
-    Album addAlbum(String title, LocalDate release);
-    List<Album> getAllAlbums();
+    Album create(String title, LocalDate release);
+    List<Album> read();
     Album findById(int id);
 }

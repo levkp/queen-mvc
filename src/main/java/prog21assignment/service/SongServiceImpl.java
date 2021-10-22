@@ -21,12 +21,12 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public Song addSong(String title, double length, List<Genre> genres, YearMonth finishedRecording, Album album) {
+    public Song create(String title, double length, List<Genre> genres, YearMonth finishedRecording, Album album) {
         return repository.create(new Song(title, length, genres, finishedRecording, album));
     }
 
     @Override
-    public List<Song> getAllSongs() {
+    public List<Song> read() {
         return repository.read();
     }
 

@@ -9,7 +9,7 @@ import java.util.List;
 
 @SuppressWarnings("unused")
 public interface SongService {
-    Song addSong(String title, double length, List<Genre> genres, YearMonth finishedRecording, Album album);
-    List<Song> getAllSongs();
+    Song create(String title, double length, List<Genre> genres, YearMonth finishedRecording, Album album);
+    List<Song> read();
     Song findById(int id);
 }

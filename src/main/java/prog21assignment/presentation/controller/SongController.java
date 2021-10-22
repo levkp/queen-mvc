@@ -35,7 +35,7 @@ public class SongController {
 
     @GetMapping
     public String showAllSongs(Model m) {
-        m.addAttribute("songs", songService.getAllSongs());
+        m.addAttribute("songs", songService.read());
         log.debug("Returning songs view");
         return "songs_table";
     }
@@ -43,7 +43,7 @@ public class SongController {
     @GetMapping("/add")
     public String addSong(Model m) {
         m.addAttribute("genres", Genre.values());
-        m.addAttribute("albums", albumService.getAllAlbums());
+        m.addAttribute("albums", albumService.read());
         log.debug("Returning add_song view");
         return "add_song";
     }
@@ -52,7 +52,7 @@ public class SongController {
     public String handleNewSong(SongDTO dto) {
         Album a = albumService.findById(dto.getAlbumId());
         log.debug("New song's album: " + a.getTitle());
-        Song s = songService.addSong(
+        Song s = songService.create(
                 dto.getTitle(),
                 dto.getLength(),
                 parseGenreOrdinals(dto.getGenreOrdinals()),
@@ -68,7 +68,7 @@ public class SongController {
 
         log.debug("Searching for song with id " + id);
 
-        Optional<Song> o = songService.getAllSongs().stream()
+        Optional<Song> o = songService.read().stream()
                 .filter(s -> s.getId() == id)
                 .findFirst();
 

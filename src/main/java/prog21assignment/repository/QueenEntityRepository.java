@@ -1,6 +1,5 @@
 package prog21assignment.repository;
 
-import org.springframework.stereotype.Component;
 import prog21assignment.domain.QueenEntity;
 
 import java.util.List;

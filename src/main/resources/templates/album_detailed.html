@@ -12,16 +12,61 @@
             crossorigin="anonymous">
     </script>
 </head>
+
+<!-- For debugging purposes -->
+<style>
+    * {
+       /*border: 1px solid red;*/
+    }
+</style>
+
 <body>
     <div class="container">
         <div class="row">
             <div th:insert="~{navbar :: navbar}"></div>
         </div>
+
         <div class="row">
-            <h1 th:text="${album.title} + ' (album)'">Album title</h1>
-        </div>
-        <div class="row">
-            <p>Hello</p>
+
+            <div class="col-3">
+                <img
+                     th:src="${album.titleToCoverPath()} + '.jpg'"
+                     class="img-fluid rounded-start"
+                     alt="Album cover"
+                     width="300px" height="300px">
+            </div>
+            <div class="col">
+
+                <div class="row">
+                    <h4 th:text="${album.title}">Album title</h4>
+                </div>
+                <div class="row">
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <td>Release date</td>
+                            <td th:text="${album.release}">Release date</td>
+                        </tr>
+                        <tr>
+                            <td>Length</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Genres</td>
+                            <td th:text="${album.getGenresAsString()}">Genres in album</td>
+                        </tr>
+                        <tr>
+                            <td>Track list</td>
+                            <td>
+                                <ul class="list-group">
+                                    <li class="list-group-item" th:each="song : ${album.songs}" th:text="${song.title}">An item</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </body>

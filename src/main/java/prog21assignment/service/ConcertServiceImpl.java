@@ -18,13 +18,12 @@ public class ConcertServiceImpl implements ConcertService {
         this.repository = repository;
     }
 
-    @Override
-    public Concert addConcert(int attendance, String name, String location, LocalDate date) {
+    public Concert create(int attendance, String name, String location, LocalDate date) {
         return repository.create(new Concert(attendance, name, location, date));
     }
 
     @Override
-    public List<Concert> getAllConcerts() {
+    public List<Concert> read() {
         return repository.read();
     }
 }

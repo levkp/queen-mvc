@@ -18,12 +18,12 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
-    public Album addAlbum(String title, LocalDate release) {
+    public Album create(String title, LocalDate release) {
         return repository.create(new Album(title, release));
     }
 
     @Override
-    public List<Album> getAllAlbums() {
+    public List<Album> read() {
         return repository.read();
     }
 

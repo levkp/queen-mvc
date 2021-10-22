@@ -33,21 +33,21 @@ public class AlbumController {
 
     @GetMapping
     public String showAlbums(Model m) {
-        m.addAttribute("albums", albumService.getAllAlbums());
+        m.addAttribute("albums", albumService.read());
         log.debug("Returning albums view");
         return "albums_table";
     }
 
     @GetMapping("/add")
     public String addAlbum(Model m) {
-        m.addAttribute("songs", songService.getAllSongs());
+        m.addAttribute("songs", songService.read());
         log.debug("Returning add_album view");
         return "add_album";
     }
 
     @PostMapping("/add")
     public String processNewAlbum(AlbumDTO dto) {
-        Album a = albumService.addAlbum(dto.title, dto.getParsedRelease());
+        Album a = albumService.create(dto.title, dto.getParsedRelease());
         dto.getSongIds().forEach(id -> a.addSong(songService.findById(id)));
         log.info("dto songs size: " + dto.getSongIds().size());
         return "redirect:/albums";
@@ -58,11 +58,12 @@ public class AlbumController {
 
         log.debug("Searching for album with id " + id);
 
-        Optional<Album> o = albumService.getAllAlbums().stream()
+        Optional<Album> o = albumService.read().stream()
                 .filter(a -> a.getId() == id)
                 .findFirst();
 
         if (o.isEmpty()) {
+            log.debug("Album with id " + id + " not found, returning 404");
             return "404";
         }
 

@@ -7,6 +7,6 @@ import java.util.List;
 
 @SuppressWarnings("unused")
 public interface ConcertService {
-    Concert addConcert(int attendance, String name, String location, LocalDate date);
-    List<Concert> getAllConcerts();
+    Concert create(int attendance, String name, String location, LocalDate date);
+    List<Concert> read();
 }
