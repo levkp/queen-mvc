@@ -3,26 +3,27 @@ package prog21assignment.presentation.dto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
 
-// Todo: why do non-static attributes have to be public to make this work
 @SuppressWarnings("unused")
 public class AlbumDTO {
-    public String title;
-    public String release;
-    public List<Integer> songIds;
+    @NotNull
+    @Size(min=2, max=40)
+    private String title;
+
+    @NotNull
+    private String release;
+
+    @NotNull
+    private List<Integer> songIds;
+
     private static final Logger log = LoggerFactory.getLogger(AlbumDTO.class);
 
     public AlbumDTO() {
         log.debug("AlbumDTO default constructor invoked");
-    }
-
-    public AlbumDTO(String title, String release) {
-        log.debug("AlbumDTO parameterized constructor invoked");
-        this.title = title;
-        this.release = release;
-        log.debug(String.format("%s set as title for AlbumDTO", title));
     }
 
     public String getTitle() {

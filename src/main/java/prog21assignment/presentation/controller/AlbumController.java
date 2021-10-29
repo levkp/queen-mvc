@@ -46,10 +46,13 @@ public class AlbumController {
     }
 
     @PostMapping("/add")
-    public String processNewAlbum(AlbumDTO dto) {
-        Album a = albumService.create(dto.title, dto.getParsedRelease());
+    public String handleNewAlbum(AlbumDTO dto) {
+
+        Album a = albumService.create(dto.getTitle(), dto.getParsedRelease());
         dto.getSongIds().forEach(id -> a.addSong(songService.findById(id)));
-        log.info("dto songs size: " + dto.getSongIds().size());
+
+
+
         return "redirect:/albums";
     }
 
