@@ -51,8 +51,7 @@ public class Album extends QueenEntity {
 
     // Remove all blanks and de-capitalise the first character
     public String titleToCoverPath() {
-        String s = title.replace(" ", "").toLowerCase();
-        return s;
+        return title.replace(" ", "").toLowerCase();
     }
 
 }

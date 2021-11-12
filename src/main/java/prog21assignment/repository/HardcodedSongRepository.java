@@ -41,8 +41,11 @@ public class HardcodedSongRepository implements QueenEntityRepository<Song> {
                             YearMonth.of(1971, 10), queen)
             );
 
-            songs.addAll(queenSongs);
-            queenSongs.forEach(queen::addSong);
+            queenSongs.forEach(s -> {
+                queen.addSong(s);
+                s.setId(songs.size());
+                songs.add(s);
+            });
         }
 
         Album queenII = HardcodedAlbumRepository.albums.stream()
@@ -64,10 +67,12 @@ public class HardcodedSongRepository implements QueenEntityRepository<Song> {
                             YearMonth.of(1974, 2), queenII)
             );
 
-            songs.addAll(queenIISongs);
-            queenIISongs.forEach(queenII::addSong);
+            queenIISongs.forEach(s -> {
+                queenII.addSong(s);
+                s.setId(songs.size());
+                songs.add(s);
+            });
         }
-
 
         Album sheerHeartAttack = HardcodedAlbumRepository.albums.stream()
                 .filter(a -> a.getTitle().equals("Sheer Heart Attack"))
@@ -84,8 +89,11 @@ public class HardcodedSongRepository implements QueenEntityRepository<Song> {
                             YearMonth.of(1974, 8), sheerHeartAttack)
             );
 
-            sheerHeartAttackSongs.forEach(sheerHeartAttack::addSong);
-            songs.addAll(sheerHeartAttackSongs);
+            sheerHeartAttackSongs.forEach(s -> {
+                sheerHeartAttack.addSong(s);
+                s.setId(songs.size());
+                songs.add(s);
+            });
         }
 
 
@@ -104,8 +112,11 @@ public class HardcodedSongRepository implements QueenEntityRepository<Song> {
                             YearMonth.of(1978, 10), jazz)
             );
 
-            songs.addAll(jazzSongs);
-            jazzSongs.forEach(jazz::addSong);
+            jazzSongs.forEach(s -> {
+                jazz.addSong(s);
+                s.setId(songs.size());
+                songs.add(s);
+            });
         }
     }
 
@@ -128,7 +139,7 @@ public class HardcodedSongRepository implements QueenEntityRepository<Song> {
 
     @Override
     public void delete(Song song) {
-
+        songs.remove(song);
     }
 
     @Override

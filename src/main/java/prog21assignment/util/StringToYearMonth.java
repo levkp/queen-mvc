@@ -1,4 +1,4 @@
-package prog21assignment.converter;
+package prog21assignment.util;
 
 import org.springframework.core.convert.converter.Converter;
 

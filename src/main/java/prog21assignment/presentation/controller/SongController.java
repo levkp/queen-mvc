@@ -68,15 +68,13 @@ public class SongController {
 
         log.debug("Searching for song with id " + id);
 
-        Optional<Song> o = songService.read().stream()
-                .filter(s -> s.getId() == id)
-                .findFirst();
+        Song a = songService.findById(id);
 
-        if (o.isEmpty()) {
+        if (a == null) {
             return "404";
         }
 
-        m.addAttribute("song", o.get());
+        m.addAttribute("song", a);
         log.debug("Returning song_detailed view");
         return "song_detailed";
     }

@@ -4,8 +4,10 @@ window.onload = function () {
     let listHidden = true;
 
     showSongListButton.onclick = function () {
-        showSongListButton.textContent =
-            showSongListButton.textContent.replace(listHidden ? "see" : "hide", listHidden ? "hide" : "see");
+        showSongListButton.textContent = showSongListButton.textContent.replace(
+            listHidden ? "see" : "hide",
+            listHidden ? "hide" : "see"
+        );
         songList.style.display = listHidden ? "inherit" : "none";
         listHidden = !listHidden;
     };
