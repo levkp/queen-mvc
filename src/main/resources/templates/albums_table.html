@@ -1,49 +1,49 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:lang="${lang}">
 <head>
     <meta charset="UTF-8">
-    <title>Albums</title>
+    <title th:text="#{title.albums}">Fallback</title>
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css} "/>
     <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
 </head>
 <body>
     <div class="container">
         <div class="row">
-            <div th:insert="~{navbar :: navbar}"></div>
+            <div th:insert="~{fragments/navbar :: navbar}"></div>
         </div>
         <div class="row">
             <table class="table table-striped">
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Title</th>
-                    <th>Release</th>
-                    <th>Number of songs</th>
-                    <th>Action</th>
+                    <th th:text="#{label.title}"></th>
+                    <th th:text="#{label.release}"></th>
+                    <th th:text="#{label.number_of_songs}"></th>
+                    <th th:text="#{label.action}"></th>
                 </tr>
                 </thead>
                 <tbody>
                     <tr th:each="album, iter : ${albums}">
                         <td th:text="${iter.index + 1}">0</td>
-                        <td th:text="${album.title}">Title</td>
+                        <td th:text="${album.title}"><span th:text="#{label.title}"></span></td>
                         <td th:text="${album.release}">N/A</td>
                         <td th:text="${album.getSongs().size()}">0</td>
                         <td>
                             <div class="btn-group" role="group">
                                 <a th:href="'/albums/' + ${album.id}">
-                                    <button type="button" class="btn btn-primary">Read</button>
+                                    <button type="button" class="btn btn-primary" th:text="#{label.details}"></button>
                                 </a>
-                                <button type="button" class="btn btn-dark">Update</button>
-                                <button type="button" class="btn btn-danger">Delete</button>
+                                <button type="button" class="btn btn-dark" th:text="#{label.update}"></button>
+                                <button type="button" class="btn btn-danger" th:text="#{label.delete}"></button>
                             </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div class="row">
+        <div class="row mb-5">
             <a href="/albums/add">
-                <button type="button" class="btn btn-dark" style="width: 25%;">Create</button>
+                <button type="button" class="btn btn-dark" style="width: 25%;" th:text="#{label.add}"></button>
             </a>
         </div>
     </div>

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import prog21assignment.domain.Album;
 import prog21assignment.presentation.dto.AlbumDTO;
-import prog21assignment.service.AlbumService;
+import prog21assignment.service.QueenEntityService;
 import prog21assignment.service.SongService;
 
 import java.util.Optional;
@@ -21,12 +21,12 @@ import java.util.Optional;
 @Component
 @RequestMapping("/albums")
 public class AlbumController {
-    private final AlbumService albumService;
+    private final QueenEntityService<Album> albumService;
     private final SongService songService;
     private static final Logger log = LoggerFactory.getLogger(AlbumController.class);
 
     @Autowired
-    public AlbumController(AlbumService albumService, SongService songService) {
+    public AlbumController(QueenEntityService<Album> albumService, SongService songService) {
         this.albumService = albumService;
         this.songService = songService;
     }
@@ -48,7 +48,7 @@ public class AlbumController {
     @PostMapping("/add")
     public String handleNewAlbum(AlbumDTO dto) {
 
-        Album a = albumService.create(dto.getTitle(), dto.getParsedRelease());
+        Album a = albumService.create(new Album(dto.getTitle(), dto.getParsedRelease()));
         dto.getSongIds().forEach(id -> a.addSong(songService.findById(id)));
 
 

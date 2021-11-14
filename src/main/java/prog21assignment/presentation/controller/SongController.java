@@ -12,6 +12,7 @@ import prog21assignment.domain.Genre;
 import prog21assignment.domain.Song;
 import prog21assignment.presentation.dto.SongDTO;
 import prog21assignment.service.AlbumService;
+import prog21assignment.service.QueenEntityService;
 import prog21assignment.service.SongService;
 
 import java.time.YearMonth;
@@ -24,11 +25,11 @@ import java.util.stream.Collectors;
 @RequestMapping("/songs")
 public class SongController {
     private final SongService songService;
-    private final AlbumService albumService;
+    private final QueenEntityService<Album> albumService;
     private static final Logger log = LoggerFactory.getLogger(AlbumController.class);
 
     @Autowired
-    public SongController(SongService songService, AlbumService albumService) {
+    public SongController(SongService songService, QueenEntityService<Album> albumService) {
         this.songService = songService;
         this.albumService = albumService;
     }

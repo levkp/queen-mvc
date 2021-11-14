@@ -3,12 +3,9 @@ package prog21assignment.presentation;
 import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import prog21assignment.domain.Concert;
-import prog21assignment.domain.Genre;
-import prog21assignment.domain.QueenEntity;
-import prog21assignment.domain.Song;
-import prog21assignment.service.AlbumService;
+import prog21assignment.domain.*;
 import prog21assignment.service.ConcertService;
+import prog21assignment.service.QueenEntityService;
 import prog21assignment.service.SongService;
 import prog21assignment.util.LocalDateSerializer;
 import prog21assignment.util.YearMonthSerializer;
@@ -31,7 +28,7 @@ public class ConsoleAppView {
     private boolean quit;
     private final Scanner sc;
     private final SongService songService;
-    private final AlbumService albumService;
+    private final QueenEntityService<Album> albumService;
     private final ConcertService concertService;
 
     private static final GsonBuilder gb = new GsonBuilder()
@@ -40,7 +37,7 @@ public class ConsoleAppView {
             .registerTypeAdapter(LocalDate.class, new LocalDateSerializer());
 
     @Autowired
-    public ConsoleAppView(SongService songService, AlbumService albumService, ConcertService concertService) {
+    public ConsoleAppView(SongService songService, QueenEntityService<Album> albumService, ConcertService concertService) {
         quit = false;
         sc = new Scanner(System.in);
         this.songService = songService;

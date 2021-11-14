@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Component
-public class AlbumServiceImpl implements AlbumService {
+public class AlbumServiceImpl implements QueenEntityService<Album> {
     private final QueenEntityRepository<Album> repository;
 
     @Autowired
@@ -18,13 +18,23 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
-    public Album create(String title, LocalDate release) {
-        return repository.create(new Album(title, release));
+    public Album create(Album a) {
+        return repository.create(a);
     }
 
     @Override
     public List<Album> read() {
         return repository.read();
+    }
+
+    @Override
+    public void update(Album album) {
+
+    }
+
+    @Override
+    public void delete(Album album) {
+
     }
 
     @Override
