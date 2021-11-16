@@ -1,4 +1,4 @@
-package prog21assignment.configuration;
+package prog21assignment.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,5 +40,4 @@ public class WebConfig implements WebMvcConfigurer {
         slr.setDefaultLocale(Locale.ENGLISH);
         return slr;
     }
-
 }

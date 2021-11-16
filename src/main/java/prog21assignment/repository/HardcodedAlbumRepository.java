@@ -3,6 +3,7 @@ package prog21assignment.repository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import prog21assignment.domain.Album;
 
 import java.time.LocalDate;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
+@Repository
 public class HardcodedAlbumRepository implements QueenEntityRepository<Album> {
     static List<Album> albums = new ArrayList<>();
     private static final Logger log = LoggerFactory.getLogger(HardcodedAlbumRepository.class);

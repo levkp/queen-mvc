@@ -6,18 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import prog21assignment.domain.Album;
 import prog21assignment.domain.Genre;
 import prog21assignment.domain.Song;
 import prog21assignment.presentation.dto.SongDTO;
-import prog21assignment.service.AlbumService;
 import prog21assignment.service.QueenEntityService;
 import prog21assignment.service.SongService;
 
 import java.time.YearMonth;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller

@@ -1,19 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title></title>
-    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css} "/>
-    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <th:block th:include="~{fragments/base_header :: base_header (page_title='Add album')}"></th:block>
 </head>
 <body>
     <div th:fragment="navbar">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">
-<!--                    <img src="/img/band_logo.png" alt="" width="30" height="24" class="d-inline-block align-text-top">-->
-<!--                    Queen App-->
-<!--                    <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2F2.bp.blogspot.com%2F-hxOnOdySElI%2FXGBp-jJiyLI%2FAAAAAAAAVwo%2FhtTzaQ4rOuQcQtK9WcjwXd__sKW_TVR4gCLcBGAs%2Fs1600%2FLogo%252BQueen2.png&f=1&nofb=1" alt="" width="33" height="27" class="d-inline-block align-text-top">-->
+                    <img src="/img/band_logo.png" alt="" width="37.5" height="30" class="d-inline-block align-text-top">
                     Queen App
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-nav">

@@ -3,7 +3,6 @@ package prog21assignment;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import prog21assignment.presentation.ConsoleAppView;
 
 @SpringBootApplication
 public class QueenApplication {

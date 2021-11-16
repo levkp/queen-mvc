@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import prog21assignment.domain.Album;
 import prog21assignment.repository.QueenEntityRepository;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Component
