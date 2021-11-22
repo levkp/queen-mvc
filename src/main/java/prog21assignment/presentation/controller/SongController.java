@@ -13,7 +13,6 @@ import prog21assignment.domain.Genre;
 import prog21assignment.domain.Song;
 import prog21assignment.presentation.dto.SongDTO;
 import prog21assignment.service.QueenEntityService;
-import prog21assignment.service.SongService;
 
 import javax.validation.Valid;
 import java.time.YearMonth;
@@ -24,12 +23,12 @@ import java.util.stream.Collectors;
 @Component
 @RequestMapping("/songs")
 public class SongController {
-    private final SongService songService;
+    private final QueenEntityService<Song> songService;
     private final QueenEntityService<Album> albumService;
     private static final Logger log = LoggerFactory.getLogger(AlbumController.class);
 
     @Autowired
-    public SongController(SongService songService, QueenEntityService<Album> albumService) {
+    public SongController(QueenEntityService<Song> songService, QueenEntityService<Album> albumService) {
         this.songService = songService;
         this.albumService = albumService;
     }
@@ -61,12 +60,12 @@ public class SongController {
         }
 
         Album a = null;
-        Song s = songService.create(
+        Song s = songService.create(new Song(
                 dto.getTitle(),
                 dto.getLength(),
                 parseGenreOrdinals(dto.getGenreOrdinals()),
                 parseRecordedDate(dto.getRecorded()),
-                a
+                a)
         );
 
         if (dto.albumId != -1) {

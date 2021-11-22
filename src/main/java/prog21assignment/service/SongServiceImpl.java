@@ -2,16 +2,13 @@ package prog21assignment.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import prog21assignment.domain.Album;
-import prog21assignment.domain.Genre;
 import prog21assignment.domain.Song;
 import prog21assignment.repository.QueenEntityRepository;
 
-import java.time.YearMonth;
 import java.util.List;
 
 @Component
-public class SongServiceImpl implements SongService {
+public class SongServiceImpl implements QueenEntityService<Song> {
 
     private final QueenEntityRepository<Song> repository;
 
@@ -21,13 +18,28 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public Song create(String title, double length, List<Genre> genres, YearMonth finishedRecording, Album album) {
-        return repository.create(new Song(title, length, genres, finishedRecording, album));
+    public Song create(Song s) {
+        return repository.create(s);
     }
+
+    //    @Override
+//    public Song create(String title, double length, List<Genre> genres, YearMonth finishedRecording, Album album) {
+//        return repository.create(new Song(title, length, genres, finishedRecording, album));
+//    }
 
     @Override
     public List<Song> read() {
         return repository.read();
+    }
+
+    @Override
+    public void update(Song s) {
+        repository.update(s);
+    }
+
+    @Override
+    public void delete(Song s) {
+        repository.delete(s);
     }
 
     @Override

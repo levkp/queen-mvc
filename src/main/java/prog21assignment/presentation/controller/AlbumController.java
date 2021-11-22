@@ -12,7 +12,6 @@ import prog21assignment.domain.Album;
 import prog21assignment.domain.Song;
 import prog21assignment.presentation.dto.AlbumDTO;
 import prog21assignment.service.QueenEntityService;
-import prog21assignment.service.SongService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -23,11 +22,11 @@ import java.util.Optional;
 @RequestMapping("/albums")
 public class AlbumController {
     private final QueenEntityService<Album> albumService;
-    private final SongService songService;
+    private final QueenEntityService<Song> songService;
     private static final Logger log = LoggerFactory.getLogger(AlbumController.class);
 
     @Autowired
-    public AlbumController(QueenEntityService<Album> albumService, SongService songService) {
+    public AlbumController(QueenEntityService<Album> albumService, QueenEntityService<Song> songService) {
         this.albumService = albumService;
         this.songService = songService;
     }
