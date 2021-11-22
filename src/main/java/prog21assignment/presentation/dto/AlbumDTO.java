@@ -3,6 +3,7 @@ package prog21assignment.presentation.dto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
@@ -12,13 +13,14 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class AlbumDTO {
     @NotNull(message = "Title is mandatory")
-    @Size(min = 4, max = 40, message = "Title should have a length between 4 and 40")
+    @Size(min = 4, max = 30, message = "Title should have a length between 4 and 30")
     public String title;
 
     @Size(max = 5000, message = "Description can't be longer 5000 characters")
     private String description;
 
     @NotNull(message = "Release date is mandatory")
+    @NotBlank(message = "Release date is mandatory")
     private String release;
 
     private List<Integer> songIds = new ArrayList<>();

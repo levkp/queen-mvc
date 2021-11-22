@@ -48,8 +48,16 @@
                             <td>Track list</td>
                             <td>
                                 <ul class="list-group">
-                                    <li class="list-group-item" th:each="song : ${album.songs}" th:text="${song.title}">An item</li>
+                                    <li class="list-group-item" th:each="song : ${album.songs}" th:text="${song.title}">
+                                        An item
+                                    </li>
                                 </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Description</td>
+                            <td>
+                                <p th:text="${album.description}">No description</p>
                             </td>
                         </tr>
                         </tbody>

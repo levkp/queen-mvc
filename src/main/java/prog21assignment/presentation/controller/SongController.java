@@ -6,10 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import prog21assignment.domain.Album;
 import prog21assignment.domain.Genre;
 import prog21assignment.domain.Song;
@@ -17,6 +15,7 @@ import prog21assignment.presentation.dto.SongDTO;
 import prog21assignment.service.QueenEntityService;
 import prog21assignment.service.SongService;
 
+import javax.validation.Valid;
 import java.time.YearMonth;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,14 +46,21 @@ public class SongController {
         m.addAttribute("genres", Genre.values());
         m.addAttribute("albums", albumService.read());
         m.addAttribute("song", new SongDTO());
+
         return "add_song";
     }
 
     @PostMapping("/add")
-    public String handleNewSong(SongDTO dto) {
+    public String handleNewSong(@Valid @ModelAttribute("song") SongDTO dto, BindingResult br, Model m) {
+        if (br.hasErrors()) {
+            log.error("Error while adding song");
+            br.getAllErrors().forEach(e -> log.error(e.toString()));
+            m.addAttribute("genres", Genre.values());
+            m.addAttribute("albums", albumService.read());
+            return "add_song";
+        }
 
         Album a = null;
-
         Song s = songService.create(
                 dto.getTitle(),
                 dto.getLength(),

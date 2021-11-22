@@ -10,7 +10,7 @@ import java.util.StringJoiner;
 @SuppressWarnings("unused")
 public class Album extends QueenEntity {
     private String title;
-    private String description;
+    private String description = "Lorem Ipsum";
     private LocalDate release;
     private final transient List<Song> songs;
 

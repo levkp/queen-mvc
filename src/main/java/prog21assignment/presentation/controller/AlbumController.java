@@ -44,40 +44,39 @@ public class AlbumController {
 //                .stream()
 //                .filter(a -> a.getAlbum() == null)
 //                .collect(Collectors.toList());
-
-        m.addAttribute("album", new AlbumDTO());
-        m.addAttribute("songs", songService.read());
 //        m.addAttribute("songs", songsWithNoAlbum);
+
+        m.addAttribute("songs", songService.read());
+        m.addAttribute("album", new AlbumDTO());
 
         return "add_album";
     }
 
-
     @PostMapping("/add")
-    public String addAlbum(@Valid @ModelAttribute("album") AlbumDTO dto, BindingResult br) {
+    public String handleNewAlbum(@Valid @ModelAttribute("album") AlbumDTO dto, BindingResult br, Model m) {
         if (br.hasErrors()) {
             log.error("Error while adding album");
-            br.getAllErrors().forEach(error -> log.error(br.toString()));
+            br.getAllErrors().forEach(e -> log.error(e.toString()));
+            m.addAttribute("songs", songService.read());
             return "add_album";
-        } else {
-            Album a = albumService.create(new Album(dto.getTitle(), dto.getParsedRelease(), dto.getDescription()));
-            List<Integer> songIds = dto.getSongIds();
-
-            if (!songIds.isEmpty()) {
-                for (Integer id : songIds) {
-                    Song s = songService.findById(id);
-                    a.addSong(s);
-                    s.setAlbum(a);
-                }
-            }
-
-            return "redirect:/albums";
         }
+
+        Album a = albumService.create(new Album(dto.getTitle(), dto.getParsedRelease(), dto.getDescription()));
+        List<Integer> songIds = dto.getSongIds();
+
+        if (!songIds.isEmpty()) {
+            for (Integer id : songIds) {
+                Song s = songService.findById(id);
+                a.addSong(s);
+                s.setAlbum(a);
+            }
+        }
+
+        return "redirect:/albums";
     }
 
     @GetMapping("/{id}")
     public String readAlbum(Model m, @PathVariable int id) {
-
         log.debug("Searching for album with id " + id);
 
         Optional<Album> o = albumService.read().stream()
@@ -97,9 +96,7 @@ public class AlbumController {
     @GetMapping("/{id}/delete")
     public String delete(Model m, @PathVariable int id) {
         Album a = albumService.findById(id);
-
-
-
+        albumService.delete(a);
 
         return "redirect:/albums";
     }

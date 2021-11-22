@@ -15,19 +15,25 @@
                 <h1>Add a new song</h1>
             </div>
 
-            <form method="post">
+            <form method="post" th:object="${song}">
                 <div class="row">
-                    <div class="mb-5">
+                    <div class="mb-3">
                         <label for="title" class="form-label fs-4">Title</label>
-                        <input type="text" class="form-control" id="title" name="title">
+                        <input type="text" class="form-control" id="title" th:field="*{title}">
+                        <p class="mt-1 text-danger"
+                           th:if="${#fields.hasErrors('title')}" th:text="${#fields.errors('title')}">
+                        </p>
                     </div>
 
-                    <div class="mb-5">
+                    <div class="mb-3">
                         <label for="length" class="form-label fs-4">Length</label>
-                        <input type="number" step="any" class="form-control" id="length" name="length">
+                        <input type="number" step="any" class="form-control" id="length" th:field="*{length}">
+                        <p class="mt-1 text-danger"
+                           th:if="${#fields.hasErrors('length')}" th:text="${#fields.errors('length')}">
+                        </p>
                     </div>
 
-                    <div class="mb-5">
+                    <div class="mb-3">
                         <label for="genre-select" class="form-label fs-4">Choose genres</label>
                         <div id="genre-select">
                             <div th:each="genre : ${genres}">
@@ -35,14 +41,20 @@
                                 <label class="form-check-label mb-1" th:text="${genre.readable}">Genre</label>
                             </div>
                         </div>
+                        <p class="mt-1 text-danger"
+                           th:if="${#fields.hasErrors('genreOrdinals')}" th:text="${#fields.errors('genreOrdinals')}">
+                        </p>
                     </div>
 
-                    <div class="mb-5">
+                    <div class="mb-3">
                         <label for="recorded">Finished recording</label>
                         <input type="text" class="form-control" id="recorded" name="recorded">
+                        <p class="mt-1 text-danger"
+                           th:if="${#fields.hasErrors('recorded')}" th:text="${#fields.errors('recorded')}">
+                        </p>
                     </div>
 
-                    <div class="mb-5">
+                    <div class="mb-3">
                         <label for="album" class="form-label fs-4">Album</label>
                         <select class="form-select" id="album" name="albumId">
                             <option value="-1">Specify later</option>

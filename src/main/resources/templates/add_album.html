@@ -18,25 +18,31 @@
 
                 <form method="post" th:object="${album}">
                     <div class="row">
-                        <div class="mb-5">
+                        <div class="mb-3">
                             <label for="title" class="form-label fs-4">Title</label>
                             <input type="text" id="title" class="form-control" th:field="*{title}">
-                            <p th:if="${#fields.hasErrors()}">Name error</p>
+                            <p class="mt-1 text-danger"
+                               th:if="${#fields.hasErrors('title')}" th:text="${#fields.errors('title')}">
+                            </p>
                         </div>
 
-                        <div class="mb-5">
+                        <div class="mb-3">
                             <label for="release" class="form-label fs-4">Release</label>
                             <input type="date" id="release" class="form-control" th:field="*{release}">
+                            <p class="mt-1 text-danger"
+                               th:if="${#fields.hasErrors('release')}" th:text="${#fields.errors('release')}">
+                            </p>
                         </div>
 
-                        <div class="mb-5">
+                        <div class="mb-3">
                             <label class="form-label fs-4" for="song-list-btn">Select songs</label>
                             <div>
                                 <button type="button" class="btn btn-warning mb-2" id="song-list-btn"
                                         th:text="'Click to see ' + ${songs.size} + ' songs'">
                                 </button>
-
-                                <p th:if="${songs.size} == 0">There are no songs without albums found.</p>
+                                <p class="mt-1 text-danger"
+                                   th:if="${songs.size} == 0">There are no songs without albums found.
+                                </p>
                             </div>
 
                             <div id="song-list" style="display: none">
@@ -50,9 +56,13 @@
                             </div>
                         </div>
 
-                        <div class="mb-5">
+                        <div class="mb-3">
                             <label for="description" class="fs-4">Write a description</label>
-                            <textarea class="form-control" id="description" rows="3" th:field="*{description}"></textarea>
+                            <textarea class="form-control" id="description" rows="3" th:field="*{description}">
+                            </textarea>
+                            <p class="mt-1 text-danger"
+                               th:if="${#fields.hasErrors('description')}" th:text="${#fields.errors('description')}">
+                            </p>
                         </div>
                     </div>
 
