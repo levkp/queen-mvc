@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <th:block th:include="~{fragments/base_header :: base_header (page_title='Add album')}"> </th:block>
+    <th:block th:include="~{fragments/base_header :: base_header (page_title=#{title.albums.add})}"> </th:block>
     <script src="../static/js/song_select.js" th:src="@{/js/song_select.js}"></script>
 </head>
 
@@ -19,7 +19,7 @@
                 <form method="post" th:object="${album}">
                     <div class="row">
                         <div class="mb-3">
-                            <label for="title" class="form-label fs-4">Title</label>
+                            <label for="title" class="form-label fs-4" th:text="#{label.title}"></label>
                             <input type="text" id="title" class="form-control" th:field="*{title}">
                             <p class="mt-1 text-danger"
                                th:if="${#fields.hasErrors('title')}" th:text="${#fields.errors('title')}">
@@ -27,7 +27,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="release" class="form-label fs-4">Release</label>
+                            <label for="release" class="form-label fs-4" th:text="#{label.release}"></label>
                             <input type="date" id="release" class="form-control" th:field="*{release}">
                             <p class="mt-1 text-danger"
                                th:if="${#fields.hasErrors('release')}" th:text="${#fields.errors('release')}">
@@ -35,13 +35,13 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label fs-4" for="song-list-btn">Select songs</label>
+                            <label class="form-label fs-4" for="song-list-btn" th:text="#{label.select_songs}"></label>
                             <div>
+                                <!-- Todo: incomplete translation -->
                                 <button type="button" class="btn btn-warning mb-2" id="song-list-btn"
                                         th:text="'Click to see ' + ${songs.size} + ' songs'">
                                 </button>
-                                <p class="mt-1 text-danger"
-                                   th:if="${songs.size} == 0">There are no songs without albums found.
+                                <p class="mt-1 text-danger" th:if="${songs.size} == 0" th:text="#{label.no_songs_found}">
                                 </p>
                             </div>
 
@@ -57,7 +57,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="description" class="fs-4">Write a description</label>
+                            <label for="description" class="fs-4" th:text="#{label.description}"></label>
                             <textarea class="form-control" id="description" rows="3" th:field="*{description}">
                             </textarea>
                             <p class="mt-1 text-danger"
@@ -67,7 +67,7 @@
                     </div>
 
                     <div class="row">
-                        <button class="btn-lg btn-dark" style="width: 50%" th:text="Done">
+                        <button class="btn-lg btn-dark" style="width: 50%" th:text="#{label.done}">
                             <input type="submit">
                         </button>
                     </div>

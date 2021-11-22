@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="~{fragments/base_header :: base_header (page_title='Songs')}"></th:block>
+    <th:block th:include="~{fragments/base_header :: base_header (page_title=#{title.songs})}"> </th:block>
 </head>
 
 <body>
@@ -14,11 +14,11 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Title</th>
-                    <th>Length</th>
-                    <th>Genres</th>
-                    <th>Finished recording</th>
-                    <th>Action</th>
+                    <th th:text="#{label.title}"></th>
+                    <th th:text="#{label.length}"></th>
+                    <th th:text="#{label.genres}"></th>
+                    <th th:text="#{label.finished_recording}"></th>
+                    <th th:text="#{label.action}"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -52,7 +52,7 @@
         </div>
         <div class="row mb-5">
             <a href="/songs/add">
-                <button type="button" class="btn btn-dark" style="width: 25%;">Add new</button>
+                <button type="button" class="btn btn-dark" style="width: 25%;" th:text="#{label.add}"></button>
             </a>
         </div>
     </div>

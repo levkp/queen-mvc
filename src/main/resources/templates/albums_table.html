@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:lang="${lang}">
 <head>
-    <th:block th:include="~{fragments/base_header :: base_header (page_title='Albums')}"> </th:block>
+    <th:block th:include="~{fragments/base_header :: base_header (page_title=#{title.albums})}"> </th:block>
 </head>
 <body>
     <div class="container">
@@ -40,7 +40,7 @@
                                     </button>
                                 </a>
                                 <a th:href="'/albums/' + ${album.id} + '/delete'">
-                                    <button type="button" class="btn btn-danger">
+                                    <button type="button" class="btn btn-danger delete-button">
                                         <span th:text="#{label.delete}"></span>
                                         <i class="bi bi-trash"></i>
                                     </button>
