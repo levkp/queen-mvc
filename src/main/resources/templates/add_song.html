@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="~{fragments/base_header :: base_header (page_title='Add song')}"></th:block>
+    <th:block th:include="~{fragments/base_header :: base_header (page_title='Add song')}"> </th:block>
 </head>
 
 <body>
@@ -9,47 +9,61 @@
     <div class="row">
         <div th:insert="~{fragments/navbar :: navbar}"></div>
     </div>
-    <div class="row mt-3">
-        <h1>Add a new song</h1>
+    <div class="row">
+        <div class="col-5">
+            <div class="row mb-3">
+                <h1>Add a new song</h1>
+            </div>
+
+            <form method="post">
+                <div class="row">
+                    <div class="mb-5">
+                        <label for="title" class="form-label fs-4">Title</label>
+                        <input type="text" class="form-control" id="title" name="title">
+                    </div>
+
+                    <div class="mb-5">
+                        <label for="length" class="form-label fs-4">Length</label>
+                        <input type="number" step="any" class="form-control" id="length" name="length">
+                    </div>
+
+                    <div class="mb-5">
+                        <label for="genre-select" class="form-label fs-4">Choose genres</label>
+                        <div id="genre-select">
+                            <div th:each="genre : ${genres}">
+                                <input type="checkbox" name="genreOrdinals" class="form-check-input" th:value="${genre.ordinal}">
+                                <label class="form-check-label mb-1" th:text="${genre.readable}">Genre</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-5">
+                        <label for="recorded">Finished recording</label>
+                        <input type="text" class="form-control" id="recorded" name="recorded">
+                    </div>
+
+                    <div class="mb-5">
+                        <label for="album" class="form-label fs-4">Album</label>
+                        <select class="form-select" id="album" name="albumId">
+                            <option value="-1">Specify later</option>
+                            <option th:each="album : ${albums}" th:text="${album.title}" th:value="${album.id}"></option>
+                        </select>
+                    </div>
+
+                    <button class="btn-lg btn-dark" style="width: 50%" th:text="Done">
+                        <input type="submit">
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-2">
+            <img src="/img/brian_standing.png" alt="Freddy standing">
+        </div>
+
     </div>
     <div class="row" style="width: 50%;">
-        <form method="post">
-            <div class="mb-3">
-                <label for="title" class="form-label">Title</label>
-                <input type="text" class="form-control" id="title" name="title">
-            </div>
 
-            <div class="mb-3">
-                <label for="length" class="form-label">Length</label>
-                <input type="number" step="any" class="form-control" id="length" name="length">
-
-            </div>
-
-            <div class="mb-3">
-
-                <label for="genre-multiselect">Choose genres</label>
-                <div id="genre-multiselect">
-                    <div th:each="genre : ${genres}">
-                        <input type="checkbox" name="genreOrdinals" class="form-check-input" th:value="${genre.ordinal}">
-                        <label class="form-check-label" th:text="${genre.readable}">Genre</label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mb-3">
-                <label for="recorded">Finished recording</label>
-                <input type="text" class="form-control" id="recorded" name="recorded">
-            </div>
-
-            <div class="mb-3">
-                <label for="album">Album</label>
-                <select class="form-select" id="album" name="albumId">
-                    <option th:each="album : ${albums}" th:text="${album.title}" th:value="${album.id}">Album title</option>
-                </select>
-            </div>
-
-            <input type="submit" class="btn btn-dark" value="Add">
-        </form>
     </div>
 </div>
 </body>

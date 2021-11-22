@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:lang="${lang}">
 <head>
-    <th:block th:include="~{fragments/base_header :: base_header (page_title='Albums')}"></th:block>
+    <th:block th:include="~{fragments/base_header :: base_header (page_title='Albums')}"> </th:block>
 </head>
 <body>
     <div class="container">
@@ -28,10 +28,23 @@
                         <td>
                             <div class="btn-group" role="group">
                                 <a th:href="'/albums/' + ${album.id}">
-                                    <button type="button" class="btn btn-primary" th:text="#{label.details}"></button>
+                                    <button type="button" class="btn btn-warning">
+                                        <span th:text="#{label.details}"></span>
+                                        <i class="bi bi-eyeglasses"></i>
+                                    </button>
                                 </a>
-                                <button type="button" class="btn btn-dark" th:text="#{label.update}"></button>
-                                <button type="button" class="btn btn-danger" th:text="#{label.delete}"></button>
+                                <a th:href="'/albums/' + ${album.id} + '/edit'">
+                                    <button type="button" class="btn btn-dark">
+                                        <span th:text="#{label.edit}"></span>
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                </a>
+                                <a th:href="'/albums/' + ${album.id} + '/delete'">
+                                    <button type="button" class="btn btn-danger">
+                                        <span th:text="#{label.delete}"></span>
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </a>
                             </div>
                         </td>
                     </tr>

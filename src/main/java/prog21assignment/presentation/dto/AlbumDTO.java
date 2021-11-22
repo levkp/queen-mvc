@@ -3,35 +3,38 @@ package prog21assignment.presentation.dto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.validation.constraints.Future;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("unused")
 public class AlbumDTO {
-    @NotBlank(message = "Title is mandatory")
+    @NotNull(message = "Title is mandatory")
     @Size(min = 4, max = 40, message = "Title should have a length between 4 and 40")
-    private String title;
+    public String title;
+
+    @Size(max = 5000, message = "Description can't be longer 5000 characters")
+    private String description;
 
     @NotNull(message = "Release date is mandatory")
-    @Future(message = "Release can't be in the future")
     private String release;
 
-    @NotNull(message = "Album must have at least 1 song")
-    @Size(min = 1, message = "Album must have at least 1 song")
-    private List<Integer> songIds;
+    private List<Integer> songIds = new ArrayList<>();
 
     private static final Logger log = LoggerFactory.getLogger(AlbumDTO.class);
 
     public AlbumDTO() {
-        log.debug("AlbumDTO default constructor invoked");
+        log.debug("Default constructor invoked");
     }
 
     public String getTitle() {
         return title;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public String getRelease() {
@@ -55,7 +58,7 @@ public class AlbumDTO {
     }
 
     public LocalDate getParsedRelease() {
-        log.debug(String.format("Parsing %s to LocalDate...", release));
+        log.debug(String.format("Parsing %s to LocalDate", release));
         return LocalDate.parse(release);
     }
 }

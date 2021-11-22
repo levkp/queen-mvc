@@ -46,14 +46,15 @@ public class SongController {
     public String addSong(Model m) {
         m.addAttribute("genres", Genre.values());
         m.addAttribute("albums", albumService.read());
-        log.debug("Returning add_song view");
+        m.addAttribute("song", new SongDTO());
         return "add_song";
     }
 
     @PostMapping("/add")
     public String handleNewSong(SongDTO dto) {
-        Album a = albumService.findById(dto.getAlbumId());
-        log.debug("New song's album: " + a.getTitle());
+
+        Album a = null;
+
         Song s = songService.create(
                 dto.getTitle(),
                 dto.getLength(),
@@ -61,7 +62,12 @@ public class SongController {
                 parseRecordedDate(dto.getRecorded()),
                 a
         );
-        a.addSong(s);
+
+        if (dto.albumId != -1) {
+            a = albumService.findById(dto.getAlbumId());
+            a.addSong(s);
+        }
+
         return "redirect:/songs";
     }
 
@@ -73,7 +79,7 @@ public class SongController {
         Song a = songService.findById(id);
 
         if (a == null) {
-            return "404";
+            return "error_404";
         }
 
         m.addAttribute("song", a);

@@ -16,7 +16,7 @@ public class QueenController {
 
     @GetMapping
     public String demo() {
-        return "404";
+        return "error_404";
     }
 
 }

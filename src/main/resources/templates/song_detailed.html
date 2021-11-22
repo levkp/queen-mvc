@@ -28,8 +28,10 @@
                     <td th:text="${song.finishedRecording}">Finished recording</td>
                 </tr>
                 <tr>
+                    <!-- Todo -->
                     <td>Album</td>
-                    <td th:text="${song.album.title}"></td>
+                    <td th:if="${song.album != null}" th:text="${song.album.title}"></td>
+                    <td th:if="${song.album == null}">N/A</td>
                 </tr>
             </tbody>
         </table>

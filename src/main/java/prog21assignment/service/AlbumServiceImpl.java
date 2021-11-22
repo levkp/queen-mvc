@@ -27,12 +27,12 @@ public class AlbumServiceImpl implements QueenEntityService<Album> {
     }
 
     @Override
-    public void update(Album album) {
+    public void update(Album a) {
 
     }
 
     @Override
-    public void delete(Album album) {
+    public void delete(Album a) {
 
     }
 

@@ -31,19 +31,28 @@
                     <td>
                         <div class="btn-group" role="group">
                             <a th:href="'/songs/' + ${song.id}">
-                                <button type="button" class="btn btn-primary">Read</button>
+                                <button type="button" class="btn btn-warning">
+                                    <span th:text="#{label.details}"></span>
+                                    <i class="bi bi-eyeglasses"></i>
+                                </button>
                             </a>
-                            <button type="button" class="btn btn-dark">Update</button>
-                            <button type="button" class="btn btn-danger">Delete</button>
+                            <button type="button" class="btn btn-dark">
+                                <span th:text="#{label.edit}"></span>
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                            <button type="button" class="btn btn-danger">
+                                <span th:text="#{label.delete}"></span>
+                                <i class="bi bi-trash"></i>
+                            </button>
                         </div>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
-        <div class="row">
+        <div class="row mb-5">
             <a href="/songs/add">
-                <button type="button" class="btn btn-dark" style="width: 25%;">Create</button>
+                <button type="button" class="btn btn-dark" style="width: 25%;">Add new</button>
             </a>
         </div>
     </div>
