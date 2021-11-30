@@ -1,10 +1,11 @@
-package prog21assignment.repository;
+package prog21assignment.repository.collections;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import prog21assignment.domain.Album;
+import prog21assignment.repository.QueenEntityRepository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -13,17 +14,17 @@ import java.util.Optional;
 
 @Component
 @Repository
-public class HardcodedAlbumRepository implements QueenEntityRepository<Album> {
+public class AlbumRepositoryCollections implements QueenEntityRepository<Album> {
     static List<Album> albums = new ArrayList<>();
-    private static final Logger log = LoggerFactory.getLogger(HardcodedAlbumRepository.class);
+    private static final Logger log = LoggerFactory.getLogger(AlbumRepositoryCollections.class);
 
     static {
-        log.debug("Seeding album repository...");
+        log.debug("Seeding album repository");
         seed();
     }
 
     private static void seed() {
-        HardcodedAlbumRepository repository = new HardcodedAlbumRepository();
+        AlbumRepositoryCollections repository = new AlbumRepositoryCollections();
         repository.create(new Album("Queen",  LocalDate.of(1973, 7, 13)));
         repository.create(new Album("Queen II",  LocalDate.of(1974, 3, 8)));
         repository.create(new Album("Sheer Heart Attack",  LocalDate.of(1974, 11, 8)));
