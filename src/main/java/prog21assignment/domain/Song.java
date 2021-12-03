@@ -1,18 +1,40 @@
 package prog21assignment.domain;
 
+import prog21assignment.util.YearMonthDateAttributeConverter;
+
+import javax.persistence.*;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 
+@Entity
+@Table(name = "song")
 @SuppressWarnings("unused")
 public class Song extends QueenEntity {
+    @Column(length = 30, nullable = false, unique = true)
     private String title;
+
+    @Column(nullable = false)
     private double length;
+
+    @ManyToMany
+    @JoinTable(name = "song_genre",
+            joinColumns = @JoinColumn(name = "song_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private List<Genre> genres;
+
+
+    @Column(name = "finished_recording", nullable = false)
+    @Convert(converter = YearMonthDateAttributeConverter.class)
     private YearMonth finishedRecording;
+
+    @ManyToOne(cascade = { })
+    @JoinColumn(name = "album_id")
     private Album album;
-    private final transient List<Concert> playedAt;
+
+    // Todo: add this attribute to Hibernate
+    private final transient List<Concert> playedAt = new ArrayList<>();
 
     public Song(String title, double length, List<Genre> genres, YearMonth finishedRecording, Album album) {
         this.title = title;
@@ -20,8 +42,9 @@ public class Song extends QueenEntity {
         this.genres = genres;
         this.finishedRecording = finishedRecording;
         this.album = album;
-        playedAt = new ArrayList<>();
     }
+
+    protected Song() { }
 
     public void addConcert(Concert... c) {
         playedAt.addAll(List.of(c));

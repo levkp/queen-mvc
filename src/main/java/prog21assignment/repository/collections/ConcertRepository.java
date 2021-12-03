@@ -2,7 +2,8 @@ package prog21assignment.repository.collections;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Repository;
 import prog21assignment.domain.Concert;
 import prog21assignment.repository.QueenEntityRepository;
 
@@ -11,10 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Component
-public class ConcertRepositoryCollections implements QueenEntityRepository<Concert> {
+@Profile("collections")
+@Repository
+public class ConcertRepository implements QueenEntityRepository<Concert> {
     private static final List<Concert> concerts = new ArrayList<>();
-    private static final Logger log = LoggerFactory.getLogger(ConcertRepositoryCollections.class);
+    private static final Logger log = LoggerFactory.getLogger(ConcertRepository.class);
 
     static {
         log.debug("Seeding concert repository");
@@ -33,7 +35,7 @@ public class ConcertRepositoryCollections implements QueenEntityRepository<Conce
 
         concerts.addAll(List.of(shaManchester, shaHanley, shaLiverpool, shaLeeds));
 
-        AlbumRepositoryCollections.albums.stream()
+        AlbumRepository.albums.stream()
                 .filter(a -> a.getTitle().equals("Sheer Heart Attack"))
                 .findAny()
                 .ifPresent(a -> a.getSongs().forEach(s -> {
@@ -44,7 +46,7 @@ public class ConcertRepositoryCollections implements QueenEntityRepository<Conce
                     s.addConcert(shaManchester, shaHanley, shaLiverpool, shaLeeds);
                 }));
 
-        AlbumRepositoryCollections.albums.stream()
+        AlbumRepository.albums.stream()
                 .filter(a -> a.getTitle().equals("Queen"))
                 .findAny()
                 .ifPresent(a -> a.getSongs().forEach(s -> {
@@ -52,7 +54,7 @@ public class ConcertRepositoryCollections implements QueenEntityRepository<Conce
                     s.addConcert(shaManchester);
                 }));
 
-        AlbumRepositoryCollections.albums.stream()
+        AlbumRepository.albums.stream()
                 .filter(a -> a.getTitle().equals("Queen II"))
                 .findAny()
                 .ifPresent(a -> a.getSongs().forEach(s -> {
@@ -60,7 +62,7 @@ public class ConcertRepositoryCollections implements QueenEntityRepository<Conce
                     s.addConcert(shaHanley);
                 }));
 
-        AlbumRepositoryCollections.albums.stream()
+        AlbumRepository.albums.stream()
                 .filter(a -> a.getTitle().equals("Jazz"))
                 .findAny()
                 .ifPresent(a -> a.getSongs().forEach(s -> {

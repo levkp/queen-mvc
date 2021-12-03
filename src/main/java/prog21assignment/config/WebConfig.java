@@ -8,8 +8,8 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
-import prog21assignment.util.StringToLocalDate;
-import prog21assignment.util.StringToYearMonth;
+import prog21assignment.util.StringToLocalDateConverter;
+import prog21assignment.util.StringToYearMonthConverter;
 
 import java.util.Locale;
 
@@ -18,8 +18,8 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
-        registry.addConverter(new StringToLocalDate());
-        registry.addConverter(new StringToYearMonth());
+        registry.addConverter(new StringToLocalDateConverter());
+        registry.addConverter(new StringToYearMonthConverter());
     }
 
     @Override

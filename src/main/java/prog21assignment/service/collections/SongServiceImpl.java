@@ -1,9 +1,10 @@
-package prog21assignment.service;
+package prog21assignment.service.collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import prog21assignment.domain.Song;
 import prog21assignment.repository.QueenEntityRepository;
+import prog21assignment.service.QueenEntityService;
 
 import java.util.List;
 

@@ -1,5 +1,12 @@
 package prog21assignment.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table
 public enum Genre {
     ART_ROCK,
     AVANT_POP,
@@ -11,6 +18,10 @@ public enum Genre {
     PROGRESSIVE_ROCK,
     SOFT_ROCK;
 
+    @Id
+    int id = ordinal();
+
+    @Column(name = "name", nullable = false, unique = true)
     public String readable() {
         return toString().charAt(0) + toString().toLowerCase().replace('_', ' ').substring(1);
     }

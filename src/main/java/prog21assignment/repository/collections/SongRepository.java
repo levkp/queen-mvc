@@ -2,7 +2,8 @@ package prog21assignment.repository.collections;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Repository;
 import prog21assignment.domain.Album;
 import prog21assignment.domain.Genre;
 import prog21assignment.domain.Song;
@@ -13,10 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Component
-public class SongRepositoryCollections implements QueenEntityRepository<Song> {
+@Profile("collections")
+@Repository
+public class SongRepository implements QueenEntityRepository<Song> {
     private static final List<Song> songs = new ArrayList<>();
-    private static final Logger log = LoggerFactory.getLogger(SongRepositoryCollections.class);
+    private static final Logger log = LoggerFactory.getLogger(SongRepository.class);
 
     static {
         log.debug("Seeding song repository");
@@ -25,7 +27,7 @@ public class SongRepositoryCollections implements QueenEntityRepository<Song> {
 
     private static void seed() {
 
-        Album queen = AlbumRepositoryCollections.albums.stream()
+        Album queen = AlbumRepository.albums.stream()
                 .filter(a -> a.getTitle().equals("Queen"))
                 .findAny()
                 .orElse(null);
@@ -49,7 +51,7 @@ public class SongRepositoryCollections implements QueenEntityRepository<Song> {
             });
         }
 
-        Album queenII = AlbumRepositoryCollections.albums.stream()
+        Album queenII = AlbumRepository.albums.stream()
                 .filter(a -> a.getTitle().equals("Queen II"))
                 .findAny()
                 .orElse(null);
@@ -75,7 +77,7 @@ public class SongRepositoryCollections implements QueenEntityRepository<Song> {
             });
         }
 
-        Album sheerHeartAttack = AlbumRepositoryCollections.albums.stream()
+        Album sheerHeartAttack = AlbumRepository.albums.stream()
                 .filter(a -> a.getTitle().equals("Sheer Heart Attack"))
                 .findAny()
                 .orElse(null);
@@ -98,7 +100,7 @@ public class SongRepositoryCollections implements QueenEntityRepository<Song> {
         }
 
 
-        Album jazz = AlbumRepositoryCollections.albums.stream()
+        Album jazz = AlbumRepository.albums.stream()
                 .filter(a -> a.getTitle().equals("Jazz"))
                 .findAny()
                 .orElse(null);

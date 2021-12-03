@@ -1,9 +1,9 @@
 INSERT INTO DUAL(DUMMY)
-VALUES 'X';
+VALUES ('X');
 
 INSERT INTO ALBUM(TITLE, RELEASE)
-VALUES('Queen', '1973-7-13'),
-      ('Queen II', '1974-3-8'),
+VALUES('Queen', '1973-07-13'),
+      ('Queen II', '1974-03-8'),
       ('Sheer Heart Attack', '1974-11-8'),
       ('Jazz', '1978-11-10');
 

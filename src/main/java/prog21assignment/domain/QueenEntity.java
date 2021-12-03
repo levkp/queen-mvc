@@ -1,9 +1,13 @@
 package prog21assignment.domain;
 
+import javax.persistence.*;
 import java.util.Objects;
 
-@SuppressWarnings("unused")
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class QueenEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
     protected int id;
 
     public int getId() {

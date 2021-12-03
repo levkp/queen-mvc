@@ -4,7 +4,7 @@ import org.springframework.core.convert.converter.Converter;
 
 import java.time.YearMonth;
 
-public class StringToYearMonth implements Converter<String, YearMonth> {
+public class StringToYearMonthConverter implements Converter<String, YearMonth> {
 
     @Override
     public YearMonth convert(String source) {

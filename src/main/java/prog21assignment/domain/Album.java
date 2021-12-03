@@ -1,5 +1,9 @@
 package prog21assignment.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -7,23 +11,33 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.StringJoiner;
 
+@Entity
+@Table
 @SuppressWarnings("unused")
 public class Album extends QueenEntity {
+    @Column(length = 30, nullable = false, unique = true)
     private String title;
+
+    @Column(length = 5000)
     private String description = "Lorem Ipsum";
+
+    @Column(nullable = false)
     private LocalDate release;
-    private final transient List<Song> songs;
+
+    @OneToMany(mappedBy = "album")
+    private final transient List<Song> songs = new ArrayList<>();
 
     public Album(String title, LocalDate release) {
         this.title = title;
         this.release = release;
-        songs = new ArrayList<>();
     }
 
     public Album(String title, LocalDate release, String description) {
         this(title, release);
         this.description = description;
     }
+
+    protected Album() { }
 
     public void addSong(Song... s) {
         songs.addAll(List.of(s));
@@ -67,6 +81,7 @@ public class Album extends QueenEntity {
         return sj.toString();
     }
 
+    // Todo: remove this fuckery
     public Duration length() {
         Duration d;
         double minutes = 0;
@@ -84,6 +99,7 @@ public class Album extends QueenEntity {
         return d;
     }
 
+    // Todo: remove this somehow
     // Remove all blanks and de-capitalise the first character
     public String titleToCoverPath() {
         return title.replace(" ", "").toLowerCase();
