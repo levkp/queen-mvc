@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Profile("collections")
+@Profile("dev2")
 @Repository
 public class SongRepository implements QueenEntityRepository<Song> {
     private static final List<Song> songs = new ArrayList<>();

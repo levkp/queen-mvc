@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Profile("collections")
+@Profile("dev2")
 @Repository
 public class AlbumRepository implements QueenEntityRepository<Album> {
     static List<Album> albums = new ArrayList<>();
