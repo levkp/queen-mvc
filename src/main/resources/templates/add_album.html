@@ -20,7 +20,8 @@
                     <div class="row">
                         <div class="mb-3">
                             <label for="title" class="form-label fs-4" th:text="#{label.title}"></label>
-                            <input type="text" id="title" class="form-control" th:field="*{title}">
+                            <input type="text" id="title" class="form-control" minlength="4" maxlength="30"
+                                   required th:field="*{title}">
                             <p class="mt-1 text-danger"
                                th:if="${#fields.hasErrors('title')}" th:text="${#fields.errors('title')}">
                             </p>
@@ -28,7 +29,7 @@
 
                         <div class="mb-3">
                             <label for="release" class="form-label fs-4" th:text="#{label.release}"></label>
-                            <input type="date" id="release" class="form-control" th:field="*{release}">
+                            <input type="date" id="release" class="form-control" required th:field="*{release}">
                             <p class="mt-1 text-danger"
                                th:if="${#fields.hasErrors('release')}" th:text="${#fields.errors('release')}">
                             </p>
@@ -58,7 +59,7 @@
 
                         <div class="mb-3">
                             <label for="description" class="fs-4" th:text="#{label.description}"></label>
-                            <textarea class="form-control" id="description" rows="3" th:field="*{description}">
+                            <textarea class="form-control" id="description" rows="3" maxlength="5000" th:field="*{description}">
                             </textarea>
                             <p class="mt-1 text-danger"
                                th:if="${#fields.hasErrors('description')}" th:text="${#fields.errors('description')}">

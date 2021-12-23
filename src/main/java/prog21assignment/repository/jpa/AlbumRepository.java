@@ -1,4 +1,4 @@
-package prog21assignment.repository.hibernate;
+package prog21assignment.repository.jpa;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
@@ -10,7 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Profile("hibernate")
+@Profile({"dev", "prod"})
 @Repository
 @Transactional
 public class AlbumRepository implements QueenEntityRepository<Album> {

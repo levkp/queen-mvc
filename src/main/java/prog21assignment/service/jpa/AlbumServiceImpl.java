@@ -1,32 +1,33 @@
-package prog21assignment.service.collections;
+package prog21assignment.service.jpa;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
 import prog21assignment.domain.Album;
-import prog21assignment.repository.QueenEntityRepository;
+import prog21assignment.repository.QueenEntityJpaRepository;
 import prog21assignment.service.QueenEntityService;
 
 import java.util.List;
 
-//@Profile({"dev2", "dev"})
-@Component
+@Profile("prod")
+@Service
 public class AlbumServiceImpl implements QueenEntityService<Album> {
 
-    private final QueenEntityRepository<Album> repository;
+    private final QueenEntityJpaRepository<Album> repository;
 
     @Autowired
-    public AlbumServiceImpl(QueenEntityRepository<Album> repository) {
+    public AlbumServiceImpl(QueenEntityJpaRepository<Album> repository) {
         this.repository = repository;
     }
 
     @Override
     public Album create(Album a) {
-        return repository.create(a);
+        return repository.save(a);
     }
 
     @Override
     public List<Album> read() {
-        return repository.read();
+        return repository.findAll();
     }
 
     @Override
@@ -41,6 +42,6 @@ public class AlbumServiceImpl implements QueenEntityService<Album> {
 
     @Override
     public Album findById(int id) {
-        return repository.findById(id);
+        return null;
     }
 }

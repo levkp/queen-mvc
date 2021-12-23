@@ -1,4 +1,4 @@
-package prog21assignment.repository.hibernate;
+package prog21assignment.repository.jpa;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -7,24 +7,22 @@ import prog21assignment.domain.Song;
 import prog21assignment.repository.QueenEntityRepository;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceUnit;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
-@Profile("hibernate")
+@Profile({"dev", "prod"})
 @Repository
 public class SongRepository implements QueenEntityRepository<Song> {
-    @PersistenceUnit
-    private final EntityManagerFactory factory;
+    @PersistenceContext
+    private final EntityManager manager;
 
     @Autowired
-    public SongRepository(EntityManagerFactory factory) {
-        this.factory = factory;
+    public SongRepository(EntityManager manager) {
+        this.manager = manager;
     }
 
     @Override
     public Song create(Song s) {
-        EntityManager manager = factory.createEntityManager();
         manager.getTransaction().begin();
         manager.persist(s);
         manager.getTransaction().commit();
@@ -49,10 +47,8 @@ public class SongRepository implements QueenEntityRepository<Song> {
 
     @Override
     public Song findById(int id) {
-        Song s;
-        EntityManager manager = factory.createEntityManager();
         manager.getTransaction().begin();
-        s = manager.find(Song.class, id);
+        Song s = manager.find(Song.class, id);
         manager.close();
         return s;
     }

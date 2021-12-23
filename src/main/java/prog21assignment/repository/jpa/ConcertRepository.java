@@ -1,4 +1,4 @@
-package prog21assignment.repository.hibernate;
+package prog21assignment.repository.jpa;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
@@ -7,7 +7,7 @@ import prog21assignment.repository.QueenEntityRepository;
 
 import java.util.List;
 
-@Profile("hibernate")
+@Profile({"dev", "prod"})
 @Repository
 public class ConcertRepository implements QueenEntityRepository<Concert> {
 
