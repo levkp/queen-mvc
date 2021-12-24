@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import prog21assignment.domain.Song;
+import prog21assignment.exceptions.DatabaseException;
 import prog21assignment.repository.QueenEntityRepository;
 import prog21assignment.service.QueenEntityService;
 
@@ -31,6 +32,12 @@ public class SongServiceImpl implements QueenEntityService<Song> {
 
     @Override
     public Song findById(int id) {
-        return repository.findById(id);
+        Song s = repository.findById(id);
+
+        if (s == null) {
+            throw new DatabaseException(id, "Entity not found");
+        }
+
+        return s;
     }
 }

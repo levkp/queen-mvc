@@ -8,14 +8,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import prog21assignment.domain.Album;
 import prog21assignment.domain.Song;
+import prog21assignment.exceptions.DatabaseException;
 import prog21assignment.presentation.dto.AlbumDTO;
 import prog21assignment.service.QueenEntityService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @Controller // Todo: what does the controller annotation do, really?
 @Component
@@ -78,18 +80,21 @@ public class AlbumController {
     public String readAlbum(Model m, @PathVariable int id) {
         log.debug("Searching for album with id " + id);
 
-        Optional<Album> o = albumService.read().stream()
-                .filter(a -> a.getId() == id)
-                .findFirst();
+        m.addAttribute("album", albumService.findById(id));
 
-        if (o.isEmpty()) {
-            log.debug("Album with id " + id + " not found, returning 404");
-            return "error_404";
-        }
-
-        m.addAttribute("album", o.get());
         log.debug("Returning album_detailed view");
         return "album_detailed";
+    }
+
+    @ExceptionHandler(DatabaseException.class)
+    public ModelAndView handleDatabaseException(HttpServletRequest request, DatabaseException de) {
+        log.error(de.getMessage() + ", id: " + de.getId());
+
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("exception", de);
+        mav.setViewName("error_database");
+
+        return mav;
     }
 
 //    @GetMapping("/{id}/delete")

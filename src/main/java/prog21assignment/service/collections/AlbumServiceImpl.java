@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import prog21assignment.domain.Album;
+import prog21assignment.exceptions.DatabaseException;
 import prog21assignment.repository.QueenEntityRepository;
 import prog21assignment.service.QueenEntityService;
 
@@ -31,6 +32,12 @@ public class AlbumServiceImpl implements QueenEntityService<Album> {
 
     @Override
     public Album findById(int id) {
-        return repository.findById(id);
+        Album a = repository.findById(id);
+
+        if (a == null) {
+            throw new DatabaseException(id, "Entity not found");
+        }
+
+        return a;
     }
 }
