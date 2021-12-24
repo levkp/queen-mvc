@@ -15,16 +15,16 @@ public class Song extends QueenEntity {
     @Column(length = 30, nullable = false, unique = true)
     private String title;
 
+    // Todo: this really should be duration
     @Column(nullable = false)
     private double length;
 
-    /*
+
     @ManyToMany
     @JoinTable(name = "song_genre",
             joinColumns = @JoinColumn(name = "song_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
 
-    */
 
     private transient List<Genre> genres = new ArrayList<>();
 

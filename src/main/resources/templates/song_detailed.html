@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="~{fragments/base_header :: base_header (page_title=${song.title})}"></th:block>
+    <th:block th:include="~{fragments/base_header :: base_header (page_title=${song.title})}"> </th:block>
 </head>
 <body>
 <div class="container">
@@ -28,7 +28,7 @@
                     <td th:text="${song.finishedRecording}">Finished recording</td>
                 </tr>
                 <tr>
-                    <!-- Todo -->
+                    <!-- Todo: else in thymeleaf? -->
                     <td>Album</td>
                     <td th:if="${song.album != null}" th:text="${song.album.title}"></td>
                     <td th:if="${song.album == null}">N/A</td>

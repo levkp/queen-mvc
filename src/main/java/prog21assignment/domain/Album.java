@@ -75,7 +75,6 @@ public class Album extends QueenEntity {
         return sj.toString();
     }
 
-    // Todo: remove this fuckery
     public Duration length() {
         Duration d;
         double minutes = 0;
@@ -83,12 +82,13 @@ public class Album extends QueenEntity {
 
         for (Song s : songs) {
             double fraction = s.getLength() % 1;
+//            Duration du = Duration.ofS
             seconds += fraction;
             minutes += s.getLength() - fraction;
         }
 
         d = Duration.ofMinutes((long)seconds);
-        d.plusSeconds((long)seconds);
+        d.plusSeconds((long)(seconds * 10));
 
         return d;
     }
