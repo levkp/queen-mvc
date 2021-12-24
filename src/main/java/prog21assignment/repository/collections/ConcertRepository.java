@@ -85,16 +85,6 @@ public class ConcertRepository implements QueenEntityRepository<Concert> {
     }
 
     @Override
-    public void update(Concert concert) {
-
-    }
-
-    @Override
-    public void delete(Concert concert) {
-
-    }
-
-    @Override
     public Concert findById(int id) {
         Optional<Concert> o = concerts.stream()
                 .filter(c -> c.getId() == id)

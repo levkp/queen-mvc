@@ -8,10 +8,12 @@ import prog21assignment.repository.QueenEntityRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 
-@Profile({"dev", "prod"})
+@Profile("jpa")
 @Repository
+@Transactional
 public class SongRepository implements QueenEntityRepository<Song> {
     @PersistenceContext
     private final EntityManager manager;
@@ -23,33 +25,17 @@ public class SongRepository implements QueenEntityRepository<Song> {
 
     @Override
     public Song create(Song s) {
-        manager.getTransaction().begin();
         manager.persist(s);
-        manager.getTransaction().commit();
-        manager.close();
         return s;
     }
 
     @Override
     public List<Song> read() {
-        return null;
-    }
-
-    @Override
-    public void update(Song s) {
-
-    }
-
-    @Override
-    public void delete(Song s) {
-
+        return manager.createQuery("select s from Song s").getResultList();
     }
 
     @Override
     public Song findById(int id) {
-        manager.getTransaction().begin();
-        Song s = manager.find(Song.class, id);
-        manager.close();
-        return s;
+        return manager.find(Song.class, id);
     }
 }

@@ -1,9 +1,6 @@
 package prog21assignment.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -19,12 +16,12 @@ public class Album extends QueenEntity {
     private String title;
 
     @Column(length = 5000)
-    private String description = "Lorem Ipsum";
+    private String description;
 
     @Column(nullable = false)
     private LocalDate release;
 
-    @OneToMany(mappedBy = "album")
+    @OneToMany(mappedBy = "album", cascade = CascadeType.MERGE)
     private final transient List<Song> songs = new ArrayList<>();
 
     public Album(String title, LocalDate release) {
@@ -67,9 +64,6 @@ public class Album extends QueenEntity {
         this.description = description;
     }
 
-    public void setRelease(LocalDate release) {
-        this.release = release;
-    }
 
     public String getGenresAsString() {
         HashSet<Genre> genres = new HashSet<>();

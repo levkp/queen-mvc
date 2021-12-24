@@ -1,6 +1,3 @@
-INSERT INTO ALBUM(ID, TITLE, RELEASE)
-VALUES (12, 'Queen', '1973-07-13');
-
 -- INSERT INTO ALBUM(TITLE, RELEASE)
 -- VALUES('Queen', '1973-07-13'),
 --       ('Queen II', '1974-03-8'),
@@ -30,9 +27,9 @@ VALUES (12, 'Queen', '1973-07-13');
 -- SELECT v.TITLE, v.LENGTH, v.FINISHED_RECORDING, a.ID
 -- FROM vals v JOIN ALBUM a ON v.ALBUM_TITLE = a.TITLE;
 --
--- INSERT INTO GENRE(NAME)
--- VALUES('Art rock'), ('Avant pop'), ('Glam rock'), ('Hard rock'), ('Heavy metal'),
---       ('Opera'), ('Power pop'), ('Progressive rock'), ('Soft rock');
+INSERT INTO GENRE(NAME)
+VALUES('Art rock'), ('Avant pop'), ('Glam rock'), ('Hard rock'), ('Heavy metal'),
+      ('Opera'), ('Power pop'), ('Progressive rock'), ('Soft rock');
 
 -- INSERT INTO SONG_GENRE(SONG_ID, GENRE_ID)
 

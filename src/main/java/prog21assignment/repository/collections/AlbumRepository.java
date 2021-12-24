@@ -43,17 +43,6 @@ public class AlbumRepository implements QueenEntityRepository<Album> {
         return albums;
     }
 
-    // Todo
-    @Override
-    public void update(Album album) {
-
-    }
-
-    @Override
-    public void delete(Album album) {
-        albums.remove(album);
-    }
-
     @Override
     public Album findById(int id) {
         Optional<Album> o = albums.stream()

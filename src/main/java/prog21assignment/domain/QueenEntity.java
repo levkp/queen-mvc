@@ -7,7 +7,8 @@ import java.util.Objects;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class QueenEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "entityPkSeq", sequenceName = "entity_pk_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "entityPkSeq")
     protected int id;
 
     public int getId() {

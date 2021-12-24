@@ -136,16 +136,6 @@ public class SongRepository implements QueenEntityRepository<Song> {
     }
 
     @Override
-    public void update(Song song) {
-
-    }
-
-    @Override
-    public void delete(Song song) {
-        songs.remove(song);
-    }
-
-    @Override
     public Song findById(int id) {
         Optional<Song> o = songs.stream()
                 .filter(s -> s.getId() == id)

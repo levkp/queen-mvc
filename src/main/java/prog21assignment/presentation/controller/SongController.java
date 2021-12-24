@@ -59,19 +59,23 @@ public class SongController {
             return "add_song";
         }
 
-        Album a = null;
-        Song s = songService.create(new Song(
+        Album a = dto.albumId != -1 ? albumService.findById(dto.getAlbumId()) : null;
+
+        Song s = new Song(
                 dto.getTitle(),
                 dto.getLength(),
                 parseGenreOrdinals(dto.getGenreOrdinals()),
                 parseRecordedDate(dto.getRecorded()),
-                a)
-        );
+                a);
 
-        if (dto.albumId != -1) {
-            a = albumService.findById(dto.getAlbumId());
+        if (a != null) {
             a.addSong(s);
         }
+
+
+        albumService.create(a);
+//        songService.create(s);
+
 
         return "redirect:/songs";
     }

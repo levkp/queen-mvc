@@ -3,5 +3,15 @@
 }
 
 .q-submit-button {
-    width: 50%;
+    width: 50% !important;
 }
+
+.q-add-new-button {
+    width: 25% !important;
+}
+
+#song-list {
+    display: none;
+}
+
+

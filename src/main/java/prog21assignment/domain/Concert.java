@@ -1,24 +1,41 @@
 package prog21assignment.domain;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "concert")
 @SuppressWarnings("unused")
 public class Concert extends QueenEntity {
+    @Column
     private int attendance;
+
+    @Column(length = 60, nullable = false, unique = true)
     private String name;
+
+    @Column
     private String location;
+
+    @Column(nullable = false)
     private LocalDate date;
-    private final List<Song> songs;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "concert_playlist",
+            joinColumns = @JoinColumn(name = "song_id"),
+            inverseJoinColumns = @JoinColumn(name = "concert_id")
+    )
+    private final List<Song> songs = new ArrayList<>();
 
     public Concert(int attendance, String name, String location, LocalDate date) {
         this.attendance = attendance;
         this.name = name;
         this.location = location;
         this.date = date;
-        songs = new ArrayList<>();
     }
+
+    protected Concert() { }
 
     public int getAttendance() {
         return attendance;

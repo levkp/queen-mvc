@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <th:block th:include="~{fragments/base_header :: base_header (page_title=#{title.albums.add})}"> </th:block>
-    <script src="../static/js/song_select.js" th:src="@{/js/song_select.js}"></script>
+    <script defer th:src="@{/js/song_select.js}"></script>
 </head>
 
 <body>
@@ -46,7 +46,7 @@
                                 </p>
                             </div>
 
-                            <div id="song-list" style="display: none">
+                            <div id="song-list">
                                 <div class="form-check" th:each="song : ${songs}">
                                     <input type="checkbox" class="form-check-input"
                                            th:value="${song.id}" th:id="'song-id-' + ${song.id}" th:field="*{songIds}">
@@ -68,7 +68,7 @@
                     </div>
 
                     <div class="row">
-                        <button class="btn-lg btn-dark" style="width: 50%" th:text="#{label.done}">
+                        <button class="q-submit-button btn-lg btn-dark" th:text="#{label.done}">
                             <input type="submit">
                         </button>
                     </div>
@@ -76,7 +76,7 @@
             </div>
 
             <div class="col-2">
-                <img src="/img/freddy_standing.webp" alt="Freddy standing" style="height: 50%">
+                <img src="/img/freddy_standing.webp" alt="Freddy standing" class="q-form-pic">
             </div>
         </div>
     </div>

@@ -92,12 +92,12 @@ public class AlbumController {
         return "album_detailed";
     }
 
-    @GetMapping("/{id}/delete")
-    public String delete(Model m, @PathVariable int id) {
-        Album a = albumService.findById(id);
-        albumService.delete(a);
-
-        return "redirect:/albums";
-    }
+//    @GetMapping("/{id}/delete")
+//    public String delete(Model m, @PathVariable int id) {
+//        Album a = albumService.findById(id);
+//        albumService.delete(a);
+//
+//        return "redirect:/albums";
+//    }
 
 }

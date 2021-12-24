@@ -18,18 +18,21 @@ public class Song extends QueenEntity {
     @Column(nullable = false)
     private double length;
 
+    /*
     @ManyToMany
     @JoinTable(name = "song_genre",
             joinColumns = @JoinColumn(name = "song_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
-    private List<Genre> genres;
 
+    */
+
+    private transient List<Genre> genres = new ArrayList<>();
 
     @Column(name = "finished_recording", nullable = false)
     @Convert(converter = YearMonthDateAttributeConverter.class)
     private YearMonth finishedRecording;
 
-    @ManyToOne(cascade = { })
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "album_id")
     private Album album;
 

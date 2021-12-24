@@ -10,7 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Profile({"dev", "prod"})
+@Profile("jpa")
 @Repository
 @Transactional
 public class AlbumRepository implements QueenEntityRepository<Album> {
@@ -25,18 +25,7 @@ public class AlbumRepository implements QueenEntityRepository<Album> {
 
     @Override
     public List<Album> read() {
-
-        return null;
-    }
-
-    @Override
-    public void update(Album a) {
-
-    }
-
-    @Override
-    public void delete(Album a) {
-
+        return manager.createQuery("select a from Album a").getResultList();
     }
 
     @Override

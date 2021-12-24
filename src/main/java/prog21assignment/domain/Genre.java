@@ -1,9 +1,6 @@
 package prog21assignment.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table
@@ -19,9 +16,12 @@ public enum Genre {
     SOFT_ROCK;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id = ordinal();
 
     @Column(name = "name", nullable = false, unique = true)
+    public final String name = readable();
+
     public String readable() {
         return toString().charAt(0) + toString().toLowerCase().replace('_', ' ').substring(1);
     }
