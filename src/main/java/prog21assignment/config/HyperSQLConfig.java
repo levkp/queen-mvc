@@ -11,8 +11,8 @@ import org.springframework.core.env.Environment;
 
 import javax.sql.DataSource;
 
-@Configuration
 @Profile("dev")
+@Configuration
 public class HyperSQLConfig {
     private final Environment env;
     private static final Logger log = LoggerFactory.getLogger(HyperSQLConfig.class);

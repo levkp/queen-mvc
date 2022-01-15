@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-// Todo: implement MVP later
 @SuppressWarnings({"unused", "FieldCanBeLocal"})
 @Component
 public class ConsoleAppView {
@@ -65,7 +64,6 @@ public class ConsoleAppView {
         sc.close();
     }
 
-    // Todo: replace with enhanced switch
     public void handleChoice(int choice) {
         switch (choice) {
             case 0 -> quit = true;

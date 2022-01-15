@@ -22,6 +22,7 @@ public class GeneralExceptionHandler {
 //            throw e;
 
         log.error(e.getMessage());
+        e.printStackTrace();
 
         ModelAndView mav = new ModelAndView();
         mav.addObject("exception", e);

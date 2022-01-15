@@ -11,8 +11,8 @@ import org.springframework.core.env.Environment;
 
 import javax.sql.DataSource;
 
-@Configuration
 @Profile("prod")
+@Configuration
 public class PostgreSQLConfig {
     private final Environment env;
     private static final Logger log = LoggerFactory.getLogger(PostgreSQLConfig.class);

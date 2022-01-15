@@ -1,6 +1,9 @@
 package prog21assignment.domain;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table
@@ -16,7 +19,6 @@ public enum Genre {
     SOFT_ROCK;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id = ordinal();
 
     @Column(name = "name", nullable = false, unique = true)

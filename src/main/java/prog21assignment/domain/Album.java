@@ -1,7 +1,6 @@
 package prog21assignment.domain;
 
 import javax.persistence.*;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -75,22 +74,21 @@ public class Album extends QueenEntity {
         return sj.toString();
     }
 
-    public Duration length() {
-        Duration d;
-        double minutes = 0;
+    // Todo: this is too complicated for what it is, replace length with Duration in Song?
+    public double length() {
+        int minutes = 0;
         double seconds = 0;
+        double result;
 
         for (Song s : songs) {
             double fraction = s.getLength() % 1;
-//            Duration du = Duration.ofS
             seconds += fraction;
-            minutes += s.getLength() - fraction;
+            minutes += (int)(s.getLength() - fraction);
         }
 
-        d = Duration.ofMinutes((long)seconds);
-        d.plusSeconds((long)(seconds * 10));
+        result = minutes + seconds / 60;
 
-        return d;
+        return (double) Math.round(result * 100) / 100;
     }
 
     // Todo: remove this somehow

@@ -20,13 +20,18 @@ public class Song extends QueenEntity {
     private double length;
 
 
+    /*
     @ManyToMany
     @JoinTable(name = "song_genre",
             joinColumns = @JoinColumn(name = "song_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
 
-
-    private transient List<Genre> genres = new ArrayList<>();
+     */
+    @ElementCollection(targetClass = Genre.class)
+    @JoinTable(name = "song_genre", joinColumns = @JoinColumn(name = "id"))
+    @Column(name = "genre", nullable = false)
+    @Enumerated(EnumType.ORDINAL)
+    private List<Genre> genres = new ArrayList<>();
 
     @Column(name = "finished_recording", nullable = false)
     @Convert(converter = YearMonthDateAttributeConverter.class)

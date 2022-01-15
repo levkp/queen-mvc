@@ -1,5 +1,7 @@
 package prog21assignment.repository.jpa;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import prog21assignment.domain.Album;
@@ -14,11 +16,14 @@ import java.util.List;
 @Repository
 @Transactional
 public class AlbumRepository implements QueenEntityRepository<Album> {
+    private static final Logger log = LoggerFactory.getLogger(AlbumRepository.class);
+
     @PersistenceContext
     private EntityManager manager;
 
     @Override
     public Album create(Album a) {
+        log.debug("Persisting album with title " + a.getTitle());
         manager.persist(a);
         return a;
     }

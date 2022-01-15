@@ -3,7 +3,6 @@ package prog21assignment.presentation.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,8 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
-@Controller // Todo: what does the controller annotation do, really?
-@Component
+@Controller
 @RequestMapping("/albums")
 public class AlbumController {
     private final QueenEntityService<Album> albumService;
@@ -36,7 +34,7 @@ public class AlbumController {
     @GetMapping
     public String showAlbums(Model m) {
         m.addAttribute("albums", albumService.read());
-        return "albums_table";
+        return "all_albums";
     }
 
     @GetMapping("/add")
