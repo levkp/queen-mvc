@@ -9,7 +9,6 @@ import java.util.StringJoiner;
 
 @Entity
 @Table
-@SuppressWarnings("unused")
 public class Album extends QueenEntity {
     @Column(length = 30, nullable = false, unique = true)
     private String title;
@@ -58,11 +57,6 @@ public class Album extends QueenEntity {
     public void setTitle(String title) {
         this.title = title;
     }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
 
     public String getGenresAsString() {
         HashSet<Genre> genres = new HashSet<>();

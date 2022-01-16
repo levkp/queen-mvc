@@ -7,6 +7,7 @@ import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "song")
@@ -27,17 +28,24 @@ public class Song extends QueenEntity {
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
 
      */
+    /*
+    @ManyToMany(fetch = FetchType.EAGER)
     @ElementCollection(targetClass = Genre.class)
     @JoinTable(name = "song_genre", joinColumns = @JoinColumn(name = "id"))
-    @Column(name = "genre", nullable = false)
     @Enumerated(EnumType.ORDINAL)
-    private List<Genre> genres = new ArrayList<>();
+    */
+    private transient List<Genre> genres = new ArrayList<>();
+
+
+    @ElementCollection(targetClass = Integer.class)
+    @JoinTable(name = "song_genre", joinColumns = @JoinColumn(name = "id"))
+    private List<Integer> genreOrdinals = new ArrayList<>();
 
     @Column(name = "finished_recording", nullable = false)
     @Convert(converter = YearMonthDateAttributeConverter.class)
     private YearMonth finishedRecording;
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinColumn(name = "album_id")
     private Album album;
 
@@ -47,7 +55,7 @@ public class Song extends QueenEntity {
     public Song(String title, double length, List<Genre> genres, YearMonth finishedRecording, Album album) {
         this.title = title;
         this.length = length;
-        this.genres = genres;
+        setGenres(genres);
         this.finishedRecording = finishedRecording;
         this.album = album;
     }
@@ -56,10 +64,6 @@ public class Song extends QueenEntity {
 
     public void addConcert(Concert... c) {
         playedAt.addAll(List.of(c));
-    }
-
-    public void addGenre(Genre... g) {
-        genres.addAll(List.of(g));
     }
 
     public String getTitle() {
@@ -96,6 +100,14 @@ public class Song extends QueenEntity {
 
     public void setGenres(List<Genre> genres) {
         this.genres = genres;
+        genres.forEach(g -> genreOrdinals.add(g.ordinal()));
+    }
+
+    public void setGenreOrdinals(List<Integer> genreOrdinals) {
+        this.genreOrdinals = genreOrdinals;
+        this.genres = genreOrdinals.stream()
+                .map(o -> Genre.values()[o])
+                .collect(Collectors.toList());
     }
 
     public void setFinishedRecording(YearMonth finishedRecording) {

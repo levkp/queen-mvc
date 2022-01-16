@@ -127,6 +127,7 @@ public class SongRepository implements QueenEntityRepository<Song> {
     public Song create(Song s) {
         s.setId(songs.size());
         songs.add(s);
+        s.getAlbum().addSong(s);
         return s;
     }
 

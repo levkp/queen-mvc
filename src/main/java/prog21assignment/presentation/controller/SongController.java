@@ -71,9 +71,7 @@ public class SongController {
             albumService.create(a);
         }
 
-
         songService.create(s);
-
 
         return "redirect:/songs";
     }

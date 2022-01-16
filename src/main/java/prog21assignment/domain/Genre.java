@@ -19,6 +19,7 @@ public enum Genre {
     SOFT_ROCK;
 
     @Id
+    @Column(name = "ordinal")
     int id = ordinal();
 
     @Column(name = "name", nullable = false, unique = true)
