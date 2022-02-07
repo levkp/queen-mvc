@@ -4,12 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
-import prog21assignment.domain.Album;
-import prog21assignment.domain.Genre;
 import prog21assignment.domain.Song;
 import prog21assignment.repository.QueenEntityRepository;
 
-import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +17,8 @@ public class SongRepository implements QueenEntityRepository<Song> {
     private static final List<Song> songs = new ArrayList<>();
     private static final Logger log = LoggerFactory.getLogger(SongRepository.class);
 
+
+    /*
     static {
         log.debug("Seeding song repository");
         seed();
@@ -122,6 +121,7 @@ public class SongRepository implements QueenEntityRepository<Song> {
             });
         }
     }
+*/
 
     @Override
     public Song create(Song s) {

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import prog21assignment.domain.Concert;
 import prog21assignment.repository.QueenEntityRepository;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +17,7 @@ public class ConcertRepository implements QueenEntityRepository<Concert> {
     private static final List<Concert> concerts = new ArrayList<>();
     private static final Logger log = LoggerFactory.getLogger(ConcertRepository.class);
 
+    /*
     static {
         log.debug("Seeding concert repository");
         seed();
@@ -72,6 +72,7 @@ public class ConcertRepository implements QueenEntityRepository<Concert> {
                 }));
     }
 
+     */
     @Override
     public Concert create(Concert c) {
         c.setId(concerts.size());

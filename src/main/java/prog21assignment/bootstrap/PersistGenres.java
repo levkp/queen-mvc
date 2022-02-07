@@ -1,4 +1,4 @@
-package prog21assignment;
+package prog21assignment.bootstrap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

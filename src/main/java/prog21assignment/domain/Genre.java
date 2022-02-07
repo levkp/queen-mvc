@@ -20,7 +20,7 @@ public enum Genre {
 
     @Id
     @Column(name = "ordinal")
-    int id = ordinal();
+    final int id = ordinal();
 
     @Column(name = "name", nullable = false, unique = true)
     public final String name = readable();

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import prog21assignment.domain.Album;
 import prog21assignment.repository.QueenEntityRepository;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +17,7 @@ public class AlbumRepository implements QueenEntityRepository<Album> {
     static List<Album> albums = new ArrayList<>();
     private static final Logger log = LoggerFactory.getLogger(AlbumRepository.class);
 
+    /*
     static {
         log.debug("Seeding album repository");
         seed();
@@ -30,6 +30,7 @@ public class AlbumRepository implements QueenEntityRepository<Album> {
         repository.create(new Album("Sheer Heart Attack",  LocalDate.of(1974, 11, 8)));
         repository.create(new Album("Jazz", LocalDate.of(1978, 11, 10)));
     }
+*/
 
     @Override
     public Album create(Album a) {
