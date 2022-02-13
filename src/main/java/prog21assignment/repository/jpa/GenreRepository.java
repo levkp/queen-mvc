@@ -14,7 +14,7 @@ import javax.transaction.Transactional;
 @Repository
 @Transactional
 public class GenreRepository {
-    private static final Logger log = LoggerFactory.getLogger(GenreRepository.class);
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     @PersistenceContext
     private EntityManager manager;

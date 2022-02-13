@@ -4,14 +4,11 @@ import prog21assignment.util.YearMonthDateAttributeConverter;
 
 import javax.persistence.*;
 import java.time.YearMonth;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringJoiner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "song")
-@SuppressWarnings("unused")
 public class Song extends QueenEntity {
     @Column(length = 30, nullable = false, unique = true)
     private String title;
@@ -20,26 +17,11 @@ public class Song extends QueenEntity {
     @Column(nullable = false)
     private double length;
 
+    private transient Set<Genre> genres = new HashSet<>();
 
-    /*
-    @ManyToMany
-    @JoinTable(name = "song_genre",
-            joinColumns = @JoinColumn(name = "song_id"),
-            inverseJoinColumns = @JoinColumn(name = "genre_id"))
-
-     */
-    /*
-    @ManyToMany(fetch = FetchType.EAGER)
-    @ElementCollection(targetClass = Genre.class)
-    @JoinTable(name = "song_genre", joinColumns = @JoinColumn(name = "id"))
-    @Enumerated(EnumType.ORDINAL)
-    */
-    private transient List<Genre> genres = new ArrayList<>();
-
-
+    @Access(value = AccessType.PROPERTY)
     @ElementCollection(targetClass = Integer.class)
     @JoinTable(name = "song_genre", joinColumns = @JoinColumn(name = "id"))
-    @Access(value = AccessType.PROPERTY)
     private List<Integer> genreOrdinals = new ArrayList<>();
 
     @Column(name = "finished_recording", nullable = false)
@@ -50,29 +32,17 @@ public class Song extends QueenEntity {
     @JoinColumn(name = "album_id")
     private Album album;
 
-    // Todo: add this attribute to Hibernate
-    private final transient List<Concert> playedAt = new ArrayList<>();
-
-    public Song(String title, double length, List<Genre> genres, YearMonth finishedRecording, Album album) {
+    public Song(String title, double length, Set<Genre> genres, YearMonth finishedRecording, Album album) {
         this.title = title;
         this.length = length;
         setGenres(genres);
         this.finishedRecording = finishedRecording;
         this.album = album;
-
-        System.out.println("PUBLIC SONG CONSTRUCTOR INVOKED");
     }
 
-    protected Song() {
-        System.out.println("PROTECTED SONG CONSTRUCTOR INVOKED");
-    }
-
-    public void addConcert(Concert... c) {
-        playedAt.addAll(List.of(c));
-    }
+    protected Song() { }
 
     public String getTitle() {
-        System.out.println("SETTING TITLE FOR SONG");
         return title;
     }
 
@@ -80,7 +50,7 @@ public class Song extends QueenEntity {
         return length;
     }
 
-    public List<Genre> getGenres() {
+    public Set<Genre> getGenres() {
         return genres;
     }
 
@@ -92,10 +62,6 @@ public class Song extends QueenEntity {
             return album;
     }
 
-    public List<Concert> getConcerts() {
-        return playedAt;
-    }
-
     public void setTitle(String title) {
         this.title = title;
     }
@@ -104,33 +70,23 @@ public class Song extends QueenEntity {
         this.length = length;
     }
 
-    public void setGenres(List<Genre> genres) {
-        System.out.println("SETTING GENRES");
+    public void setGenres(Set<Genre> genres) {
         this.genres = genres;
         genres.forEach(g -> genreOrdinals.add(g.ordinal()));
     }
 
     public void setGenreOrdinals(List<Integer> genreOrdinals) {
-        System.out.println("SETTING GENRE ORDINALS");
         this.genreOrdinals = genreOrdinals;
-
-        System.out.println(this.genreOrdinals.toString());
-
         this.genres = genreOrdinals.stream()
                 .map(o -> Genre.values()[o])
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
 
     public List<Integer> getGenreOrdinals() {
         return genreOrdinals;
     }
 
-    public void setFinishedRecording(YearMonth finishedRecording) {
-        this.finishedRecording = finishedRecording;
-    }
-
     public void setAlbum(Album album) {
-        System.out.println("SETTING ALBUM");
         this.album = album;
     }
 

@@ -23,7 +23,7 @@ import java.util.List;
 public class AlbumController {
     private final QueenEntityService<Album> albumService;
     private final QueenEntityService<Song> songService;
-    private static final Logger log = LoggerFactory.getLogger(AlbumController.class);
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     public AlbumController(QueenEntityService<Album> albumService, QueenEntityService<Song> songService) {

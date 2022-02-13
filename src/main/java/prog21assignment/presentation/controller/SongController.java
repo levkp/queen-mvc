@@ -16,6 +16,7 @@ import prog21assignment.service.QueenEntityService;
 import javax.validation.Valid;
 import java.time.YearMonth;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
@@ -97,10 +98,10 @@ public class SongController {
         return YearMonth.parse(recorded);
     }
 
-    private List<Genre> parseGenreOrdinals(List<Integer> ordinals) {
+    private Set<Genre> parseGenreOrdinals(List<Integer> ordinals) {
         log.debug("Parsing genre ordinals...");
         return ordinals.stream()
                 .map(o -> Genre.values()[o])
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
 }
