@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Profile("jpa")
 @Repository
@@ -29,7 +30,7 @@ public class ConcertRepository implements QueenEntityRepository<Concert> {
     }
 
     @Override
-    public Concert findById(int id) {
-        return manager.find(Concert.class, id);
+    public Optional<Concert> findById(int id) {
+        return Optional.ofNullable(manager.find(Concert.class, id));
     }
 }

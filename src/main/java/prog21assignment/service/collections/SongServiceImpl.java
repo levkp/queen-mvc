@@ -4,11 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import prog21assignment.domain.Song;
-import prog21assignment.exceptions.DatabaseException;
+import prog21assignment.exceptions.EntityNotFoundException;
 import prog21assignment.repository.QueenEntityRepository;
 import prog21assignment.service.QueenEntityService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Profile("dev2")
 @Component
@@ -33,12 +34,12 @@ public class SongServiceImpl implements QueenEntityService<Song> {
 
     @Override
     public Song findById(int id) {
-        Song s = repository.findById(id);
+        Optional<Song> song = repository.findById(id);
 
-        if (s == null) {
-            throw new DatabaseException(id, "Entity not found");
+        if (song.isEmpty()) {
+            throw new EntityNotFoundException();
         }
 
-        return s;
+        return song.get();
     }
 }

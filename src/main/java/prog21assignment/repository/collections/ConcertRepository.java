@@ -86,10 +86,9 @@ public class ConcertRepository implements QueenEntityRepository<Concert> {
     }
 
     @Override
-    public Concert findById(int id) {
-        Optional<Concert> o = concerts.stream()
+    public Optional<Concert> findById(int id) {
+        return concerts.stream()
                 .filter(c -> c.getId() == id)
                 .findFirst();
-        return o.isEmpty() ? null : o.get();
     }
 }

@@ -4,11 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import prog21assignment.domain.Album;
-import prog21assignment.exceptions.DatabaseException;
+import prog21assignment.exceptions.EntityNotFoundException;
 import prog21assignment.repository.QueenEntityRepository;
 import prog21assignment.service.QueenEntityService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Profile("dev2")
 @Component
@@ -32,12 +33,12 @@ public class AlbumServiceImpl implements QueenEntityService<Album> {
 
     @Override
     public Album findById(int id) {
-        Album a = repository.findById(id);
+        Optional<Album> album = repository.findById(id);
 
-        if (a == null) {
-            throw new DatabaseException(id, "Entity not found");
+        if(album.isEmpty()) {
+            throw new EntityNotFoundException();
         }
 
-        return a;
+        return album.get();
     }
 }

@@ -137,10 +137,9 @@ public class SongRepository implements QueenEntityRepository<Song> {
     }
 
     @Override
-    public Song findById(int id) {
-        Optional<Song> o = songs.stream()
+    public Optional<Song> findById(int id) {
+        return songs.stream()
                 .filter(s -> s.getId() == id)
                 .findFirst();
-        return o.isEmpty() ? null : o.get();
     }
 }

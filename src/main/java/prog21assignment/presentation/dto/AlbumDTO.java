@@ -2,7 +2,8 @@ package prog21assignment.presentation.dto;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import prog21assignment.domain.Song;
+import prog21assignment.domain.Album;
+import prog21assignment.domain.QueenEntity;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -26,10 +27,17 @@ public class AlbumDTO {
 
     private List<Integer> songIds = new ArrayList<>();
 
-    private static final Logger log = LoggerFactory.getLogger(AlbumDTO.class);
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     public AlbumDTO() {
         log.debug("Default constructor invoked");
+    }
+
+    public AlbumDTO(String title, String description, String release, List<Integer> songIds) {
+        this.title = title;
+        this.description = description;
+        this.release = release;
+        this.songIds = songIds;
     }
 
     public String getTitle() {
@@ -60,12 +68,14 @@ public class AlbumDTO {
         this.songIds = songIds;
     }
 
-    public void setSongIdsFromObject(List<Song> songs) {
-
-    }
-
     public LocalDate getParsedRelease() {
         log.debug(String.format("Parsing %s to LocalDate", release));
         return LocalDate.parse(release);
+    }
+
+    public static AlbumDTO fromAlbum(Album a) {
+        List<Integer> songIds = a.getSongs().stream()
+            .map(QueenEntity::getId).toList();
+        return new AlbumDTO(a.getTitle(), a.getDescription(), a.getRelease().toString(), songIds);
     }
 }

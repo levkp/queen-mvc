@@ -45,10 +45,9 @@ public class AlbumRepository implements QueenEntityRepository<Album> {
     }
 
     @Override
-    public Album findById(int id) {
-        Optional<Album> o = albums.stream()
+    public Optional<Album> findById(int id) {
+        return albums.stream()
                 .filter(a -> a.getId() == id)
                 .findFirst();
-        return o.isEmpty() ? null : o.get();
     }
 }

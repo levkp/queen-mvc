@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Profile("jpa")
 @Repository
@@ -35,10 +36,7 @@ public class SongRepository implements QueenEntityRepository<Song> {
     }
 
     @Override
-    public Song findById(int id) {
-//        return manager.find(Song.class, id);
-        Song s = manager.find(Song.class, id);
-        return s;
-
+    public Optional<Song> findById(int id) {
+        return Optional.ofNullable(manager.find(Song.class, id));
     }
 }
