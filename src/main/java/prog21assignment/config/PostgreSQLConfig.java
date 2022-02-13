@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 @Configuration
 public class PostgreSQLConfig {
     private final Environment env;
-    private static final Logger log = LoggerFactory.getLogger(PostgreSQLConfig.class);
+    private final Logger log = LoggerFactory.getLogger(PostgreSQLConfig.class);
 
     @Autowired
     public PostgreSQLConfig(Environment env) {

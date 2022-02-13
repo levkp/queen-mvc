@@ -1,7 +1,9 @@
-## Programming 2.1 Project Assignment: Queen App
+## Programming 2.3 Assignment: Queen App
 
-### Name
+### Student
 Levente Katai-Pal
+levente.katai-pal@student.kdg.be
+
 
 ### Domain
 The project's entities are based on the early years of the rock band Queen.
@@ -45,10 +47,3 @@ The application is using two kinds of Spring profiles:
 `jdbc` would use JDBC templates, but well, it's not implemented
 
 If `dev2` is active, there is obviously no need to set a second profile
-
---
-
-As it's clearly visible, the program is barely finished. Most concepts we learnt are touched, but only some
-weekly assignments are fully finished. This is because of my busy schedule and my occasionally poor study habits.
-I know it won't affect the grading anymore, but I'll try to finish it anyway, because honestly this was one of the two
-classes I enjoyed during the semester.

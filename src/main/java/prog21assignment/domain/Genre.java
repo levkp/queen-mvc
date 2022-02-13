@@ -19,10 +19,10 @@ public enum Genre {
     SOFT_ROCK;
 
     @Id
-    @Column(name = "ordinal")
-    final int id = ordinal();
+    @Column
+    final int id =  ordinal();
 
-    @Column(name = "name", nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     public final String name = readable();
 
     public String readable() {

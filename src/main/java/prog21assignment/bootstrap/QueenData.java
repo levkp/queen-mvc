@@ -14,18 +14,18 @@ import java.time.YearMonth;
 import java.util.List;
 
 @Component
-public class SeedData {
+public class QueenData {
     private final QueenEntityRepository<Album> albumRepository;
     private final QueenEntityRepository<Song> songRepository;
-    private static final Logger log = LoggerFactory.getLogger(SeedData.class);
+    private static final Logger log = LoggerFactory.getLogger(QueenData.class);
 
     @Autowired
-    public SeedData(QueenEntityRepository<Album> albumRepository, QueenEntityRepository<Song> songRepository) {
+    public QueenData(QueenEntityRepository<Album> albumRepository, QueenEntityRepository<Song> songRepository) {
         this.albumRepository = albumRepository;
         this.songRepository = songRepository;
     }
 
-    public void seed(String... args) {
+    public void seed() {
         log.debug("Seeding database");
 
         Album queen = albumRepository.create(new Album("Queen",  LocalDate.of(1973, 7, 13)));

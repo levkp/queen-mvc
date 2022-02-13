@@ -60,7 +60,7 @@ public class Album extends QueenEntity {
 
     public String getGenresAsString() {
         HashSet<Genre> genres = new HashSet<>();
-        songs.forEach(s -> genres.addAll(s.getGenres()));
+//        songs.forEach(s -> genres.addAll(s.getGenres()));
 
         StringJoiner sj = new StringJoiner(", ");
         genres.forEach(g -> sj.add(g.readable()));

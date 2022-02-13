@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 @Configuration
 public class HyperSQLConfig {
     private final Environment env;
-    private static final Logger log = LoggerFactory.getLogger(HyperSQLConfig.class);
+    private final Logger log = LoggerFactory.getLogger(HyperSQLConfig.class);
 
     @Autowired
     public HyperSQLConfig(Environment env) {

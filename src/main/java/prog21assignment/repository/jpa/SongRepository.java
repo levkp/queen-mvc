@@ -36,6 +36,9 @@ public class SongRepository implements QueenEntityRepository<Song> {
 
     @Override
     public Song findById(int id) {
-        return manager.find(Song.class, id);
+//        return manager.find(Song.class, id);
+        Song s = manager.find(Song.class, id);
+        return s;
+
     }
 }

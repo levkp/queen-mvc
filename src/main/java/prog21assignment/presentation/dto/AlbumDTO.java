@@ -2,6 +2,7 @@ package prog21assignment.presentation.dto;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import prog21assignment.domain.Song;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -57,6 +58,10 @@ public class AlbumDTO {
 
     public void setSongIds(List<Integer> songIds) {
         this.songIds = songIds;
+    }
+
+    public void setSongIdsFromObject(List<Song> songs) {
+
     }
 
     public LocalDate getParsedRelease() {

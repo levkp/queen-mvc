@@ -39,6 +39,7 @@ public class Song extends QueenEntity {
 
     @ElementCollection(targetClass = Integer.class)
     @JoinTable(name = "song_genre", joinColumns = @JoinColumn(name = "id"))
+    @Access(value = AccessType.PROPERTY)
     private List<Integer> genreOrdinals = new ArrayList<>();
 
     @Column(name = "finished_recording", nullable = false)
@@ -58,15 +59,20 @@ public class Song extends QueenEntity {
         setGenres(genres);
         this.finishedRecording = finishedRecording;
         this.album = album;
+
+        System.out.println("PUBLIC SONG CONSTRUCTOR INVOKED");
     }
 
-    protected Song() { }
+    protected Song() {
+        System.out.println("PROTECTED SONG CONSTRUCTOR INVOKED");
+    }
 
     public void addConcert(Concert... c) {
         playedAt.addAll(List.of(c));
     }
 
     public String getTitle() {
+        System.out.println("SETTING TITLE FOR SONG");
         return title;
     }
 
@@ -83,7 +89,7 @@ public class Song extends QueenEntity {
     }
 
     public Album getAlbum() {
-        return album;
+            return album;
     }
 
     public List<Concert> getConcerts() {
@@ -99,15 +105,24 @@ public class Song extends QueenEntity {
     }
 
     public void setGenres(List<Genre> genres) {
+        System.out.println("SETTING GENRES");
         this.genres = genres;
         genres.forEach(g -> genreOrdinals.add(g.ordinal()));
     }
 
     public void setGenreOrdinals(List<Integer> genreOrdinals) {
+        System.out.println("SETTING GENRE ORDINALS");
         this.genreOrdinals = genreOrdinals;
+
+        System.out.println(this.genreOrdinals.toString());
+
         this.genres = genreOrdinals.stream()
                 .map(o -> Genre.values()[o])
                 .collect(Collectors.toList());
+    }
+
+    public List<Integer> getGenreOrdinals() {
+        return genreOrdinals;
     }
 
     public void setFinishedRecording(YearMonth finishedRecording) {
@@ -115,6 +130,7 @@ public class Song extends QueenEntity {
     }
 
     public void setAlbum(Album album) {
+        System.out.println("SETTING ALBUM");
         this.album = album;
     }
 
