@@ -33,12 +33,8 @@ public class SongServiceImpl implements QueenEntityService<Song> {
 
     @Override
     public Song findById(int id) {
-        Optional<Song> song = repository.findById(id);
-
-        if (song.isEmpty()) {
-            throw new EntityNotFoundException();
-        }
-
-        return song.get();
+        Optional<Song> o = repository.findById(id);
+        if (o.isEmpty()) throw new EntityNotFoundException("Unable to find song with id " + id);
+        return o.get();
     }
 }

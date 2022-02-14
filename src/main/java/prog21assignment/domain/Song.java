@@ -28,7 +28,7 @@ public class Song extends QueenEntity {
     @Convert(converter = YearMonthDateAttributeConverter.class)
     private YearMonth finishedRecording;
 
-    @ManyToOne(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "album_id")
     private Album album;
 

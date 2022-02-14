@@ -31,7 +31,7 @@ public class  AlbumController {
     @GetMapping
     public String showAlbums(Model m) {
         m.addAttribute("albums", albumService.read());
-        return "all_albums";
+        return "albums";
     }
 
     @GetMapping("/add")
@@ -60,13 +60,11 @@ public class  AlbumController {
         Album a = albumService.create(new Album(dto.getTitle(), dto.getParsedRelease(), dto.getDescription()));
         List<Integer> songIds = dto.getSongIds();
 
-        if (!songIds.isEmpty()) {
             for (Integer id : songIds) {
                 Song s = songService.findById(id);
                 a.addSong(s);
                 s.setAlbum(a);
             }
-        }
 
         return "redirect:/albums";
     }

@@ -10,6 +10,28 @@ Accept: application/json
 
 ###
 
+# Delete an album by id
+DELETE http://localhost:8080/api/albums/12 HTTP/1.1
+
+###
+
 # 404 test
 GET http://localhost:8080/api/albums/1123 HTTP/1.1
 Accept: application/json
+
+###
+
+# Update by id
+PUT http://localhost:8080/api/albums/1
+Content-Type: application/json
+
+{
+  "title" : "a",
+  "release" : null,
+  "description" : "desc",
+  "songIds" : null
+}
+
+
+
+

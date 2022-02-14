@@ -1,5 +1,7 @@
 package prog21assignment.service.jpa;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import java.util.Optional;
 @Profile("jpa")
 @Service
 public class AlbumServiceImpl implements QueenEntityService<Album> {
+    private final Logger log = LoggerFactory.getLogger(getClass());
     private final QueenEntityRepository<Album> repository;
 
     @Autowired
@@ -30,22 +33,24 @@ public class AlbumServiceImpl implements QueenEntityService<Album> {
     @Override
     public List<Album> read() {
         List<Album> albums = repository.read();
-
-        if (albums.isEmpty()) {
-            throw new NoContentException();
-        }
-
+        if (albums.isEmpty()) throw new NoContentException();
         return albums;
+    }
+
+    @Override
+    public void update(Album album) {
+        repository.create(album);
+    }
+
+    @Override
+    public void delete(int id) {
+        repository.delete(findById(id));
     }
 
     @Override
     public Album findById(int id) {
         Optional<Album> album = repository.findById(id);
-
-        if (album.isEmpty()) {
-            throw new EntityNotFoundException("Album with id " + id + " doesn't exist");
-        }
-
+        if (album.isEmpty()) throw new EntityNotFoundException("Unable to find album with id " + id);
         return album.get();
     }
 }

@@ -35,6 +35,11 @@ public class AlbumRepository implements QueenEntityRepository<Album> {
     }
 
     @Override
+    public void delete(Album a) {
+        manager.remove(manager.contains(a) ? a : manager.merge(a));
+    }
+
+    @Override
     public Optional<Album> findById(int id) {
         return Optional.ofNullable(manager.find(Album.class, id));
     }

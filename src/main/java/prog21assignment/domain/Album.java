@@ -19,8 +19,10 @@ public class Album extends QueenEntity {
     @Column(nullable = false)
     private LocalDate release;
 
-    @OneToMany(mappedBy = "album", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "album", cascade = {CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.EAGER)
     private final List<Song> songs = new ArrayList<>();
+
+    protected Album() { }
 
     public Album(String title, LocalDate release) {
         this.title = title;
@@ -32,9 +34,7 @@ public class Album extends QueenEntity {
         this.description = description;
     }
 
-    protected Album() { }
-
-    public void addSong(Song... s) {
+    public void addSong(Song s) {
         songs.addAll(List.of(s));
     }
 
@@ -56,6 +56,14 @@ public class Album extends QueenEntity {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setRelease(LocalDate release) {
+        this.release = release;
     }
 
     public String getGenresAsString() {
@@ -91,4 +99,10 @@ public class Album extends QueenEntity {
         return title.replace(" ", "").toLowerCase();
     }
 
+//    public static Album fromDto(AlbumDTO dto) {
+//        Album a = new Album(dto.getTitle(), dto.getParsedRelease(), dto.getDescription());
+//
+//
+//        return a;
+//    }
 }

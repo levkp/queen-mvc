@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:lang="${lang}">
 <head>
     <th:block th:include="~{fragments/base_header :: base_header (page_title=#{title.albums})}"> </th:block>
+    <script defer th:src="@{/js/albums.js}"></script>
 </head>
 <body>
     <div class="container">
@@ -39,12 +40,10 @@
 <!--                                        <i class="bi bi-pencil"></i>-->
 <!--                                    </button>-->
 <!--                                </a>-->
-<!--                                <a th:href="'/albums/' + ${album.id} + '/delete'">-->
-<!--                                    <button type="button" class="btn btn-danger delete-button">-->
-<!--                                        <span th:text="#{label.delete}"></span>-->
-<!--                                        <i class="bi bi-trash"></i>-->
-<!--                                    </button>-->
-<!--                                </a>-->
+                                    <button type="button" class="btn btn-danger delete-button">
+                                        <span th:text="#{label.delete}"></span>
+                                        <i class="bi bi-trash"></i>
+                                    </button>
                             </div>
                         </td>
                     </tr>

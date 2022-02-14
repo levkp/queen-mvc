@@ -20,10 +20,12 @@ public class AlbumDTO {
     @Size(max = 5000, message = "Description can't be longer 5000 characters")
     private String description;
 
+    // Todo
     @NotNull(message = "Release date is mandatory")
     @NotBlank(message = "Release date is mandatory")
     private String release;
 
+    @NotNull(message = "Song ids must not be null")
     private List<Integer> songIds = new ArrayList<>();
 
     private final Logger log = LoggerFactory.getLogger(getClass());
