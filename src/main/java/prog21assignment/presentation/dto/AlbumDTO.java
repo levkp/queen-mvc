@@ -12,7 +12,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings("unused")
 public class AlbumDTO {
     @NotNull(message = "Title is mandatory")
     @Size(min = 4, max = 30, message = "Title should have a length between 4 and 30")
@@ -74,8 +73,7 @@ public class AlbumDTO {
     }
 
     public static AlbumDTO fromAlbum(Album a) {
-        List<Integer> songIds = a.getSongs().stream()
-            .map(QueenEntity::getId).toList();
+        List<Integer> songIds = a.getSongs().stream().map(QueenEntity::getId).toList();
         return new AlbumDTO(a.getTitle(), a.getDescription(), a.getRelease().toString(), songIds);
     }
 }

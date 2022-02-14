@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 @Configuration
 public class HyperSQLConfig {
     private final Environment env;
-    private final Logger log = LoggerFactory.getLogger(HyperSQLConfig.class);
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     public HyperSQLConfig(Environment env) {
@@ -26,8 +26,7 @@ public class HyperSQLConfig {
     public DataSource source() {
         log.debug("Establishing connection to HyperSQL database");
 
-        return DataSourceBuilder
-                .create()
+        return DataSourceBuilder.create()
                 .driverClassName(env.getProperty("spring.datasource.driver-class-name"))
                 .url(env.getProperty("spring.datasource.url"))
                 .username(env.getProperty("spring.datasource.username"))

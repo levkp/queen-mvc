@@ -1,10 +1,14 @@
 package prog21assignment.presentation.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import prog21assignment.domain.Album;
 import prog21assignment.exceptions.EntityNotFoundException;
+import prog21assignment.exceptions.NoContentException;
 import prog21assignment.presentation.dto.AlbumDTO;
 import prog21assignment.service.QueenEntityService;
 
@@ -14,21 +18,21 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/albums")
 public class AlbumRestController {
+    private final Logger log = LoggerFactory.getLogger(getClass());
     private final QueenEntityService<Album> service;
 
+    @Autowired
     public AlbumRestController(QueenEntityService<Album> service) {
         this.service = service;
     }
 
-
     @GetMapping
     public ResponseEntity<List<AlbumDTO>> getAll() {
-        List<AlbumDTO> dtos = service
+        return ResponseEntity.ok(service
                 .read()
                 .stream()
                 .map(AlbumDTO::fromAlbum)
-                .toList();
-        return ResponseEntity.ok(dtos);
+                .toList());
     }
 
     @GetMapping("{id}")
@@ -37,7 +41,12 @@ public class AlbumRestController {
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<String> handleEntityNotFoundException(HttpServletRequest request, EntityNotFoundException e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    public ResponseEntity<Void> handleEntityNotFoundException(HttpServletRequest request, EntityNotFoundException e) {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(NoContentException.class)
+    public ResponseEntity<Void> handleNoContentException(HttpServletRequest request, NoContentException e) {
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

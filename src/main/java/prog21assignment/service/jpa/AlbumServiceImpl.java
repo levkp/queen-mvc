@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import prog21assignment.domain.Album;
 import prog21assignment.exceptions.EntityNotFoundException;
+import prog21assignment.exceptions.NoContentException;
 import prog21assignment.repository.QueenEntityRepository;
 import prog21assignment.service.QueenEntityService;
 
@@ -28,7 +29,13 @@ public class AlbumServiceImpl implements QueenEntityService<Album> {
 
     @Override
     public List<Album> read() {
-        return repository.read();
+        List<Album> albums = repository.read();
+
+        if (albums.isEmpty()) {
+            throw new NoContentException();
+        }
+
+        return albums;
     }
 
     @Override

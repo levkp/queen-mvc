@@ -7,11 +7,5 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class QueenApplication {
     public static void main(String[] args) {
         SpringApplication.run(QueenApplication.class, args);
-        /*
-        ConfigurableApplicationContext context =
-        ConsoleAppView v = context.getBean(ConsoleAppView.class);
-        v.showMenu();
-        context.close();
-        */
     }
 }

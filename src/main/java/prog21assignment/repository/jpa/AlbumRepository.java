@@ -17,7 +17,7 @@ import java.util.Optional;
 @Repository
 @Transactional
 public class AlbumRepository implements QueenEntityRepository<Album> {
-    private static final Logger log = LoggerFactory.getLogger(AlbumRepository.class);
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     @PersistenceContext
     private EntityManager manager;

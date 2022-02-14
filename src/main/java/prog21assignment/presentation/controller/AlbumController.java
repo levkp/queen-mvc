@@ -7,20 +7,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import prog21assignment.domain.Album;
 import prog21assignment.domain.Song;
-import prog21assignment.exceptions.DatabaseException;
 import prog21assignment.presentation.dto.AlbumDTO;
 import prog21assignment.service.QueenEntityService;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
 @Controller
 @RequestMapping("/albums")
-public class AlbumController {
+public class  AlbumController {
     private final QueenEntityService<Album> albumService;
     private final QueenEntityService<Song> songService;
     private final Logger log = LoggerFactory.getLogger(getClass());
@@ -84,16 +81,16 @@ public class AlbumController {
         return "album_detailed";
     }
 
-    @ExceptionHandler(DatabaseException.class)
-    public ModelAndView handleDatabaseException(HttpServletRequest request, DatabaseException de) {
-        log.error(de.getMessage() + ", id: " + de.getId());
-
-        ModelAndView mav = new ModelAndView();
-        mav.addObject("exception", de);
-        mav.setViewName("error_database");
-
-        return mav;
-    }
+//    @ExceptionHandler(DatabaseException.class)
+//    public ModelAndView handleDatabaseException(HttpServletRequest request, DatabaseException de) {
+//        log.error(de.getMessage() + ", id: " + de.getId());
+//
+//        ModelAndView mav = new ModelAndView();
+//        mav.addObject("exception", de);
+//        mav.setViewName("error_database");
+//
+//        return mav;
+//    }
 
 //    @GetMapping("/{id}/delete")
 //    public String delete(Model m, @PathVariable int id) {
