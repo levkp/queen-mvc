@@ -4,15 +4,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import prog21assignment.domain.Album;
 import prog21assignment.domain.QueenEntity;
+import prog21assignment.exceptions.InvalidDtoException;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AlbumDTO {
+    // Todo
+    private int id = -1;
+
     @NotNull(message = "Title is mandatory")
     @Size(min = 4, max = 30, message = "Title should have a length between 4 and 30")
     public String title;
@@ -39,6 +44,19 @@ public class AlbumDTO {
         this.description = description;
         this.release = release;
         this.songIds = songIds;
+    }
+
+    public AlbumDTO(int id, String title, String description, String release, List<Integer> songIds) {
+        this(title, description, release, songIds);
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -71,11 +89,16 @@ public class AlbumDTO {
 
     public LocalDate getParsedRelease() {
         log.debug(String.format("Parsing %s to LocalDate", release));
-        return LocalDate.parse(release);
+
+        try {
+            return LocalDate.parse(release);
+        } catch (DateTimeException e) {
+            throw new InvalidDtoException(e.getMessage());
+        }
     }
 
     public static AlbumDTO fromAlbum(Album a) {
         List<Integer> songIds = a.getSongs().stream().map(QueenEntity::getId).toList();
-        return new AlbumDTO(a.getTitle(), a.getDescription(), a.getRelease().toString(), songIds);
+        return new AlbumDTO(a.getId(), a.getTitle(), a.getDescription(), a.getRelease().toString(), songIds);
     }
 }

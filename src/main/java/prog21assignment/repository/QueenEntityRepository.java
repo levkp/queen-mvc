@@ -10,6 +10,10 @@ public interface QueenEntityRepository<T extends QueenEntity> {
     List<T> read();
     Optional<T> findById(int id);
 
+    default T update(T t) {
+        return t;
+    }
+
     default void delete(T t) {
 
     }

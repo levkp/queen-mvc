@@ -58,13 +58,26 @@ one-to many relationship between Album and Song.
 
 ### To retrieve all albums
 
+#### Request
 ```http request
 GET http://localhost:8080/api/albums HTTP/1.1
 Accept: application/json
 ```
 
+#### Response
 
 
+### To retrieve an album by its id
+
+```http request
+GET http://localhost:8080/api/albums/6 HTTP/1.1
+Accept: application/json
+```
+
+### To delete an album by its id
+```http request
+DELETE http://localhost:8080/api/albums/12 HTTP/1.1
+```
 
 
 

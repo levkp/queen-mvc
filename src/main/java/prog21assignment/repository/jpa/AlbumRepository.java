@@ -35,6 +35,12 @@ public class AlbumRepository implements QueenEntityRepository<Album> {
     }
 
     @Override
+    public Album update(Album a) {
+        manager.persist(manager.contains(a) ? a : manager.merge(a));
+        return a;
+    }
+
+    @Override
     public void delete(Album a) {
         manager.remove(manager.contains(a) ? a : manager.merge(a));
     }

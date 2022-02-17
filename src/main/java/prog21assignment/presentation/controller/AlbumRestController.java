@@ -16,6 +16,7 @@ import prog21assignment.presentation.dto.AlbumDTO;
 import prog21assignment.service.QueenEntityService;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -68,6 +69,27 @@ public class AlbumRestController {
 
         albumService.update(a);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<AlbumDTO> create(@RequestBody @Valid AlbumDTO dto, BindingResult br) {
+        if (br.hasErrors()) throw new InvalidDtoException(br);
+
+        Album a = new Album(dto.getTitle(), dto.getParsedRelease(), dto.getDescription());
+        List<Song> songs = new ArrayList<>();
+
+        dto.getSongIds().forEach(songId -> {
+            Song s = songService.findById(songId);
+            songs.add(s);
+            s.setAlbum(a);
+            a.addSong(s);
+        });
+
+        albumService.create(a);
+        songs.forEach(songService::update);
+
+        dto.setId(a.getId());
+        return ResponseEntity.ok(dto);
     }
 
     @ExceptionHandler(EntityNotFoundException.class)

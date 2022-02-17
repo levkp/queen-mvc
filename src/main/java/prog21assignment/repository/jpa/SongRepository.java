@@ -36,6 +36,12 @@ public class SongRepository implements QueenEntityRepository<Song> {
     }
 
     @Override
+    public Song update(Song s) {
+        manager.persist(manager.contains(s) ? s : manager.merge(s));
+        return s;
+    }
+
+    @Override
     public Optional<Song> findById(int id) {
         return Optional.ofNullable(manager.find(Song.class, id));
     }

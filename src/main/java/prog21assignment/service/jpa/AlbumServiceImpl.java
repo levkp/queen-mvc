@@ -38,8 +38,8 @@ public class AlbumServiceImpl implements QueenEntityService<Album> {
     }
 
     @Override
-    public void update(Album album) {
-        repository.create(album);
+    public Album update(Album a) {
+        return repository.update(a);
     }
 
     @Override

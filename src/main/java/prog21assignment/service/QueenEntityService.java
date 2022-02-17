@@ -8,8 +8,8 @@ public interface QueenEntityService<T extends QueenEntity> {
     T create(T t);
     List<T> read();
 
-    default void update(T t) {
-
+    default T update(T t) {
+        return t;
     }
 
     default void delete(int id) {
