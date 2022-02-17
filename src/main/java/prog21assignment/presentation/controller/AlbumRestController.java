@@ -15,7 +15,6 @@ import prog21assignment.exceptions.NoContentException;
 import prog21assignment.presentation.dto.AlbumDTO;
 import prog21assignment.service.QueenEntityService;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -72,17 +71,17 @@ public class AlbumRestController {
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<String> handleEntityNotFoundException(HttpServletRequest request, EntityNotFoundException e) {
+    public ResponseEntity<String> handleEntityNotFoundException(EntityNotFoundException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 
     @ExceptionHandler(NoContentException.class)
-    public ResponseEntity<String> handleNoContentException(HttpServletRequest request, NoContentException e) {
+    public ResponseEntity<String> handleNoContentException(NoContentException e) {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(e.getMessage());
     }
 
     @ExceptionHandler(InvalidDtoException.class)
-    public ResponseEntity<List<String>> handleInvalidDtoException(HttpServletRequest request, InvalidDtoException e) {
+    public ResponseEntity<List<String>> handleInvalidDtoException(InvalidDtoException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessages());
     }
 }

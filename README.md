@@ -1,11 +1,37 @@
-## Programming 2.3 Assignment: Queen App
+# Programming 2.3 project: Queen App
 
-### Student
+## Student
 Levente Katai-Pal
+
 levente.katai-pal@student.kdg.be
 
+## Run information
 
-### Domain
+I use OpenJDK 17 for development.
+
+The application works with 2 kinds of Spring profiles:
+
+### Data sources
+
+`prod` makes use of the PostgreSQL database running on localhost
+
+`dev` makes use of the embedded HyperSQL database
+
+`dev2` makes use of Java collections
+
+### Method of CRUD operations
+
+`jpa` uses the Jakarta Persistence API
+
+**`jpa_rep` and `jdbc` are not present in this implementation.**
+
+For example, to use HyperSQL with JPA, this line needs to be set in the application.properties file:
+
+`spring.profiles.active=prod,jpa`
+
+If `dev2` is active, there is obviously no need to set a second profile.
+
+## Domain
 The project's entities are based on the early years of the rock band Queen.
 
 | Album       | Song              | Concert       |
@@ -23,27 +49,26 @@ A song has several genres. Genre is an enumeration.
 A concert's playlist consists of multiple songs, and a song can be played 
 on several concerts.
 
-### JDK version used
-OpenJDK 17
+**Concert** was removed from the project for Programming 2.3 to make the relationships a bit easier to work with.
+So, now there is a many-to-many relationship between Song and Genre (if it makes sense to say that about an enum) and a
+one-to many relationship between Album and Song.
 
-### Extra information
 
-The application is using two kinds of Spring profiles:
+## Assignment for week 1
 
-#### Data sources
+### To retrieve all albums
 
-`prod` makes use of the PostgreSQL database running on localhost
+```http request
+GET http://localhost:8080/api/albums HTTP/1.1
+Accept: application/json
+```
 
-`dev` makes use of the embedded HyperSQL database
 
-`dev2` makes use of Java collections
 
-#### Method of CRUD operations
 
-`jpa` uses the Jakarta Persistence API 
 
-`jpa_rep` uses JPA's `JpaRepository` interface
 
-`jdbc` would use JDBC templates, but well, it's not implemented
 
-If `dev2` is active, there is obviously no need to set a second profile
+
+
+
