@@ -37,7 +37,7 @@ public class SongServiceImpl implements QueenEntityService<Song> {
         Optional<Song> song = repository.findById(id);
 
         if (song.isEmpty()) {
-            throw new EntityNotFoundException();
+            throw new EntityNotFoundException("Unable to find song with id " + id);
         }
 
         return song.get();

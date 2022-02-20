@@ -6,10 +6,7 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 @SuppressWarnings("unused")
-public class SongDTO {
-    @NotNull(message = "Title is mandatory")
-    @Size(min = 4, max = 30, message = "Title should have a length between 4 and 30")
-    public String title;
+public class SongDTO extends QueenEntityDto {
 
     @Size(max = 5000, message = "Description can't be longer 5000 characters")
     private String description;
@@ -26,14 +23,6 @@ public class SongDTO {
     @NotNull(message = "Song should have at least 1 genre")
     @Size(min = 1, message = "Song should have at least 1 genre")
     public List<Integer> genreOrdinals;
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
     public double getLength() {
         return length;

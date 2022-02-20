@@ -49,39 +49,57 @@ A song has several genres. Genre is an enumeration.
 A concert's playlist consists of multiple songs, and a song can be played 
 on several concerts.
 
-**Concert** was removed from the project for Programming 2.3 to make the relationships a bit easier to work with.
+Concert was removed from the project for Programming 2.3 to make the relationships a bit easier to work with.
 So, now there is a many-to-many relationship between Song and Genre (if it makes sense to say that about an enum) and a
 one-to many relationship between Album and Song.
 
+## Assignments for week 1
 
-## Assignment for week 1
-
-### To retrieve all albums
-
-#### Request
+### Request to retrieve all albums
 ```http request
 GET http://localhost:8080/api/albums HTTP/1.1
 Accept: application/json
 ```
 
-#### Response
-
-
-### To retrieve an album by its id
-
+### Request to retrieve an album by its id
 ```http request
 GET http://localhost:8080/api/albums/6 HTTP/1.1
 Accept: application/json
 ```
 
-### To delete an album by its id
+### Request to delete an album by its id
 ```http request
 DELETE http://localhost:8080/api/albums/12 HTTP/1.1
 ```
 
+### Example responses
 
+#### Requesting an existing album - OK
+```http request
+HTTP/1.1 200 
+Content-Type: application/json
 
+{
+  "id": 6,
+  "title": "Queen II",
+  "description": null,
+  "release": "1974-03-08",
+  "songIds": [7, 8, 9, 10, 11]
+}
+```
 
+#### Requesting or deleting a non-existing album - NOT FOUND
+```http request
+HTTP/1.1 404 
+Content-Type: application/json
 
+Unable to find album with id 1123
+```
 
+#### Requesting all albums but there are none - NO CONTENT
+```http request
+HTTP/1.1 204 
 
+<Response body is empty>
+```
+## Assignments for week 2

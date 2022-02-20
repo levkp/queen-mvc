@@ -14,20 +14,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AlbumDTO {
-    // Todo
-    private int id = -1;
-
-    @NotNull(message = "Title is mandatory")
-    @Size(min = 4, max = 30, message = "Title should have a length between 4 and 30")
-    public String title;
-
+public class AlbumDTO extends QueenEntityDto {
     @Size(max = 5000, message = "Description can't be longer 5000 characters")
     private String description;
 
     // Todo
-    @NotNull(message = "Release date is mandatory")
-    @NotBlank(message = "Release date is mandatory")
+    @NotNull(message = "Release date must not be null")
+    @NotBlank(message = "Release date must not be blank")
     private String release;
 
     @NotNull(message = "Song ids must not be null")
@@ -51,18 +44,6 @@ public class AlbumDTO {
         this.id = id;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -75,10 +56,6 @@ public class AlbumDTO {
         return songIds;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public void setRelease(String release) {
         this.release = release;
     }
@@ -87,6 +64,7 @@ public class AlbumDTO {
         this.songIds = songIds;
     }
 
+    // Todo: why does parsed release get included in response bodies?!
     public LocalDate getParsedRelease() {
         log.debug(String.format("Parsing %s to LocalDate", release));
 

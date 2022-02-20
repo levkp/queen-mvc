@@ -1,3 +1,5 @@
+# WEEK 1 TESTS
+
 # Get all albums
 GET http://localhost:8080/api/albums HTTP/1.1
 Accept: application/json
@@ -11,15 +13,22 @@ Accept: application/json
 ###
 
 # Delete an album by id
-DELETE http://localhost:8080/api/albums/12 HTTP/1.1
+DELETE http://localhost:8080/api/albums/112 HTTP/1.1
 
 ###
 
-# 404 test
+# 404 test (id not found)
 GET http://localhost:8080/api/albums/1123 HTTP/1.1
 Accept: application/json
 
 ###
+
+# Todo: receives 500 instead
+# 404 test (route not found)
+GET http://localhost:8080/api/albums/foo
+Accept: application/json
+
+# WEEK 2 TESTS
 
 # Update by id
 PUT http://localhost:8080/api/albums/1
@@ -29,7 +38,7 @@ Content-Type: application/json
   "title" : "Levi's Renamed Album",
   "release" : "2000-02-16",
   "description" : "Not null desc",
-  "songIds" : [2, 7]
+  "songIds" : [2, 45]
 }
 
 ###
@@ -40,9 +49,9 @@ Content-Type: application/json
 
 {
   "title" : "Levi's New Test Album",
-  "release" : "2000-02-16",
+  "release" : null,
   "description" : "Not null desc",
   "songIds" : [
-    2, 7
+    2, 4
   ]
 }

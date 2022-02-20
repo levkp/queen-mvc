@@ -61,13 +61,17 @@ public class AlbumRestController {
         a.setRelease(dto.getParsedRelease());
         a.setDescription(dto.getDescription());
 
+        List<Song> songs = new ArrayList<>();
+
         dto.getSongIds().forEach(songId -> {
             Song s = songService.findById(songId);
+            songs.add(s);
             s.setAlbum(a);
             a.addSong(s);
         });
 
         albumService.update(a);
+        songs.forEach(songService::update);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -76,6 +80,7 @@ public class AlbumRestController {
         if (br.hasErrors()) throw new InvalidDtoException(br);
 
         Album a = new Album(dto.getTitle(), dto.getParsedRelease(), dto.getDescription());
+
         List<Song> songs = new ArrayList<>();
 
         dto.getSongIds().forEach(songId -> {
