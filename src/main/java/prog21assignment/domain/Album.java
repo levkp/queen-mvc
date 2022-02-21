@@ -1,5 +1,8 @@
 package prog21assignment.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -10,15 +13,19 @@ import java.util.StringJoiner;
 @Entity
 @Table
 public class Album extends QueenEntity {
+    @Getter @Setter
     @Column(length = 30, nullable = false, unique = true)
     private String title;
 
+    @Getter @Setter
     @Column(length = 5000)
     private String description;
 
+    @Getter @Setter
     @Column(nullable = false)
     private LocalDate release;
 
+    @Getter
     @OneToMany(mappedBy = "album", cascade = {CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.EAGER)
     private final List<Song> songs = new ArrayList<>();
 
@@ -38,37 +45,9 @@ public class Album extends QueenEntity {
         songs.addAll(List.of(s));
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public LocalDate getRelease() {
-        return release;
-    }
-
-    public List<Song> getSongs() {
-        return songs;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setRelease(LocalDate release) {
-        this.release = release;
-    }
-
     public String getGenresAsString() {
         HashSet<Genre> genres = new HashSet<>();
-//        songs.forEach(s -> genres.addAll(s.getGenres()));
+        songs.forEach(s -> genres.addAll(s.getGenres()));
 
         StringJoiner sj = new StringJoiner(", ");
         genres.forEach(g -> sj.add(g.readable()));
@@ -99,10 +78,4 @@ public class Album extends QueenEntity {
         return title.replace(" ", "").toLowerCase();
     }
 
-//    public static Album fromDto(AlbumDTO dto) {
-//        Album a = new Album(dto.getTitle(), dto.getParsedRelease(), dto.getDescription());
-//
-//
-//        return a;
-//    }
 }

@@ -117,9 +117,11 @@
                                 </div>
 
                                 <div id="song-list">
-                                    <div class="form-check" th:each="song : ${songs}" id="song-select">
-                                        <input type="checkbox" class="form-check-input"
-                                               th:value="${song.id}" th:id="'song-' + ${song.id}" name="song-ids">
+                                    <div class="form-check" id="song-select"
+                                         th:each="song : ${songs}">
+                                        <input type="checkbox" class="form-check-input" name="song-ids"
+                                               th:value="${song.id}" th:id="'song-' + ${song.id}">
+
                                         <label class="form-check-label mb-1"
                                                th:text="${song.title}" th:for="'song-' + ${song.id}">
                                         </label>

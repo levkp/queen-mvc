@@ -1,4 +1,4 @@
-// Deletion
+// Delete
 const deleteButtons = document.getElementsByClassName("q-delete");
 
 for (let button of deleteButtons) {
@@ -26,7 +26,7 @@ async function deleteAlbum(event) {
     }
 }
 
-// Creation
+// Create
 const addNewAlbumButton = document.getElementById("add-album");
 const newAlbumModal = document.getElementById("new-album-modal");
 const cancelNewAlbumModal = document.getElementsByClassName("q-cancel-modal")[0];
@@ -82,7 +82,7 @@ function submitNewAlbum() {
     hideNewAlbumModal();
 }
 
-// Editing
+// Update
 const editButtons = document.getElementsByClassName("q-edit");
 const editAlbumModal = document.getElementById("edit-album-modal");
 

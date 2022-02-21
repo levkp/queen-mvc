@@ -48,8 +48,7 @@ public class AlbumServiceImpl implements QueenEntityService<Album> {
 
     @Override
     public Album findById(int id) {
-        return repository
-                .findById(id)
+        return repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Unable to find album with id " + id));
     }
 }

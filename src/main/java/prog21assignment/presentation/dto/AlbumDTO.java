@@ -1,5 +1,7 @@
 package prog21assignment.presentation.dto;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import prog21assignment.domain.Album;
@@ -15,14 +17,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AlbumDTO extends QueenEntityDto {
+    @Getter
     @Size(max = 5000, message = "Description can't be longer 5000 characters")
     private String description;
 
     // Todo
+    @Getter @Setter
     @NotNull(message = "Release date must not be null")
     @NotBlank(message = "Release date must not be blank")
     private String release;
 
+    @Getter @Setter
     @NotNull(message = "Song ids must not be null")
     private List<Integer> songIds = new ArrayList<>();
 
@@ -44,25 +49,6 @@ public class AlbumDTO extends QueenEntityDto {
         this.id = id;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public String getRelease() {
-        return release;
-    }
-
-    public List<Integer> getSongIds() {
-        return songIds;
-    }
-
-    public void setRelease(String release) {
-        this.release = release;
-    }
-
-    public void setSongIds(List<Integer> songIds) {
-        this.songIds = songIds;
-    }
 
     // Todo: why does parsed release get included in response bodies?!
     public LocalDate getParsedRelease() {

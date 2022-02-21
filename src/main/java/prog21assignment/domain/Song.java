@@ -1,5 +1,7 @@
 package prog21assignment.domain;
 
+import lombok.Getter;
+import lombok.Setter;
 import prog21assignment.util.YearMonthDateAttributeConverter;
 
 import javax.persistence.*;
@@ -10,26 +12,31 @@ import java.util.stream.Collectors;
 @Entity
 @Table(name = "song")
 public class Song extends QueenEntity {
+    @Getter @Setter
     @Column(length = 30, nullable = false, unique = true)
     private String title;
 
     // Todo: this really should be duration
+    @Getter @Setter
     @Column(nullable = false)
     private double length;
 
+    @Getter
     private transient Set<Genre> genres = new HashSet<>();
 
+    @Getter
     @Access(value = AccessType.PROPERTY)
     @ElementCollection(targetClass = Integer.class)
     @JoinTable(name = "song_genre", joinColumns = @JoinColumn(name = "id"))
     private List<Integer> genreOrdinals = new ArrayList<>();
 
+    @Getter
     @Column(name = "finished_recording", nullable = false)
     @Convert(converter = YearMonthDateAttributeConverter.class)
     private YearMonth finishedRecording;
 
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    @JoinColumn(name = "album_id")
+    @Getter @Setter
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER) @JoinColumn(name = "album_id")
     private Album album;
 
     public Song(String title, double length, Set<Genre> genres, YearMonth finishedRecording, Album album) {
@@ -42,34 +49,6 @@ public class Song extends QueenEntity {
 
     protected Song() { }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public double getLength() {
-        return length;
-    }
-
-    public Set<Genre> getGenres() {
-        return genres;
-    }
-
-    public YearMonth getFinishedRecording() {
-        return finishedRecording;
-    }
-
-    public Album getAlbum() {
-            return album;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setLength(double length) {
-        this.length = length;
-    }
-
     public void setGenres(Set<Genre> genres) {
         this.genres = genres;
         genres.forEach(g -> genreOrdinals.add(g.ordinal()));
@@ -80,14 +59,6 @@ public class Song extends QueenEntity {
         this.genres = genreOrdinals.stream()
                 .map(o -> Genre.values()[o])
                 .collect(Collectors.toSet());
-    }
-
-    public List<Integer> getGenreOrdinals() {
-        return genreOrdinals;
-    }
-
-    public void setAlbum(Album album) {
-        this.album = album;
     }
 
     public String genresToString() {
