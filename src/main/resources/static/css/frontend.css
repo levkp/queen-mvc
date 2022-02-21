@@ -2,11 +2,7 @@
     height: 35%;
 }
 
-.q-submit-button {
-    width: 50% !important;
-}
-
-.q-add {
+.q-add-new-btn {
     width: 25% !important;
 }
 
@@ -23,10 +19,10 @@
 
 .q-modal-content {
     background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
+    margin: 15% auto;
     padding: 20px;
     border: 1px solid black;
-    width: 60%; /* Could be more or less, depending on screen size */
+    width: 60%;
 
     /*margin: 20% auto;*/
     /*width: 50%;*/
@@ -44,5 +40,3 @@
 #song-list {
     display: none;
 }
-
-

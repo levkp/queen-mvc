@@ -11,20 +11,20 @@ import org.springframework.core.env.Environment;
 
 import javax.sql.DataSource;
 
-@Profile("dev")
+@Profile({"prod", "dev"})
 @Configuration
-public class HyperSQLConfig {
+public class DataSourceConfig {
     private final Environment env;
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    public HyperSQLConfig(Environment env) {
+    public DataSourceConfig(Environment env) {
         this.env = env;
     }
 
     @Bean
     public DataSource source() {
-        log.debug("Establishing connection to HyperSQL database");
+        log.debug("Establishing connection to " + env.getProperty("spring.datasource.driver-class-name"));
 
         return DataSourceBuilder.create()
                 .driverClassName(env.getProperty("spring.datasource.driver-class-name"))
