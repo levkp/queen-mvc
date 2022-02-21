@@ -1,7 +1,5 @@
 package prog21assignment.repository.collections;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import prog21assignment.domain.Album;
@@ -15,7 +13,6 @@ import java.util.Optional;
 @Repository
 public class AlbumRepository implements QueenEntityRepository<Album> {
     static List<Album> albums = new ArrayList<>();
-    private static final Logger log = LoggerFactory.getLogger(AlbumRepository.class);
 
     /*
     static {
@@ -42,6 +39,11 @@ public class AlbumRepository implements QueenEntityRepository<Album> {
     @Override
     public List<Album> read() {
         return albums;
+    }
+
+    @Override
+    public void delete(Album a) {
+        albums.remove(a);
     }
 
     @Override

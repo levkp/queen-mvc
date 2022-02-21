@@ -12,7 +12,6 @@ import prog21assignment.repository.QueenEntityRepository;
 import prog21assignment.service.QueenEntityService;
 
 import java.util.List;
-import java.util.Optional;
 
 @Profile("jpa")
 @Service
@@ -49,8 +48,8 @@ public class AlbumServiceImpl implements QueenEntityService<Album> {
 
     @Override
     public Album findById(int id) {
-        Optional<Album> album = repository.findById(id);
-        if (album.isEmpty()) throw new EntityNotFoundException("Unable to find album with id " + id);
-        return album.get();
+        return repository
+                .findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Unable to find album with id " + id));
     }
 }

@@ -1,4 +1,4 @@
-package prog21assignment.presentation.controller;
+package prog21assignment.presentation.api;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,8 +27,8 @@ public class AlbumRestController {
     private final QueenEntityService<Song> songService;
 
     @Autowired
-    public AlbumRestController(QueenEntityService<Album> service, QueenEntityService<Song> songService) {
-        this.albumService = service;
+    public AlbumRestController(QueenEntityService<Album> albumService, QueenEntityService<Song> songService) {
+        this.albumService = albumService;
         this.songService = songService;
     }
 

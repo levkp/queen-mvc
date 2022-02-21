@@ -1,4 +1,4 @@
-package prog21assignment.presentation.controller;
+package prog21assignment.presentation.mvc;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,8 +29,10 @@ public class  AlbumController {
     }
 
     @GetMapping
-    public String showAlbums(Model m) {
+    public String showAll(Model m) {
         m.addAttribute("albums", albumService.read());
+        m.addAttribute("songs", songService.read());
+        m.addAttribute("newAlbum", new AlbumDTO());
         return "albums";
     }
 
@@ -88,14 +90,6 @@ public class  AlbumController {
 //        mav.setViewName("error_database");
 //
 //        return mav;
-//    }
-
-//    @GetMapping("/{id}/delete")
-//    public String delete(Model m, @PathVariable int id) {
-//        Album a = albumService.findById(id);
-//        albumService.delete(a);
-//
-//        return "redirect:/albums";
 //    }
 
 }

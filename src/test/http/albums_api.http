@@ -28,6 +28,8 @@ Accept: application/json
 GET http://localhost:8080/api/albums/foo
 Accept: application/json
 
+###
+
 # WEEK 2 TESTS
 
 # Update by id
@@ -35,10 +37,10 @@ PUT http://localhost:8080/api/albums/1
 Content-Type: application/json
 
 {
-  "title" : "Levi's Renamed Album",
-  "release" : "2000-02-16",
-  "description" : "Not null desc",
-  "songIds" : [2, 45]
+  "title": "Levi's Renamed Album",
+  "release": "2000-02-16",
+  "description": "Not null desc",
+  "songIds": [2, 45]
 }
 
 ###
@@ -48,10 +50,10 @@ POST http://localhost:8080/api/albums HTTP/1.1
 Content-Type: application/json
 
 {
-  "title" : "Levi's New Test Album",
-  "release" : null,
-  "description" : "Not null desc",
-  "songIds" : [
+  "title": "Levi's New Test Album",
+  "release": null,
+  "description": "Not null desc",
+  "songIds": [
     2, 4
   ]
 }

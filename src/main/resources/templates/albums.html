@@ -3,12 +3,18 @@
 <head>
     <th:block th:include="~{fragments/base_header :: base_header (page_title=#{title.albums})}"> </th:block>
     <script defer th:src="@{/js/albums.js}"></script>
+    <script defer th:src="@{/js/song_select.js}"></script>
 </head>
 <body>
     <div class="container">
         <div class="row">
             <div th:insert="~{fragments/navbar :: navbar}"></div>
         </div>
+
+        <div class="row mb-5">
+            <button type="button" class="q-add btn btn-dark" id="add-album" th:text="#{label.add}"></button>
+        </div>
+
         <div class="row">
             <table class="table table-striped">
                 <thead>
@@ -31,7 +37,6 @@
                                 <a th:href="'/albums/' + ${album.id}">
                                     <button type="button" class="btn btn-warning">
                                         <span th:text="#{label.details}"></span>
-                                        <i class="bi bi-eyeglasses"></i>
                                     </button>
                                 </a>
 
@@ -49,10 +54,87 @@
                 </tbody>
             </table>
         </div>
-        <div class="row mb-5">
-            <a href="/albums/add">
-                <button type="button" class="q-submit-button btn btn-dark" th:text="#{label.add}"></button>
-            </a>
+
+        <div class="q-modal" id="new-album-modal">
+            <div class="q-modal-content">
+                    <div class="col-5">
+                        <h1 class="mb-3"
+                            th:text="#{header.new_album}">
+                        </h1>
+
+                        <form action="#" id="new-album-form" th:object="${newAlbum}" onsubmit="submitNewAlbum()">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="mb-3">
+                                        <label for="title" class="form-label fs-4"
+                                               th:text="#{label.title}">
+                                        </label>
+
+                                        <input type="text" id="title" class="form-control" minlength="4" maxlength="30" required
+                                               th:field="*{title}">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="release" class="form-label fs-4"
+                                               th:text="#{label.release}">
+                                        </label>
+
+                                        <input type="date" id="release" class="form-control" required
+                                               th:field="*{release}">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="description" class="fs-4"
+                                               th:text="#{label.description}">
+                                        </label>
+
+                                        <textarea class="form-control" id="description" rows="3" maxlength="5000"
+                                                  th:field="*{description}">
+                                        </textarea>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <button class="q-cancel-modal btn btn-warning">Cancel</button>
+
+                                        <button class="btn btn-dark" id="add-new-btn"
+                                                th:text="#{label.done}">
+                                            <input type="submit">
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="col">
+                                    <label class="form-label fs-4" for="song-list-btn"
+                                           th:text="#{label.select_songs}">
+                                    </label>
+
+                                    <div>
+                                        <button type="button" class="btn btn-warning mb-2" id="song-list-btn"
+                                                th:text="'Click to see ' + ${songs.size} + ' songs'">
+                                        </button>
+
+                                        <p class="mt-1 text-danger"
+                                           th:if="${songs.size} == 0" th:text="#{label.no_songs_found}">
+                                        </p>
+                                    </div>
+
+                                    <div id="song-list">
+                                        <div class="form-check" th:each="song : ${songs}">
+                                            <input type="checkbox" class="form-check-input"
+                                                   th:value="${song.id}" th:id="'song-id-' + ${song.id}" th:field="*{songIds}">
+                                            <label class="form-check-label mb-1"
+                                                   th:text="${song.title}" th:for="'song-id-' + ${song.id}">
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+<!--                    <div class="col-2">-->
+<!--                        <img th:src="/img/freddy_standing.webp" alt="Freddy standing" class="q-form-pic">-->
+<!--                    </div>-->
+                </div>
+            </div>
         </div>
     </div>
 </body>

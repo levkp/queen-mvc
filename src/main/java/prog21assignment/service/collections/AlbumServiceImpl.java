@@ -9,7 +9,6 @@ import prog21assignment.repository.QueenEntityRepository;
 import prog21assignment.service.QueenEntityService;
 
 import java.util.List;
-import java.util.Optional;
 
 @Profile("dev2")
 @Component
@@ -32,13 +31,14 @@ public class AlbumServiceImpl implements QueenEntityService<Album> {
     }
 
     @Override
+    public void delete(int id) {
+        repository.delete(findById(id));
+    }
+
+    @Override
     public Album findById(int id) {
-        Optional<Album> o = repository.findById(id);
-
-        if(o.isEmpty()) {
-            throw new EntityNotFoundException("Unable to find album with id " + id);
-        }
-
-        return o.get();
+        return repository
+                .findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Unable to find album with id " + id));
     }
 }
