@@ -9,6 +9,8 @@ levente.katai-pal@student.kdg.be
 
 I use OpenJDK 17 for development.
 
+Lombok needs to be enabled.
+
 The application works with 2 kinds of Spring profiles:
 
 ### Data sources
@@ -103,3 +105,47 @@ HTTP/1.1 204
 <Response body is empty>
 ```
 ## Assignments for week 2
+### Creating a new album
+```http request
+POST http://localhost:8080/api/albums HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": A New Album",
+  "release": "1981-03-03",
+  "description": "Some text",
+  "songIds": [
+    1, 4, 5 
+  ]
+}
+```
+
+### Updating an album
+
+### Example responses
+#### Submitting valid data - OK
+
+```http request
+HTTP/1.1 200 
+Content-Type: application/json
+
+{
+  "id": 21,
+  "title": "A New Album",
+  "description": "Some text",
+  "release": "1981-03-03",
+  "songIds": [
+    1, 4, 5
+  ],
+}
+```
+
+#### Mandatory attribute is null - BAD REQUEST
+```http request
+HTTP/1.1 400 
+Content-Type: application/json
+
+[
+  "Title is mandatory"
+]
+```

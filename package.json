@@ -1,27 +1,29 @@
 {
   "name": "prog21-assignment",
   "version": "1.0.0",
-  "description": "## Student Levente Katai-Pal",
+  "description": "A Spring Boot application for Programming 2.3",
   "main": "index.js",
+  "dependencies": {},
   "devDependencies": {
     "css-loader": "^6.4.0",
     "mini-css-extract-plugin": "^2.4.2",
+    "npm-watch": "^0.11.0",
+    "sass": "^1.49.9",
+    "sass-loader": "^12.6.0",
     "source-map-loader": "^3.0.0",
-    "webpack": "^5.58.2",
+    "webpack": "^5.69.1",
     "webpack-cli": "^4.9.0"
   },
   "watch": {},
   "scripts": {
     "build": "webpack",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "scriptest": "echo henlo fren"
   },
   "repository": {
     "type": "git",
     "url": "git@gitlab.com:kdg-ti/programming-2.3/projects-21-22/levente.katai-pal.git"
   },
   "author": "Levente Katai-Pal",
-  "license": "ISC",
-  "dependencies": {
-    "npm-watch": "^0.11.0"
-  }
+  "license": "ISC"
 }

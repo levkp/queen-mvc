@@ -1,9 +1,7 @@
-.q-form-pic {
-    height: 35%;
-}
+$modalBgColor: rgba(0, 0, 0, 20%);
 
-.q-add-new-btn {
-    width: 25% !important;
+.q-topbar-btn {
+    width: 15% !important;
 }
 
 .q-modal {
@@ -14,7 +12,7 @@
     height: 100%;
     left: 0;
     top: 0;
-    background-color: rgba(0,0,0,20%);
+    background-color: $modalBgColor;
 }
 
 .q-modal-content {
@@ -27,14 +25,8 @@
     /*margin: 20% auto;*/
     /*width: 50%;*/
     /*height: 50%;*/
-
     /*padding: 20%;*/
     /*background-color: #fefefe;*/
-
-}
-
-.q-cancel-modal {
-
 }
 
 #song-list {

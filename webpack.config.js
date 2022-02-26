@@ -23,8 +23,19 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.css$/,
-                use: [MiniCssExtractPlugin.loader, {loader: 'css-loader'}]
+                test: /\.s?css$/i,
+                use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+            },
+            {
+                test: /\.(woff|woff2|eot|ttf|otf)$/i,
+                type: "asset",
+                generator: {
+                    filename: '../fonts/[hash][ext][query]'
+                }
+            },
+            {
+                test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                type: "asset",
             },
             {
                 enforce: 'pre',

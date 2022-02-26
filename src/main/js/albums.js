@@ -28,28 +28,21 @@ async function deleteAlbum(event) {
 
 // Create
 const newAlbumForm = document.getElementById("new-album-form");
-
-// newAlbumForm.onsubmit = function () {
-//     console.log("Submitting a new album");
-//     return false;
-// }
-
-newAlbumForm.onsubmit = submitNewAlbum
-
-document.getElementById("add-album").onclick = showNewAlbumModal
-
-const newAlbumModal = document.getElementById("new-album-modal");
-const cancelNewAlbumModal = document.getElementsByClassName("q-cancel-modal")[0];
+const addAlbumButton = document.getElementById("add-album");
+const albumCreatorModal = document.getElementById("new-album-modal");
+const cancelNewAlbumModal = document.getElementById("cancel-new-btn");
 const albumsTable = document.getElementById("albums-table");
 
 cancelNewAlbumModal.onclick = hideNewAlbumModal
+addAlbumButton.onclick = showNewAlbumModal
+newAlbumForm.onsubmit = submitNewAlbum
 
 function showNewAlbumModal() {
-    newAlbumModal.style.display = "block";
+    albumCreatorModal.style.display = "block";
 }
 
 function hideNewAlbumModal() {
-    newAlbumModal.style.display = "none";
+    albumCreatorModal.style.display = "none";
 }
 
 // Todo: urgent: NetworkError???
@@ -81,16 +74,16 @@ function hideNewAlbumModal() {
                  newRow.children[3].innerText = data.songIds.length;
 
                  actionButtons[0].value = data.id;
-                 actionButtons[0].onclick = showReadAlbumModal
+                 actionButtons[0].onclick = showReadAlbumModal;
                  actionButtons[1].value = data.id;
-                 actionButtons[1].onclick = showEditAlbumModal;
+                 actionButtons[1].onclick = showNewAlbumModal;
                  actionButtons[2].value = data.id;
-                 actionButtons[2].onclick = deleteAlbum
+                 actionButtons[2].onclick = deleteAlbum;
 
                  albumsTable.append(newRow);
 
                  console.log(newRow);
-             })
+             });
 
          } else {
              console.log(response.status);
@@ -104,6 +97,8 @@ function hideNewAlbumModal() {
 
 // Update
 const editButtons = document.getElementsByClassName("q-edit");
+
+
 const editAlbumModal = document.getElementById("edit-album-modal");
 
 for (let button of editButtons) {

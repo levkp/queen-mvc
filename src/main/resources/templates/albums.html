@@ -12,7 +12,8 @@
         </div>
 
         <div class="row mb-5">
-            <button type="button" class="q-add-new-btn btn btn-dark" id="add-album" th:text="#{label.add}"></button>
+            <button type="button" class="q-topbar-btn btn btn-dark" id="add-album" th:text="#{label.add}"></button>
+            <button class="q-topbar-btn btn btn-danger">Delete all</button>
         </div>
 
         <div class="row">
@@ -90,7 +91,7 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <button type="button" class="q-cancel-modal btn btn-warning">Cancel</button>
+                                    <button type="button" class="btn btn-warning" id="cancel-new-btn">Cancel</button>
 
                                     <button type="submit" class="btn btn-dark" id="add-new-btn"
                                             th:text="#{label.done}">
@@ -137,8 +138,6 @@
 
         <div class="q-modal" id="edit-album-modal">
             <div class="q-modal-content">
-
-
 
             </div>
         </div>
