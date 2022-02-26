@@ -1,99 +1,56 @@
 package prog21assignment.presentation.api;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import prog21assignment.domain.Album;
-import prog21assignment.domain.Song;
 import prog21assignment.exceptions.EntityNotFoundException;
 import prog21assignment.exceptions.InvalidDtoException;
 import prog21assignment.exceptions.NoContentException;
 import prog21assignment.presentation.dto.AlbumDto;
-import prog21assignment.service.QueenEntityService;
+import prog21assignment.service.QueenEntityDtoService;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/albums")
 public class AlbumRestController {
-    private final Logger log = LoggerFactory.getLogger(getClass());
-    private final QueenEntityService<Album> albumService;
-    private final QueenEntityService<Song> songService;
+    private final QueenEntityDtoService<AlbumDto> service;
 
     @Autowired
-    public AlbumRestController(QueenEntityService<Album> albumService, QueenEntityService<Song> songService) {
-        this.albumService = albumService;
-        this.songService = songService;
+    public AlbumRestController(QueenEntityDtoService<AlbumDto> service) {
+        this.service = service;
     }
 
     @GetMapping
     public ResponseEntity<List<AlbumDto>> readAll() {
-        return ResponseEntity.ok(albumService
-                .read()
-                .stream()
-                .map(AlbumDto::fromAlbum)
-                .toList());
+        return ResponseEntity.ok(service.read());
     }
 
     @GetMapping("{id}")
     public ResponseEntity<AlbumDto> findById(@PathVariable int id) {
-        return ResponseEntity.ok(AlbumDto.fromAlbum(albumService.findById(id)));
+        return ResponseEntity.ok(service.findById(id));
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteById(@PathVariable int id) {
-        albumService.delete(id);
+        service.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("{id}")
     public ResponseEntity<Void> updateById(@PathVariable int id, @RequestBody @Valid AlbumDto dto, BindingResult br) {
         if (br.hasErrors()) throw new InvalidDtoException(br);
-
-        Album a = albumService.findById(id);
-        a.setTitle(dto.getTitle());
-        a.setRelease(dto.getParsedRelease());
-        a.setDescription(dto.getDescription());
-
-        List<Song> songs = new ArrayList<>();
-
-        dto.getSongIds().forEach(songId -> {
-            Song s = songService.findById(songId);
-            songs.add(s);
-            s.setAlbum(a);
-            a.addSong(s);
-        });
-
-        albumService.update(a);
-        songs.forEach(songService::update);
+        service.updateById(id, dto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<AlbumDto> create(@RequestBody @Valid AlbumDto dto, BindingResult br) {
         if (br.hasErrors()) throw new InvalidDtoException(br);
-
-        Album a = new Album(dto.getTitle(), dto.getParsedRelease(), dto.getDescription());
-
-        List<Song> songs = new ArrayList<>();
-
-        dto.getSongIds().forEach(songId -> {
-            Song s = songService.findById(songId);
-            songs.add(s);
-            s.setAlbum(a);
-            a.addSong(s);
-        });
-
-        albumService.create(a);
-        songs.forEach(songService::update);
-
-        dto.setId(a.getId());
+        service.create(dto);
         return ResponseEntity.ok(dto);
     }
 

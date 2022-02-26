@@ -56,32 +56,18 @@ function hideNewAlbumModal() {
  function submitNewAlbum() {
     const fd = new FormData(document.getElementById("new-album-form"));
 
-    console.log("About to submit new album");
-    console.log("FormData keys:");
-    for(let key of fd.keys()) {
-        console.log(key);
-    }
-
-    console.log("FormData values: ");
-    for(let key of fd.values()) {
-        console.log(key)
-    }
-    console.log("Submitting new album");
-
-    // Function must return false to prevent page refresh after the onsubmit event
-
-     fetch('/api/albums', {
-         method: "POST",
-         headers: {
-             "Content-Type": "application/json"
-         },
-         body: JSON.stringify({
-             "title": fd.get("title"),
-             "release": fd.get("release"),
-             "description": fd.get("description"),
-             "songIds": fd.getAll("song-ids")
-         })
-     }).then(response => {
+    fetch('/api/albums', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            "title": fd.get("title"),
+            "release": fd.get("release"),
+            "description": fd.get("description"),
+            "songIds": fd.getAll("song-ids")
+        })
+    }).then(response => {
          if (response.status === 200) {
              response.json().then(data => {
                  let rows = albumsTable.rows;
@@ -111,8 +97,9 @@ function hideNewAlbumModal() {
          }
      })
 
+
      hideNewAlbumModal();
-     return false; // To prevent onsubmit triggering a page refresh
+    return false; // To prevent onsubmit triggering a page refresh
 }
 
 // Update
@@ -173,7 +160,6 @@ function readAlbum(event) {
     } catch (exc) {
         console.error(exc);
     }
-
 
     showReadAlbumModal();
 }

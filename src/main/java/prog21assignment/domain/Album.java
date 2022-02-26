@@ -29,7 +29,7 @@ public class Album extends QueenEntity {
     @OneToMany(mappedBy = "album", cascade = {CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.EAGER)
     private final List<Song> songs = new ArrayList<>();
 
-    protected Album() { }
+    public Album() { }
 
     public Album(String title, LocalDate release) {
         this.title = title;
