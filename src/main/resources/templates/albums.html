@@ -16,7 +16,7 @@
         </div>
 
         <div class="row">
-            <table class="table table-striped">
+            <table class="table table-striped" id="albums-table">
                 <thead>
                 <tr>
                     <th>#</th>
@@ -28,21 +28,18 @@
                 </thead>
                 <tbody>
                     <tr th:each="album, iter : ${albums}" th:id="'album-' + ${album.id}">
-                        <td th:text="${iter.index + 1}">0</td>
+                        <td th:text="${album.id}">0</td>
                         <td th:text="${album.title}"><span th:text="#{label.title}"></span></td>
                         <td th:text="${album.release}">N/A</td>
                         <td th:text="${album.getSongs().size()}">0</td>
                         <td>
                             <div class="btn-group" role="group">
                                 <button type="button" class="q-read btn btn-warning"
-                                    th:value="${album.id}" th:text="#{label.details}">
+                                        th:value="${album.id}" th:text="#{label.details}">
                                 </button>
-<!--                                <a th:href="'/albums/' + ${album.id}">-->
 
-<!--                                </a>-->
-
-                                <button type="button" class="q-edit btn btn-dark">
-                                    <span th:text="#{label.edit}"></span>
+                                <button type="button" class="q-edit btn btn-dark"
+                                        th:value="${album.id}" th:text="#{label.edit}">
                                 </button>
 
                                 <button type="button" class="q-delete btn btn-danger"
@@ -62,7 +59,7 @@
                         th:text="#{header.new_album}">
                     </h1>
 
-                    <form action="#" id="new-album-form" onsubmit="submitNewAlbum()">
+                    <form id="new-album-form" action="#">
                         <div class="row">
                             <div class="col">
                                 <div class="mb-3">
@@ -95,10 +92,13 @@
                                 <div class="mb-3">
                                     <button type="button" class="q-cancel-modal btn btn-warning">Cancel</button>
 
-                                    <button class="btn btn-dark" id="add-new-btn"
+                                    <button type="submit" class="btn btn-dark" id="add-new-btn"
                                             th:text="#{label.done}">
-                                        <input type="submit">
                                     </button>
+
+<!--                                    <button type="submit" class="btn btn-dark" id="add-new-btn"-->
+<!--                                            th:text="#{label.done}">-->
+<!--                                    </button>-->
                                 </div>
                             </div>
 
