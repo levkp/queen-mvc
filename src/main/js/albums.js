@@ -103,4 +103,44 @@ function editAlbum(event) {
 
 }
 
+// Read
+const readButtons = document.getElementsByClassName("q-read");
+const readAlbumModal = document.getElementById("read-album-modal")
 
+for (let button of readButtons) {
+    button.onclick = readAlbum;
+}
+
+function showReadAlbumModal() {
+    readAlbumModal.style.display = "block";
+}
+
+function hideReadAlbumModal() {
+    readAlbumModal.style.display = "none";
+}
+
+function readAlbum(event) {
+    let id = event.target.value;
+
+    console.log("Showing details for album " + id);
+
+    try {
+        fetch(`/api/albums/${id}`, {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        }).then(response => {
+            console.log(response);
+
+            if (response.status === 200) {
+                console.log(response.body)
+            }
+        })
+    } catch (exc) {
+        console.error(exc);
+    }
+
+
+    showReadAlbumModal();
+}

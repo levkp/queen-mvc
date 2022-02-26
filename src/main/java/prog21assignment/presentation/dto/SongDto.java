@@ -8,17 +8,16 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
-public class SongDTO extends QueenEntityDto {
+public class SongDto extends QueenEntityDto {
     @Getter @Setter
-    @Size(max = 5000, message = "Description can't be longer 5000 characters")
+    @Size(max = 5000, message = "Description can't be longer than 5000 characters")
     private String description;
 
     @Getter @Setter
-    @NotNull(message = "Release date is mandatory")
-    @NotBlank(message = "Release date is mandatory")
+    @NotNull(message = "Release date is mandatory") @NotBlank(message = "Release date is mandatory")
     public String recorded;
 
-//    @Size(max = 9, message = "Song length should be between 0 and 9 minutes")
+    // Todo: constraint?
     @Getter @Setter
     public double length;
 

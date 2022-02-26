@@ -12,7 +12,7 @@ import prog21assignment.domain.Song;
 import prog21assignment.exceptions.EntityNotFoundException;
 import prog21assignment.exceptions.InvalidDtoException;
 import prog21assignment.exceptions.NoContentException;
-import prog21assignment.presentation.dto.AlbumDTO;
+import prog21assignment.presentation.dto.AlbumDto;
 import prog21assignment.service.QueenEntityService;
 
 import javax.validation.Valid;
@@ -33,17 +33,17 @@ public class AlbumRestController {
     }
 
     @GetMapping
-    public ResponseEntity<List<AlbumDTO>> readAll() {
+    public ResponseEntity<List<AlbumDto>> readAll() {
         return ResponseEntity.ok(albumService
                 .read()
                 .stream()
-                .map(AlbumDTO::fromAlbum)
+                .map(AlbumDto::fromAlbum)
                 .toList());
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<AlbumDTO> findById(@PathVariable int id) {
-        return ResponseEntity.ok(AlbumDTO.fromAlbum(albumService.findById(id)));
+    public ResponseEntity<AlbumDto> findById(@PathVariable int id) {
+        return ResponseEntity.ok(AlbumDto.fromAlbum(albumService.findById(id)));
     }
 
     @DeleteMapping("{id}")
@@ -53,7 +53,7 @@ public class AlbumRestController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Void> updateById(@PathVariable int id, @RequestBody @Valid AlbumDTO dto, BindingResult br) {
+    public ResponseEntity<Void> updateById(@PathVariable int id, @RequestBody @Valid AlbumDto dto, BindingResult br) {
         if (br.hasErrors()) throw new InvalidDtoException(br);
 
         Album a = albumService.findById(id);
@@ -76,7 +76,7 @@ public class AlbumRestController {
     }
 
     @PostMapping
-    public ResponseEntity<AlbumDTO> create(@RequestBody @Valid AlbumDTO dto, BindingResult br) {
+    public ResponseEntity<AlbumDto> create(@RequestBody @Valid AlbumDto dto, BindingResult br) {
         if (br.hasErrors()) throw new InvalidDtoException(br);
 
         Album a = new Album(dto.getTitle(), dto.getParsedRelease(), dto.getDescription());

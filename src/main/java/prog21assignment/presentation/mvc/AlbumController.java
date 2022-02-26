@@ -9,7 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import prog21assignment.domain.Album;
 import prog21assignment.domain.Song;
-import prog21assignment.presentation.dto.AlbumDTO;
+import prog21assignment.presentation.dto.AlbumDto;
 import prog21assignment.service.QueenEntityService;
 
 import javax.validation.Valid;
@@ -32,7 +32,7 @@ public class  AlbumController {
     public String showAll(Model m) {
         m.addAttribute("albums", albumService.read());
         m.addAttribute("songs", songService.read());
-        m.addAttribute("newAlbum", new AlbumDTO());
+        m.addAttribute("newAlbum", new AlbumDto());
         return "albums";
     }
 
@@ -45,13 +45,13 @@ public class  AlbumController {
 //        m.addAttribute("songs", songsWithNoAlbum);
 
         m.addAttribute("songs", songService.read());
-        m.addAttribute("album", new AlbumDTO());
+        m.addAttribute("album", new AlbumDto());
 
         return "add_album";
     }
 
     @PostMapping("/add")
-    public String handleNewAlbum(@Valid @ModelAttribute("album") AlbumDTO dto, BindingResult br, Model m) {
+    public String handleNewAlbum(@Valid @ModelAttribute("album") AlbumDto dto, BindingResult br, Model m) {
         if (br.hasErrors()) {
             log.error("Error while adding album");
             br.getAllErrors().forEach(e -> log.error(e.toString()));

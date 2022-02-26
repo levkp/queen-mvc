@@ -2,8 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:lang="${lang}">
 <head>
     <th:block th:include="~{fragments/base_header :: base_header (page_title=#{title.albums})}"> </th:block>
-    <script defer th:src="@{/js/albums.js}"></script>
-    <script defer th:src="@{/js/song_select.js}"></script>
+    <script defer th:src="@{/js/bundle-albums.js}"></script>
+    <script defer th:src="@{/js/bundle-song_select.js}"></script>
 </head>
 <body>
     <div class="container">
@@ -34,11 +34,12 @@
                         <td th:text="${album.getSongs().size()}">0</td>
                         <td>
                             <div class="btn-group" role="group">
-                                <a th:href="'/albums/' + ${album.id}">
-                                    <button type="button" class="btn btn-warning">
-                                        <span th:text="#{label.details}"></span>
-                                    </button>
-                                </a>
+                                <button type="button" class="q-read btn btn-warning"
+                                    th:value="${album.id}" th:text="#{label.details}">
+                                </button>
+<!--                                <a th:href="'/albums/' + ${album.id}">-->
+
+<!--                                </a>-->
 
                                 <button type="button" class="q-edit btn btn-dark">
                                     <span th:text="#{label.edit}"></span>
@@ -137,6 +138,58 @@
         <div class="q-modal" id="edit-album-modal">
             <div class="q-modal-content">
 
+
+
+            </div>
+        </div>
+
+        <div class="q-modal" id="read-album-modal">
+            <div class="q-modal-content">
+                <div class="row">
+
+                    <div class="col">
+                        <div class="row">
+                            <h4 id="album-title">Sample title</h4>
+                        </div>
+
+                        <div class="row">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td>Release date</td>
+                                        <td id="album-release">01/01/1980</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Length</td>
+                                        <td id="album-length">23.4</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Genres</td>
+                                        <td id="album-genres">-</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Track list</td>
+                                        <td>
+                                            <ul class="list-group" id="album-songs">
+                                                <li class="list-group-item">
+                                                    -
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Description</td>
+                                        <td id="album-desc">-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

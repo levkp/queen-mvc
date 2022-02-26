@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import prog21assignment.domain.Album;
 import prog21assignment.domain.Genre;
 import prog21assignment.domain.Song;
-import prog21assignment.presentation.dto.SongDTO;
+import prog21assignment.presentation.dto.SongDto;
 import prog21assignment.service.QueenEntityService;
 
 import javax.validation.Valid;
@@ -43,13 +43,13 @@ public class SongController {
     public String addSong(Model m) {
         m.addAttribute("genres", Genre.values());
         m.addAttribute("albums", albumService.read());
-        m.addAttribute("song", new SongDTO());
+        m.addAttribute("song", new SongDto());
 
         return "add_song";
     }
 
     @PostMapping("/add")
-    public String handleNewSong(@Valid @ModelAttribute("song") SongDTO dto, BindingResult br, Model m) {
+    public String handleNewSong(@Valid @ModelAttribute("song") SongDto dto, BindingResult br, Model m) {
         if (br.hasErrors()) {
             log.error("Error while adding song");
             br.getAllErrors().forEach(e -> log.error(e.toString()));
