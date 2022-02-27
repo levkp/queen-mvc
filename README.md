@@ -119,7 +119,7 @@ POST http://localhost:8080/api/albums HTTP/1.1
 Content-Type: application/json
 
 {
-  "title": A New Album",
+  "title": "A New Album",
   "release": "1981-03-03",
   "description": "Some text",
   "songIds": [
@@ -170,7 +170,7 @@ ERROR: duplicate key value violates unique constraint "uk_3a47omptijvdn5qupc38c4
 ## Assignments for week 3
 Two bootstrap icons on `/albums`: `bi-plus-square` and `bi-trash`. The source code is located in albums.html. 
 
-Two new npm dependencies: owoify
+Two new npm dependencies: owoify and axios
 
 
 To see the effect of owoify, create a new album on `/albums` with a long description. Here is a sample text:
