@@ -32,7 +32,6 @@ public class  AlbumController {
     public String showAll(Model m) {
         m.addAttribute("albums", albumService.read());
         m.addAttribute("songs", songService.read());
-        m.addAttribute("newAlbum", new AlbumDto());
         return "albums";
     }
 
@@ -80,16 +79,4 @@ public class  AlbumController {
         log.debug("Returning album_detailed view");
         return "album_detailed";
     }
-
-//    @ExceptionHandler(DatabaseException.class)
-//    public ModelAndView handleDatabaseException(HttpServletRequest request, DatabaseException de) {
-//        log.error(de.getMessage() + ", id: " + de.getId());
-//
-//        ModelAndView mav = new ModelAndView();
-//        mav.addObject("exception", de);
-//        mav.setViewName("error_database");
-//
-//        return mav;
-//    }
-
 }

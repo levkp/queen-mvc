@@ -42,7 +42,7 @@ public class Album extends QueenEntity {
     }
 
     public void addSong(Song s) {
-        songs.addAll(List.of(s));
+        songs.add(s);
     }
 
     public String getGenresAsString() {

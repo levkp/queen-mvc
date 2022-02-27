@@ -158,7 +158,7 @@ Content-Type: application/json
 ]
 ```
 
-#### Attribute with unique constraint already exists
+#### Attribute with unique constraint already exists - CONFLICT
 ```http request
 HTTP/1.1 409 
 Content-Type: text/plain;charset=UTF-8
@@ -169,4 +169,19 @@ ERROR: duplicate key value violates unique constraint "uk_3a47omptijvdn5qupc38c4
 
 ## Assignments for week 3
 Two bootstrap icons on `/albums`: `bi-plus-square` and `bi-trash`. The source code is located in albums.html. 
+
+Two new npm dependencies: owoify
+
+
+To see the effect of owoify, create a new album on `/albums` with a long description. Here is a sample text:
+
+```
+The album was influenced by heavy metal and progressive rock. The lyrics are based on a variety of topics, including 
+folklore and religion. Lead singer Freddie Mercury wrote five of the ten tracks, lead guitarist Brian May wrote four 
+songs (including "Doing All Right", which he co-wrote with Tim Staffell while in the band Smile), and drummer Roger
+Taylor both wrote and sang "Modern Times Rock and Roll". The final song on the album is a short instrumental version of
+ "Seven Seas of Rhye", the full version of which would appear on the band's second album, Queen II.
+```
+
+After submitting, click the details button to see all attributes of the album.
 

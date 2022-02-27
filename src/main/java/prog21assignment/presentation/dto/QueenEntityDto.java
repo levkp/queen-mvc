@@ -6,7 +6,6 @@ import lombok.Setter;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@SuppressWarnings("unused")
 public abstract class QueenEntityDto {
     @Getter @Setter
     protected int id;

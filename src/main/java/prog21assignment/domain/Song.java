@@ -16,6 +16,10 @@ public class Song extends QueenEntity {
     @Column(length = 30, nullable = false, unique = true)
     private String title;
 
+    @Getter @Setter
+    @Column(length = 5000)
+    private String description;
+
     // Todo: this really should be duration
     @Getter @Setter
     @Column(nullable = false)

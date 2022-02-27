@@ -4,7 +4,8 @@
   "description": "A Spring Boot application for Programming 2.3",
   "main": "index.js",
   "dependencies": {
-    "axios": "^0.26.0"
+    "axios": "^0.26.0",
+    "owoifyx": "^1.0.3"
   },
   "devDependencies": {
     "axios": "^0.26.0",

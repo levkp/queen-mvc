@@ -1,14 +1,9 @@
-// let currentModal;
-//
-// const modalCloseButtons = document.getElementsByClassName("q-modal-close");
-//
-// for (let button of modalCloseButtons) {
-//
-// }
-
 
 
 // Delete
+
+import owoify from "owoifyx";
+
 const deleteButtons = document.getElementsByClassName("q-delete");
 
 for (let button of deleteButtons) {
@@ -67,7 +62,7 @@ function hideNewAlbumModal() {
         body: JSON.stringify({
             "title": fd.get("title"),
             "release": fd.get("release"),
-            "description": fd.get("description"),
+            "description": owoify(fd.get("description").toString()),
             "songIds": fd.getAll("song-ids")
         })
     }).then(response => {
@@ -152,9 +147,7 @@ function readAlbum(event) {
     try {
         fetch(`/api/albums/${id}`, {
             method: "GET",
-            headers: {
-                "Accept": "application/json"
-            }
+            headers: { "Accept": "application/json" }
         }).then(response => {
             if (response.status === 200) {
                 response.json().then(data => {
@@ -165,8 +158,15 @@ function readAlbum(event) {
                     document.getElementById("album-length").innerText = data.length;
                     document.getElementById("album-desc").innerText = data.description;
 
+                    console.log("Fetching songs for album");
+
+                    for(let id of data.songIds) {
+                        let result = fetchSong(id);
+                        console.log(result);
+                    }
 
                 });
+
             } else {
                 console.log(response.status);
             }
@@ -176,4 +176,24 @@ function readAlbum(event) {
     }
 
     showReadAlbumModal();
+}
+
+async function fetchSong(id) {
+    console.log("Sending request for song " + id);
+    let result;
+
+    await fetch(`/api/songs/${id}`, {
+        method: "GET",
+        headers: { "Accept": "application/json" }
+    }).then(response => {
+       if (response.status === 200) {
+           response.json().then(data => {
+               result = data;
+           });
+       } else {
+           console.log(response);
+       }
+    });
+
+    return result;
 }

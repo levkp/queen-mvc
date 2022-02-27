@@ -2,7 +2,8 @@ $modalBgColor: rgba(0, 0, 0, 20%);
 $modalContentBgColor: #fefefe;
 
 .q-topbar-btn {
-    width: 15% !important;
+    width: 12% !important;
+    margin: 5px;
 }
 
 .q-modal {
@@ -13,6 +14,7 @@ $modalContentBgColor: #fefefe;
     height: 100%;
     left: 0;
     top: 0;
+    overflow: auto;
     background-color: $modalBgColor;
 }
 
@@ -22,12 +24,6 @@ $modalContentBgColor: #fefefe;
     padding: 20px;
     border: 1px solid black;
     width: 60%;
-
-    /*margin: 20% auto;*/
-    /*width: 50%;*/
-    /*height: 50%;*/
-    /*padding: 20%;*/
-    /*background-color: #fefefe;*/
 }
 
 .q-modal-close {

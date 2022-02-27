@@ -12,7 +12,8 @@
         </div>
 
         <div class="row mb-5">
-            <button type="button" class="q-topbar-btn btn btn-dark" id="add-album" th:text="#{label.add}">
+            <button class="q-topbar-btn btn btn-dark" id="add-album">
+                Add new
                 <span class="bi bi-plus-square"></span>
             </button>
 
@@ -93,7 +94,7 @@
 
                                     <textarea class="form-control" id="description" rows="3" maxlength="5000"
                                               name="description">
-                                        </textarea>
+                                    </textarea>
                                 </div>
 
                                 <div class="mb-3">
@@ -102,10 +103,6 @@
                                     <button type="submit" class="btn btn-dark" id="add-new-btn"
                                             th:text="#{label.done}">
                                     </button>
-
-<!--                                    <button type="submit" class="btn btn-dark" id="add-new-btn"-->
-<!--                                            th:text="#{label.done}">-->
-<!--                                    </button>-->
                                 </div>
                             </div>
 

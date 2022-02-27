@@ -31,7 +31,6 @@ public class AlbumDto extends QueenEntityDto {
     @NotNull(message = "Song ids must not be null")
     private List<Integer> songIds = new ArrayList<>();
 
-
     public AlbumDto() {
         log.debug("Default constructor invoked");
     }

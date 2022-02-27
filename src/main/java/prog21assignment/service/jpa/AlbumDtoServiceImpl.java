@@ -58,7 +58,7 @@ public class AlbumDtoServiceImpl implements QueenEntityDtoService<AlbumDto> {
         List<Song> songs = new ArrayList<>();
         dto.getSongIds().forEach(id -> {
             Optional<Song> o = songRepository.findById(id);
-            if (o.isEmpty()) throw new EntityNotFoundException(Song.    class, id);
+            if (o.isEmpty()) throw new EntityNotFoundException(Song.class, id);
             Song s = o.get();
             a.addSong(s);
             s.setAlbum(a);

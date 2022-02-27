@@ -24,7 +24,7 @@ public class DataSourceConfig {
 
     @Bean
     public DataSource source() {
-        log.debug("Datasource driver:  " + env.getProperty("spring.datasource.driver-class-name"));
+        log.debug("Datasource driver: " + env.getProperty("spring.datasource.driver-class-name"));
 
         return DataSourceBuilder.create()
                 .driverClassName(env.getProperty("spring.datasource.driver-class-name"))
