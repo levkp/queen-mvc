@@ -1,34 +1,33 @@
 package prog21assignment.exceptions;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @ControllerAdvice
 public class GeneralExceptionHandler {
-    private final Logger log = LoggerFactory.getLogger(getClass());
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<String> handleDataIntegrityViolation(DataIntegrityViolationException e) {
+        // Todo: handle this better, in a more user-friendly way
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getCause().getCause().getMessage());
+    }
 
-    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "Internal server occurred")
-    @ExceptionHandler(value = Exception.class)
-    public ModelAndView error500Handler(HttpServletRequest request, Exception e) {
-//
-//        if (AnnotationUtils.findAnnotation(e.getClass(), ResponseStatus.class) != null)
-//            throw e;
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<String> handleEntityNotFound(EntityNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    }
 
-        log.error(e.getMessage());
-        e.printStackTrace();
+    @ExceptionHandler(NoContentException.class)
+    public ResponseEntity<String> handleNoContent(NoContentException e) {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(e.getMessage());
+    }
 
-        ModelAndView mav = new ModelAndView();
-        mav.addObject("exception", e);
-        mav.addObject("url", request.getRequestURL());
-        mav.setViewName("error_500");
-
-        return mav;
+    @ExceptionHandler(InvalidDtoException.class)
+    public ResponseEntity<List<String>> handleInvalidDto(InvalidDtoException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessages());
     }
 }

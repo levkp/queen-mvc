@@ -3,7 +3,7 @@
 <head>
     <th:block th:include="~{fragments/base_header :: base_header (page_title=#{title.albums})}"> </th:block>
     <script defer th:src="@{/js/bundle-albums.js}"></script>
-    <script defer th:src="@{/js/bundle-song_select.js}"></script>
+    <script defer th:src="@{/js/bundle-songselect.js}"></script>
 </head>
 <body>
     <div class="container">
@@ -12,8 +12,14 @@
         </div>
 
         <div class="row mb-5">
-            <button type="button" class="q-topbar-btn btn btn-dark" id="add-album" th:text="#{label.add}"></button>
-            <button class="q-topbar-btn btn btn-danger">Delete all</button>
+            <button type="button" class="q-topbar-btn btn btn-dark" id="add-album" th:text="#{label.add}">
+                <span class="bi bi-plus-square"></span>
+            </button>
+
+            <button class="q-topbar-btn btn btn-danger">
+                Delete all
+                <span class="bi bi-trash"></span>
+            </button>
         </div>
 
         <div class="row">
@@ -147,8 +153,9 @@
                 <div class="row">
 
                     <div class="col">
-                        <div class="row">
-                            <h4 id="album-title">Sample title</h4>
+                        <div class="row" style="border: 1px solid black;">
+                            <span class="h4" id="album-title">Sample title</span>
+                            <span class="q-modal-close">&times;</span>
                         </div>
 
                         <div class="row">

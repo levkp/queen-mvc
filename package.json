@@ -3,19 +3,31 @@
   "version": "1.0.0",
   "description": "A Spring Boot application for Programming 2.3",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "axios": "^0.26.0"
+  },
   "devDependencies": {
+    "axios": "^0.26.0",
+    "sass": "^1.49.9",
+    "sass-loader": "^12.6.0",
     "css-loader": "^6.4.0",
     "mini-css-extract-plugin": "^2.4.2",
     "npm-watch": "^0.11.0",
-    "sass": "^1.49.9",
-    "sass-loader": "^12.6.0",
     "source-map-loader": "^3.0.0",
     "webpack": "^5.69.1",
-    "webpack-cli": "^4.9.0"
+    "webpack-cli": "^4.9.0",
+    "bootstrap-icons": "^1.8.1"
   },
-  "watch": {},
+  "watch": {
+    "build": {
+      "patterns": [
+        "main"
+      ],
+      "extensions": "js,css,scss,html"
+    }
+  },
   "scripts": {
+    "watch": "npm-watch",
     "build": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1",
     "scriptest": "echo henlo fren"

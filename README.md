@@ -9,8 +9,16 @@ levente.katai-pal@student.kdg.be
 
 I use OpenJDK 17 for development.
 
-Lombok needs to be enabled.
+The project depends on the Lombok annotations (e.g. `@Getter` , `@Setter`) library.
 
+For this, in IntelliJ, annotation processing and the bundled Lombok extension needs to be enabled.
+
+Annotation processing can be turned on here: 
+Build, Execution, Deployment - Annotation Processors - Enable annotation processing
+
+The Gradle task `bootRun` will first run `npm run build` to compile frontend resources, then it will start the Spring 
+application.
+    
 The application works with 2 kinds of Spring profiles:
 
 ### Data sources
@@ -51,7 +59,7 @@ A song has several genres. Genre is an enumeration.
 A concert's playlist consists of multiple songs, and a song can be played 
 on several concerts.
 
-Concert was removed from the project for Programming 2.3 to make the relationships a bit easier to work with.
+**Concert was removed from the project for Programming 2.3 to make the relationships a bit easier to work with.**
 So, now there is a many-to-many relationship between Song and Genre (if it makes sense to say that about an enum) and a
 one-to many relationship between Album and Song.
 
@@ -140,7 +148,7 @@ Content-Type: application/json
 }
 ```
 
-#### Mandatory attribute is null - BAD REQUEST
+#### Attribute fails validation - BAD REQUEST
 ```http request
 HTTP/1.1 400 
 Content-Type: application/json
@@ -149,3 +157,16 @@ Content-Type: application/json
   "Title is mandatory"
 ]
 ```
+
+#### Attribute with unique constraint already exists
+```http request
+HTTP/1.1 409 
+Content-Type: text/plain;charset=UTF-8
+
+ERROR: duplicate key value violates unique constraint "uk_3a47omptijvdn5qupc38c4dfi"
+  Detail: Key (title)=(Queen) already exists.
+```
+
+## Assignments for week 3
+Two bootstrap icons on `/albums`: `bi-plus-square` and `bi-trash`. The source code is located in albums.html. 
+

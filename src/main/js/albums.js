@@ -1,3 +1,13 @@
+// let currentModal;
+//
+// const modalCloseButtons = document.getElementsByClassName("q-modal-close");
+//
+// for (let button of modalCloseButtons) {
+//
+// }
+
+
+
 // Delete
 const deleteButtons = document.getElementsByClassName("q-delete");
 
@@ -86,7 +96,7 @@ function hideNewAlbumModal() {
              });
 
          } else {
-             console.log(response.status);
+             console.log(response);
          }
      })
 
@@ -146,10 +156,19 @@ function readAlbum(event) {
                 "Accept": "application/json"
             }
         }).then(response => {
-            console.log(response);
-
             if (response.status === 200) {
-                console.log(response.body)
+                response.json().then(data => {
+                    console.log(data);
+
+                    document.getElementById("album-title").innerText = data.title;
+                    document.getElementById("album-release").innerText = data.release;
+                    document.getElementById("album-length").innerText = data.length;
+                    document.getElementById("album-desc").innerText = data.description;
+
+
+                });
+            } else {
+                console.log(response.status);
             }
         })
     } catch (exc) {

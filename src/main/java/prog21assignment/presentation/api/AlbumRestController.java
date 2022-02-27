@@ -5,9 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import prog21assignment.exceptions.EntityNotFoundException;
 import prog21assignment.exceptions.InvalidDtoException;
-import prog21assignment.exceptions.NoContentException;
 import prog21assignment.presentation.dto.AlbumDto;
 import prog21assignment.service.QueenEntityDtoService;
 
@@ -52,20 +50,5 @@ public class AlbumRestController {
         if (br.hasErrors()) throw new InvalidDtoException(br);
         service.create(dto);
         return ResponseEntity.ok(dto);
-    }
-
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<String> handleEntityNotFoundException(EntityNotFoundException e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-    }
-
-    @ExceptionHandler(NoContentException.class)
-    public ResponseEntity<String> handleNoContentException(NoContentException e) {
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(e.getMessage());
-    }
-
-    @ExceptionHandler(InvalidDtoException.class)
-    public ResponseEntity<List<String>> handleInvalidDtoException(InvalidDtoException e) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessages());
     }
 }

@@ -1,4 +1,5 @@
 $modalBgColor: rgba(0, 0, 0, 20%);
+$modalContentBgColor: #fefefe;
 
 .q-topbar-btn {
     width: 15% !important;
@@ -16,7 +17,7 @@ $modalBgColor: rgba(0, 0, 0, 20%);
 }
 
 .q-modal-content {
-    background-color: #fefefe;
+    background-color: $modalContentBgColor;
     margin: 15% auto;
     padding: 20px;
     border: 1px solid black;
@@ -27,6 +28,17 @@ $modalBgColor: rgba(0, 0, 0, 20%);
     /*height: 50%;*/
     /*padding: 20%;*/
     /*background-color: #fefefe;*/
+}
+
+.q-modal-close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+
+    &:hover {
+        color: darkred;
+        cursor: pointer;
+    }
 }
 
 #song-list {
