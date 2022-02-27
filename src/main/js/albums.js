@@ -150,8 +150,8 @@ function readAlbum(event) {
             headers: { "Accept": "application/json" }
         }).then(response => {
             if (response.status === 200) {
-                response.json().then(data => {
-                    console.log(data);
+                response.json().then(async data => {
+                       console.log(data);
 
                     document.getElementById("album-title").innerText = data.title;
                     document.getElementById("album-release").innerText = data.release;
@@ -160,11 +160,28 @@ function readAlbum(event) {
 
                     console.log("Fetching songs for album");
 
-                    for(let id of data.songIds) {
-                        let result = fetchSong(id);
-                        console.log(result);
+                    let songs = [];
+
+                    for (let id of data.songIds) {
+                        (await fetchSong(id)).json().then(song => {
+                            songs.push(song);
+                        });
                     }
 
+                    let trackList = document.getElementById("album-songs");
+                    let genres = "";
+
+                    songs.forEach(s => {
+                        console.log(s);
+                        genres.concat(s['genresToString']);
+                        let li = document.createElement("li");
+                        li.className = "list-group-item";
+                        li.innerText = s.title;
+                        trackList.appendChild(li);
+                    });
+
+                    console.log("Genres:");
+                    console.log(genres);
                 });
 
             } else {
@@ -180,20 +197,9 @@ function readAlbum(event) {
 
 async function fetchSong(id) {
     console.log("Sending request for song " + id);
-    let result;
 
-    await fetch(`/api/songs/${id}`, {
+    return fetch(`/api/songs/${id}`, {
         method: "GET",
         headers: { "Accept": "application/json" }
-    }).then(response => {
-       if (response.status === 200) {
-           response.json().then(data => {
-               result = data;
-           });
-       } else {
-           console.log(response);
-       }
     });
-
-    return result;
 }
