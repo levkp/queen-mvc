@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import prog21assignment.domain.Album;
 import prog21assignment.domain.QueenEntity;
-import prog21assignment.exceptions.InvalidDtoException;
+import prog21assignment.exception.InvalidDtoException;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;

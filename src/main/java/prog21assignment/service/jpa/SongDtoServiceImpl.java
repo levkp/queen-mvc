@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import prog21assignment.domain.Song;
-import prog21assignment.exceptions.EntityNotFoundException;
+import prog21assignment.exception.EntityNotFoundException;
 import prog21assignment.presentation.dto.SongDto;
 import prog21assignment.repository.QueenEntityRepository;
 import prog21assignment.service.QueenEntityDtoService;

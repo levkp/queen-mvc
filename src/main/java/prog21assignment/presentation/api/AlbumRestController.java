@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import prog21assignment.exceptions.InvalidDtoException;
+import prog21assignment.exception.InvalidDtoException;
 import prog21assignment.presentation.dto.AlbumDto;
 import prog21assignment.service.QueenEntityDtoService;
 
@@ -24,7 +24,11 @@ public class AlbumRestController {
 
     @GetMapping
     public ResponseEntity<List<AlbumDto>> readAll() {
-        return ResponseEntity.ok(service.read());
+        List<AlbumDto> albums = service.read();
+        if (albums.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(albums);
     }
 
     @GetMapping("{id}")

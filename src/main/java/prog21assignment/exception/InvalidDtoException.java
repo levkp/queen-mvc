@@ -1,4 +1,4 @@
-package prog21assignment.exceptions;
+package prog21assignment.exception;
 
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.validation.BindingResult;

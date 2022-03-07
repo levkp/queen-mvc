@@ -5,8 +5,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import prog21assignment.domain.Album;
 import prog21assignment.domain.Song;
-import prog21assignment.exceptions.EntityNotFoundException;
-import prog21assignment.exceptions.NoContentException;
+import prog21assignment.exception.EntityNotFoundException;
 import prog21assignment.presentation.dto.AlbumDto;
 import prog21assignment.repository.QueenEntityRepository;
 import prog21assignment.service.QueenEntityDtoService;
@@ -35,9 +34,8 @@ public class AlbumDtoServiceImpl implements QueenEntityDtoService<AlbumDto> {
 
     @Override
     public List<AlbumDto> read() {
-        List<Album> albums = albumRepository.read();
-        if (albums.isEmpty()) throw new NoContentException();
-        return albums.stream()
+        return albumRepository.read()
+                .stream()
                 .map(AlbumDto::fromAlbum)
                 .toList();
     }

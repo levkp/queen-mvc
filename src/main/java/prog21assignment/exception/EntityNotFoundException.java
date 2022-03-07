@@ -1,4 +1,4 @@
-package prog21assignment.exceptions;
+package prog21assignment.exception;
 
 public class EntityNotFoundException extends RuntimeException {
     public EntityNotFoundException(Class c, int id) {
@@ -7,5 +7,9 @@ public class EntityNotFoundException extends RuntimeException {
 
     public EntityNotFoundException(String message) {
         super(message);
+    }
+
+    public EntityNotFoundException() {
+
     }
 }

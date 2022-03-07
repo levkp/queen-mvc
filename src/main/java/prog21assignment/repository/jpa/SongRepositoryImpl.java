@@ -15,12 +15,12 @@ import java.util.Optional;
 @Profile("jpa")
 @Repository
 @Transactional
-public class SongRepository implements QueenEntityRepository<Song> {
+public class SongRepositoryImpl implements QueenEntityRepository<Song> {
     @PersistenceContext
     private final EntityManager manager;
 
     @Autowired
-    public SongRepository(EntityManager manager) {
+    public SongRepositoryImpl(EntityManager manager) {
         this.manager = manager;
     }
 

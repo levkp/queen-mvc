@@ -16,7 +16,7 @@ import java.util.Optional;
 @Profile("jpa")
 @Repository
 @Transactional
-public class AlbumRepository implements QueenEntityRepository<Album> {
+public class AlbumRepositoryImpl implements QueenEntityRepository<Album> {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @PersistenceContext
