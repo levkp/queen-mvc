@@ -19,6 +19,12 @@ public class QueenUserRepositoryImpl implements QueenUserRepository {
     private EntityManager manager;
 
     @Override
+    public QueenUser create(QueenUser user) {
+        manager.persist(user);
+        return user;
+    }
+
+    @Override
     public Optional<QueenUser> findByUsername(String username) {
         return Optional.ofNullable(manager.find(QueenUser.class, username));
     }

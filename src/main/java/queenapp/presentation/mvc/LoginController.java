@@ -11,7 +11,7 @@ import queenapp.presentation.mvc.viewmodels.LoginViewModel;
 public class LoginController {
     @GetMapping
     public ModelAndView login(ModelAndView mav) {
-        mav.addObject("user", new LoginViewModel());
+        mav.addObject("loginInfo", new LoginViewModel());
         mav.setViewName("login");
         return mav;
     }

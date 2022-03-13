@@ -8,5 +8,5 @@ public class LoginViewModel {
     private String username;
 
     @Getter @Setter
-    private String secret;
+    private String password;
 }

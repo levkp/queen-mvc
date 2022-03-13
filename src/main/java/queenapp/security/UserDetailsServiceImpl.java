@@ -1,5 +1,6 @@
 package queenapp.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -18,6 +19,7 @@ import java.util.List;
 public class UserDetailsServiceImpl implements UserDetailsService {
     private final QueenUserService service;
 
+    @Autowired
     public UserDetailsServiceImpl(QueenUserService service) {
         this.service = service;
     }
@@ -25,10 +27,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         try {
-            QueenUser qu = service.findByUsername(username);
+            QueenUser user = service.findByUsername(username);
             List<GrantedAuthority> authorities = new ArrayList<>();
-            authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-            return new User(qu.getUsername(), qu.getSecret(), authorities);
+            authorities.add(new SimpleGrantedAuthority(user.isAdmin() ? "ROLE_ADMIN" : "ROLE_USER"));
+            return new User(user.getUsername(), user.getSecret(), authorities);
         } catch (EntityNotFoundException e) {
             throw new UsernameNotFoundException("User '" + username + "' not found");
         }

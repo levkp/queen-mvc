@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import queenapp.domain.Album;
 import queenapp.domain.Genre;
+import queenapp.domain.QueenUser;
 import queenapp.domain.Song;
 import queenapp.repository.QueenEntityRepository;
+import queenapp.repository.QueenUserRepository;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -16,19 +18,34 @@ import java.util.Set;
 
 @Component
 public class QueenData {
+    private final QueenUserRepository userRepository;
     private final QueenEntityRepository<Album> albumRepository;
     private final QueenEntityRepository<Song> songRepository;
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    public QueenData(QueenEntityRepository<Album> albumRepository, QueenEntityRepository<Song> songRepository) {
+    public QueenData(QueenUserRepository userRepository, QueenEntityRepository<Album> albumRepository, QueenEntityRepository<Song> songRepository) {
+        this.userRepository = userRepository;
         this.albumRepository = albumRepository;
         this.songRepository = songRepository;
     }
 
     public void seed() {
         log.debug("Seeding database");
+
+        QueenUser standard = new QueenUser(
+                "standard",
+                "$2a$10$PXi6GGA2YJCHVf7OSZW5suzT5J2nTi72ZhrT4lT1EU4HhEQgxopzu",
+                false);
+
+        QueenUser admin = new QueenUser(
+                "admin",
+                "$2a$10$LqLqgrrWBlA1M3tvwtFPn.yV9D/Bl2XW3cB.Sm047Gu8xkXDZbIRm",
+                true);
+
+        userRepository.create(standard);
+        userRepository.create(admin);
 
         String queenDesc = """
                 The album was influenced by heavy metal and progressive rock. The lyrics are based on a variety of topics, including\s
