@@ -1,9 +1,9 @@
-package prog21assignment.service.jdbc;
+package queenapp.service.jdbc;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
-import prog21assignment.domain.Song;
-import prog21assignment.service.QueenEntityService;
+import queenapp.domain.Song;
+import queenapp.service.QueenEntityService;
 
 import java.util.List;
 

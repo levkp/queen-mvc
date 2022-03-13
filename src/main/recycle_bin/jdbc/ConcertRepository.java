@@ -1,11 +1,11 @@
-package prog21assignment.repository.jdbc;
+package queenapp.repository.jdbc;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
-import prog21assignment.domain.Concert;
-import prog21assignment.repository.QueenEntityRepository;
+import queenapp.domain.Concert;
+import queenapp.repository.QueenEntityRepository;
 
 import java.util.List;
 
