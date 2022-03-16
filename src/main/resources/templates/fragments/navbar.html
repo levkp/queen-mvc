@@ -13,13 +13,16 @@
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/albums}" th:text="#{title.albums}"></a>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/songs}" th:text="#{title.songs}"></a>
                     </li>
+
                     <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <span class="nav-link">admin</span>
+                    </li>
 
-                        <span class="navbar-text">Logged in as: admin</span>
-
+                    <li class="nav-item" sec:authorize="isAuthenticated()" style="justify-content: flex-end; margin-right: 0 !important">
                         <form method="post" th:action="@{/logout}">
                             <button type="submit" class="btn btn-secondary">Log out</button>
                         </form>

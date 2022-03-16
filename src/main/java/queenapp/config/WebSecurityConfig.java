@@ -16,6 +16,7 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
           // @formatter:off
           http
                   .httpBasic()
@@ -24,7 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                   .authorizeRequests()
                         .antMatchers("/", "/signup", "/albums", "/api/**/*")
                             .permitAll()
-                        .regexMatchers(HttpMethod.GET, ".+\\.(css|js|map|woff2?|jpg)(\\?.*)?")
+                        .regexMatchers(HttpMethod.GET, ".+\\.(css|js|map|woff2?|jpg|png|ico)(\\?.*)?")
                             .permitAll()
                         .anyRequest()
                             .authenticated()

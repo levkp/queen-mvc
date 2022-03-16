@@ -1,10 +1,12 @@
-package queenapp.exception;
+package queenapp.presentation;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import queenapp.exception.EntityNotFoundException;
+import queenapp.exception.InvalidDtoException;
 
 import java.util.List;
 
@@ -19,11 +21,6 @@ public class GeneralExceptionHandler {
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<String> handleEntityNotFound(EntityNotFoundException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-    }
-
-    @ExceptionHandler(NoContentException.class)
-    public ResponseEntity<String> handleNoContent(NoContentException e) {
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(e.getMessage());
     }
 
     @ExceptionHandler(InvalidDtoException.class)

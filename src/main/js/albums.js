@@ -1,35 +1,35 @@
+import axios from "axios";
+import Modal from "modal-vanilla/lib/modal";
 
+function showErrorModal(title, content) {
+    new Modal({
+        title: title,
+        content: content
+    }).show();
+}
 
 // Delete
-
-import owoify from "owoifyx";
-
 const deleteButtons = document.getElementsByClassName("q-delete");
 
 for (let button of deleteButtons) {
-    button.onclick = deleteAlbum
+    button.onclick = deleteAlbum;
 }
 
 async function deleteAlbum(event) {
     let id = event.target.value;
 
-    try {
-        fetch(`/api/albums/${id}`, {
-            method: "DELETE",
-        }).then(
-            response => {
-                if (response.status === 200) {
-                    document.getElementById(`album-${id}`).remove();
-                } else {
-                    // Todo
-                    console.error(response);
-                }
-            }
-        );
-    } catch (e) {
-        console.error(e);
-    }
+    await axios.delete(`/api/albums/${id}`)
+        .then((response) => {
+            console.log(response);
+            document.getElementById(`album-${id}`).remove();
+        })
+        .catch((error) => {
+            console.error(error);
+            showErrorModal("Error while deleting album", error.toString())
+        });
 }
+
+
 
 // Create
 const newAlbumForm = document.getElementById("new-album-form");
@@ -62,7 +62,7 @@ function hideNewAlbumModal() {
         body: JSON.stringify({
             "title": fd.get("title"),
             "release": fd.get("release"),
-            "description": owoify(fd.get("description").toString()),
+            "description": fd.get("description").toString(),
             "songIds": fd.getAll("song-ids")
         })
     }).then(response => {

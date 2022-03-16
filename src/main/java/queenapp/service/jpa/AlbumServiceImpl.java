@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import queenapp.domain.Album;
 import queenapp.exception.EntityNotFoundException;
-import queenapp.exception.NoContentException;
 import queenapp.repository.QueenEntityRepository;
 import queenapp.service.QueenEntityService;
 
@@ -29,9 +28,7 @@ public class AlbumServiceImpl implements QueenEntityService<Album> {
     // Todo: remove exception
     @Override
     public List<Album> read() {
-        List<Album> albums = repository.read();
-        if (albums.isEmpty()) throw new NoContentException();
-        return albums;
+        return repository.read();
     }
 
     @Override
