@@ -13,7 +13,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/albums")
+@RequestMapping("/api/albums/   ")
 public class AlbumRestController {
     private final QueenEntityDtoService<AlbumDto> service;
 
@@ -25,10 +25,7 @@ public class AlbumRestController {
     @GetMapping
     public ResponseEntity<List<AlbumDto>> readAll() {
         List<AlbumDto> albums = service.read();
-        if (albums.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(albums);
+        return albums.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(albums);
     }
 
     @GetMapping("{id}")

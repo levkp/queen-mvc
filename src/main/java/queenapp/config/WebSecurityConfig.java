@@ -20,10 +20,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
           // @formatter:off
           http
                   .httpBasic()
-                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.FORBIDDEN))
+                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.OK))
                   .and()
                   .authorizeRequests()
-                        .antMatchers("/", "/signup", "/albums", "/api/**/*")
+                        .antMatchers("/", "/register", "/login", "/api/**/*")
                             .permitAll()
                         .regexMatchers(HttpMethod.GET, ".+\\.(css|js|map|woff2?|jpg|png|ico)(\\?.*)?")
                             .permitAll()

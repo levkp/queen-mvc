@@ -59,7 +59,11 @@ public class AlbumDto extends QueenEntityDto {
     }
 
     public static AlbumDto fromAlbum(Album a) {
-        List<Integer> songIds = a.getSongs().stream().map(QueenEntity::getId).toList();
-        return new AlbumDto(a.getId(), a.getTitle(), a.getDescription(), a.getRelease().toString(), songIds);
+        return new AlbumDto(
+                a.getId(),
+                a.getTitle(),
+                a.getDescription(),
+                a.getRelease().toString(),
+                a.getSongs().stream().map(QueenEntity::getId).toList());
     }
 }

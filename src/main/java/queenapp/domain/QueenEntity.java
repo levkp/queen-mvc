@@ -8,7 +8,6 @@ import javax.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-//@MappedSuperclass
 @EqualsAndHashCode
 public abstract class QueenEntity {
     @Id
@@ -16,4 +15,8 @@ public abstract class QueenEntity {
     @SequenceGenerator(name = "entityPkSeq", sequenceName = "entity_pk_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "entityPkSeq")
     protected int id;
+
+    @Getter @Setter
+    @ManyToOne @JoinColumn(name = "owner_id")
+    private QueenUser owner;
 }

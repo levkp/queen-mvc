@@ -26,14 +26,15 @@
         <div class="row">
             <table class="table table-striped" id="albums-table">
                 <thead>
-                <tr>
-                    <th>#</th>
-                    <th th:text="#{label.title}"></th>
-                    <th th:text="#{label.release}"></th>
-                    <th th:text="#{label.number_of_songs}"></th>
-                    <th th:text="#{label.action}"></th>
-                </tr>
+                    <tr>
+                        <th>#</th>
+                        <th th:text="#{label.title}"></th>
+                        <th th:text="#{label.release}"></th>
+                        <th th:text="#{label.number_of_songs}"></th>
+                        <th th:text="#{label.action}"></th>
+                    </tr>
                 </thead>
+
                 <tbody>
                     <tr th:each="album, iter : ${albums}" th:id="'album-' + ${album.id}">
                         <td th:text="${album.id}">0</td>
@@ -46,10 +47,6 @@
                                         th:value="${album.id}" th:text="#{label.details}">
                                 </button>
 
-<!--                                <button type="button" class="q-edit btn btn-dark"-->
-<!--                                        th:value="${album.id}" th:text="#{label.edit}">-->
-<!--                                </button>-->
-
                                 <button type="button" class="q-delete btn btn-danger"
                                         th:value="${album.id}" th:text="#{label.delete}">
                                 </button>
@@ -60,106 +57,107 @@
             </table>
         </div>
 
-        <div class="q-modal" id="new-album-modal">
-            <div class="q-modal-content">
-                <div class="col-5">
-                    <h1 class="mb-3"
-                        th:text="#{header.new_album}">
-                    </h1>
-
-                    <form id="new-album-form" action="#">
-                        <div class="row">
-                            <div class="col">
-                                <div class="mb-3">
-                                    <label for="title" class="form-label fs-4"
-                                           th:text="#{label.title}">
-                                    </label>
-
-                                    <input type="text" id="title" class="form-control" name="title" minlength="4"
-                                           maxlength="30" required>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="release" class="form-label fs-4"
-                                           th:text="#{label.release}">
-                                    </label>
-
-                                    <input type="date" id="release" class="form-control" name="release" required>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="description" class="fs-4"
-                                           th:text="#{label.description}">
-                                    </label>
-
-                                    <textarea class="form-control" id="description" rows="3" maxlength="5000"
-                                              name="description">
-                                    </textarea>
-                                </div>
-
-                                <div class="mb-3">
-                                    <button type="button" class="btn btn-warning" id="cancel-new-btn">Cancel</button>
-
-                                    <button type="submit" class="btn btn-dark" id="add-new-btn"
-                                            th:text="#{label.done}">
-                                    </button>
-                                </div>
+        <div class="row">
+            <div id="create-album-modal" class="modal fade" tabindex="-1" role="dialog">
+                <form action="#" id="create-album-form">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="mb-3" th:text="#{header.new_album}"></h1>
                             </div>
 
-                            <div class="col">
-                                <label class="form-label fs-4" for="song-list-btn"
-                                       th:text="#{label.select_songs}">
-                                </label>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label for="title" class="form-label fs-4" th:text="#{label.title}"></label>
 
-                                <div>
-                                    <button type="button" class="btn btn-warning mb-2" id="song-list-btn"
-                                            th:text="'Click to see ' + ${songs.size} + ' songs'">
-                                    </button>
+                                            <input type="text" id="title" class="form-control" name="title" minlength="4"
+                                                   maxlength="30" required>
+                                        </div>
 
-                                    <p class="mt-1 text-danger"
-                                       th:if="${songs.size} == 0" th:text="#{label.no_songs_found}">
-                                    </p>
-                                </div>
+                                        <div class="mb-3">
+                                            <label for="release" class="form-label fs-4"
+                                                   th:text="#{label.release}">
+                                            </label>
 
-                                <div id="song-list">
-                                    <div class="form-check" id="song-select"
-                                         th:each="song : ${songs}">
-                                        <input type="checkbox" class="form-check-input" name="song-ids"
-                                               th:value="${song.id}" th:id="'song-' + ${song.id}">
+                                            <input type="date" id="release" class="form-control" name="release" required>
+                                        </div>
 
-                                        <label class="form-check-label mb-1"
-                                               th:text="${song.title}" th:for="'song-' + ${song.id}">
+                                        <div class="mb-3">
+                                            <label for="description" class="fs-4"
+                                                   th:text="#{label.description}">
+                                            </label>
+
+                                            <textarea class="form-control" id="description" rows="3" maxlength="5000"
+                                                      name="description">
+                                        </textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <label class="form-label fs-4" for="song-list-btn"
+                                               th:text="#{label.select_songs}">
                                         </label>
+
+                                        <div>
+                                            <button type="button" class="btn btn-warning mb-2" id="song-list-btn"
+                                                    th:text="'Click to see ' + ${songs.size} + ' songs'">
+                                            </button>
+
+                                            <p class="mt-1 text-danger"
+                                               th:if="${songs.size} == 0" th:text="#{label.no_songs_found}">
+                                            </p>
+                                        </div>
+
+                                        <div id="song-list">
+                                            <div class="form-check" id="song-select"
+                                                 th:each="song : ${songs}">
+                                                <input type="checkbox" class="form-check-input" name="song-ids"
+                                                       th:value="${song.id}" th:id="'song-' + ${song.id}">
+
+                                                <label class="form-check-label mb-1"
+                                                       th:text="${song.title}" th:for="'song-' + ${song.id}">
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+
+                                <button type="submit" class="btn btn-dark" id="add-new-btn"
+                                        th:text="#{label.done}">
+                                </button>
+                            </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
 
-        <div class="q-modal" id="edit-album-modal">
-            <div class="q-modal-content">
 
-            </div>
-        </div>
+        <div class="row">
+            <div id="read-album-modal" class="modal fade" tabindex="-1" role="dialog">
+                <form action="#" id="edit-album-form">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 id="album-title" class="modal-title">Album title</h4>
+                                <i id="edit-title" class="bi bi-pencil ml-2"></i>
+                            </div>
 
-        <div class="q-modal" id="read-album-modal">
-            <div class="q-modal-content">
-                <div class="row">
-
-                    <div class="col">
-                        <div class="row">
-                            <span class="h4" id="album-title">Sample title</span>
-<!--                            <span class="q-modal-close">&times;</span>-->
-                        </div>
-
-                        <div class="row">
-                            <table class="table">
-                                <tbody>
+                            <div class="modal-body">
+                                <table class="table">
+                                    <tbody>
                                     <tr>
-                                        <td>Release date</td>
+                                        <td>
+                                            Release date
+                                            <i id="edit-release" class="bi bi-pencil ml-2"></i>
+                                        </td>
+
                                         <td id="album-release">01/01/1980</td>
                                     </tr>
 
@@ -174,23 +172,35 @@
                                     </tr>
 
                                     <tr>
-                                        <td>Track list</td>
+                                        <td>
+                                            Track list
+                                            <i id="edit-tracklist" class="bi bi-pencil ml-2"></i>
+                                        </td>
                                         <td>
                                             <ul class="list-group" id="album-songs">
-                                                
+
                                             </ul>
                                         </td>
                                     </tr>
 
                                     <tr>
-                                        <td>Description</td>
+                                        <td>
+                                            Description
+                                            <i id="edit-desc" class="bi bi-pencil ml-2"></i>
+                                        </td>
                                         <td id="album-desc">-</td>
                                     </tr>
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" id="submit-edit" class="btn btn-dark">Done</button>
+                                <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
