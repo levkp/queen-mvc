@@ -23,7 +23,7 @@ public class SongDtoServiceImpl implements QueenEntityDtoService<SongDto> {
     }
 
     @Override
-    public SongDto create(SongDto songDto) {
+    public SongDto create(SongDto songDto, String ownerUsername) {
         return null;
     }
 

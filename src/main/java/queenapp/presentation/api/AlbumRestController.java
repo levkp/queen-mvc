@@ -3,6 +3,8 @@ package queenapp.presentation.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import queenapp.exception.InvalidDtoException;
@@ -13,7 +15,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/albums/   ")
+@RequestMapping("/api/albums")
 public class AlbumRestController {
     private final QueenEntityDtoService<AlbumDto> service;
 
@@ -47,9 +49,10 @@ public class AlbumRestController {
     }
 
     @PostMapping
-    public ResponseEntity<AlbumDto> create(@RequestBody @Valid AlbumDto dto, BindingResult br) {
+    public ResponseEntity<AlbumDto> create(@RequestBody @Valid AlbumDto dto, BindingResult br,
+                                           @AuthenticationPrincipal UserDetails user) {
         if (br.hasErrors()) throw new InvalidDtoException(br);
-        service.create(dto);
+        service.create(dto, user.getUsername());
         return ResponseEntity.ok(dto);
     }
 }

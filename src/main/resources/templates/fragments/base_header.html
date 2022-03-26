@@ -1,8 +1,10 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="base_header (page_title)">
     <meta charset="UTF-8">
-    <meta name="_csrf_header" th:content="${_csrf.headerName}">
-    <meta name="_csrf" th:content="${_csrf.token}">
+<!--    <meta name="_csrf_header" th:content="${_csrf.headerName}">-->
+<!--    <meta name="_csrf" th:content="${_csrf.token}">-->
+    <meta name="_csrf_header" th:content="0">
+    <meta name="_csrf" th:content="0">
     <title th:text="${page_title}">Queen App</title>
     <link th:rel="stylesheet" th:href="@{/css/bundle.css}">
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css} "/>

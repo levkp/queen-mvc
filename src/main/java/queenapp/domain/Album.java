@@ -14,14 +14,6 @@ import java.util.StringJoiner;
 @Table
 public class Album extends QueenEntity {
     @Getter @Setter
-    @Column(length = 30, nullable = false, unique = true)
-    private String title;
-
-    @Getter @Setter
-    @Column(length = 5000)
-    private String description;
-
-    @Getter @Setter
     @Column(nullable = false)
     private LocalDate release;
 
@@ -39,6 +31,16 @@ public class Album extends QueenEntity {
     public Album(String title, LocalDate release, String description) {
         this(title, release);
         this.description = description;
+    }
+
+    public Album(String title, LocalDate release, QueenUser owner) {
+        this(title, release);
+        this.owner = owner;
+    }
+
+    public Album(String title, LocalDate release, String description, QueenUser owner) {
+        this(title, release, description);
+        this.owner = owner;
     }
 
     public void addSong(Song s) {
@@ -71,11 +73,4 @@ public class Album extends QueenEntity {
 
         return (double) Math.round(result * 100) / 100;
     }
-
-    // Todo: remove this somehow
-    // Remove all blanks and de-capitalise the first character
-    public String titleToCoverPath() {
-        return title.replace(" ", "").toLowerCase();
-    }
-
 }

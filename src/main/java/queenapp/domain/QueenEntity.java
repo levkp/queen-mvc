@@ -17,6 +17,15 @@ public abstract class QueenEntity {
     protected int id;
 
     @Getter @Setter
+    @Column(length = 30, nullable = false, unique = true)
+    protected String title;
+
+    @Getter @Setter
+    @Column(length = 5000)
+    protected String description;
+
+    // Todo: should this be optional?
+    @Getter @Setter
     @ManyToOne @JoinColumn(name = "owner_id")
-    private QueenUser owner;
+    protected QueenUser owner;
 }

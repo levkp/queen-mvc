@@ -55,6 +55,7 @@ async function deleteAlbum(event) {
 
 const newAlbumForm = document.getElementById("create-album-form");
 const addAlbumButton = document.getElementById("add-album");
+const albumsTable = document.getElementById("albums-table");
 
 let createAlbumModal = new Modal({
    el: document.getElementById("create-album-modal")
@@ -64,11 +65,55 @@ addAlbumButton.onclick = function() {
     createAlbumModal.show();
 }
 
-newAlbumForm.onsubmit = function() {
+newAlbumForm.onsubmit = function(event) {
+    event.preventDefault();
+
+    console.log("Submitting new album...");
     createAlbumModal.hide();
     const fd = new FormData(newAlbumForm);
 
 
+    fetch('/api/albums', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-XSRF-TOKEN": csrfToken,
+        },
+        body: JSON.stringify({
+            "title": fd.get("title"),
+            "release": fd.get("release"),
+            "description": fd.get("description").toString(),
+            "songIds": fd.getAll("song-ids")
+        })
+    }).then(response => {
+        if (response.status === 200) {
+            response.json().then(data => {
+                let tableRows = albumsTable.rows;
+                let newRow = tableRows[tableRows.length - 1].cloneNode(true);
+                let actionButtons = newRow.getElementsByTagName("button");
+
+                newRow.id = `album-${data.id}`;
+                newRow.children[0].innerText = data.id;
+                newRow.children[1].innerText = data.title;
+                newRow.children[2].innerText = data.release;
+                newRow.children[3].innerText = data.songIds.length;
+
+                actionButtons[0].value = data.id;
+                actionButtons[0].onclick = readAlbum
+                // actionButtons[1].value = data.id;
+                // actionButtons[1].onclick = showNewAlbumModal;
+                actionButtons[1].value = data.id;
+                actionButtons[1].onclick = deleteAlbum;
+
+                albumsTable.append(newRow);
+            })
+        } else {
+            console.error(response);
+            showErrorModal("Error while creating album!", response.toString());
+        }
+    })
+
+    return false; // To prevent onsubmit triggering a page refresh
 }
 
 

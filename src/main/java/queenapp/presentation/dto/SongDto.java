@@ -15,10 +15,6 @@ public class SongDto extends QueenEntityDto {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Getter @Setter
-    @Size(max = 5000, message = "Description can't be longer than 5000 characters")
-    private String description;
-
-    @Getter @Setter
     @NotNull(message = "Release date is mandatory") @NotBlank(message = "Release date is mandatory")
     public String recorded;
 

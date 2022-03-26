@@ -3,6 +3,7 @@ package queenapp.bootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import queenapp.domain.Album;
 import queenapp.domain.Genre;
@@ -34,15 +35,13 @@ public class QueenData {
     public void seed() {
         log.debug("Seeding database");
 
-        QueenUser standard = new QueenUser(
-                "standard",
-                "$2a$10$PXi6GGA2YJCHVf7OSZW5suzT5J2nTi72ZhrT4lT1EU4HhEQgxopzu",
-                false);
+        BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
 
-        QueenUser admin = new QueenUser(
-                "admin",
-                "$2a$10$LqLqgrrWBlA1M3tvwtFPn.yV9D/Bl2XW3cB.Sm047Gu8xkXDZbIRm",
-                true);
+//        $2a$10$PXi6GGA2YJCHVf7OSZW5suzT5J2nTi72ZhrT4lT1EU4HhEQgxopzu
+//        $2a$10$LqLqgrrWBlA1M3tvwtFPn.yV9D/Bl2XW3cB.Sm047Gu8xkXDZbIRm
+
+        QueenUser standard = new QueenUser("standard", bcrypt.encode("standard"),false);
+        QueenUser admin = new QueenUser("admin", bcrypt.encode("admin"),true);
 
         userRepository.create(standard);
         userRepository.create(admin);
@@ -54,7 +53,7 @@ public class QueenData {
                 Taylor both wrote and sang "Modern Times Rock and Roll". The final song on the album is a short instrumental version of
                  "Seven Seas of Rhye", the full version of which would appear on the band's second album, Queen II.""";
 
-        Album queen = albumRepository.create(new Album("Queen",  LocalDate.of(1973, 7, 13), queenDesc));
+        Album queen = albumRepository.create(new Album("Queen",  LocalDate.of(1973, 7, 13), queenDesc, standard));
         
         List<Song> queenSongs = List.of(
                 new Song("Keep Yourself Alive", 3.47, Set.of(Genre.HARD_ROCK, Genre.POWER_POP),
@@ -78,7 +77,7 @@ public class QueenData {
                 Queen II is not a concept album but a collection of songs with a loose theme running throughout.""";
 
 
-        Album queenII = albumRepository.create(new Album("Queen II",  LocalDate.of(1974, 3, 8), queenIIDesc));
+        Album queenII = albumRepository.create(new Album("Queen II",  LocalDate.of(1974, 3, 8), queenIIDesc, standard));
 
         List<Song> queenIISongs = List.of(
                 new Song("Procession", 1.12, Set.of(Genre.PROGRESSIVE_ROCK),
@@ -98,7 +97,7 @@ public class QueenData {
             queenII.addSong(s);
         });
 
-        Album sheerHeartAttack = albumRepository.create(new Album("Sheer Heart Attack",  LocalDate.of(1974, 11, 8)));
+        Album sheerHeartAttack = albumRepository.create(new Album("Sheer Heart Attack",  LocalDate.of(1974, 11, 8), standard));
 
         List<Song> sheerHeartAttackSongs = List.of(
                 new Song("Brighton Rock", 5.11, Set.of(Genre.HARD_ROCK),
@@ -114,7 +113,7 @@ public class QueenData {
             sheerHeartAttack.addSong(s);
         });
 
-        Album jazz = albumRepository.create(new Album("Jazz", LocalDate.of(1978, 11, 10)));
+        Album jazz = albumRepository.create(new Album("Jazz", LocalDate.of(1978, 11, 10), admin));
 
         List<Song> jazzSongs = List.of(
                 new Song("Mustapha", 5.11, Set.of(Genre.HARD_ROCK, Genre.PROGRESSIVE_ROCK, Genre.ART_ROCK),

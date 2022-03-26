@@ -12,15 +12,7 @@ import java.util.stream.Collectors;
 @Entity
 @Table(name = "song")
 public class Song extends QueenEntity {
-    @Getter @Setter
-    @Column(length = 30, nullable = false, unique = true)
-    private String title;
-
-    @Getter @Setter
-    @Column(length = 5000)
-    private String description;
-
-    // Todo: this really should be duration
+    // Todo: this really should be Duration
     @Getter @Setter
     @Column(nullable = false)
     private double length;
@@ -28,6 +20,7 @@ public class Song extends QueenEntity {
     @Getter
     private transient Set<Genre> genres = new HashSet<>();
 
+    // Todo: this should be a Set too
     @Getter
     @Access(value = AccessType.PROPERTY)
     @ElementCollection(targetClass = Integer.class)
@@ -39,9 +32,11 @@ public class Song extends QueenEntity {
     @Convert(converter = YearMonthDateAttributeConverter.class)
     private YearMonth finishedRecording;
 
-    @Getter @Setter
+    @Getter
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER) @JoinColumn(name = "album_id")
     private Album album;
+
+    protected Song() { }
 
     public Song(String title, double length, Set<Genre> genres, YearMonth finishedRecording, Album album) {
         this.title = title;
@@ -49,9 +44,13 @@ public class Song extends QueenEntity {
         setGenres(genres);
         this.finishedRecording = finishedRecording;
         this.album = album;
+        this.owner = album.getOwner(); // No problem if null
     }
 
-    protected Song() { }
+    public void setAlbum(Album album) {
+        this.album = album;
+        this.owner = album.getOwner();
+    }
 
     public void setGenres(Set<Genre> genres) {
         this.genres = genres;

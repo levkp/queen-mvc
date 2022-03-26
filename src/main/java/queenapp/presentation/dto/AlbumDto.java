@@ -10,7 +10,6 @@ import queenapp.exception.InvalidDtoException;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -18,10 +17,6 @@ import java.util.List;
 
 public class AlbumDto extends QueenEntityDto {
     private final Logger log = LoggerFactory.getLogger(getClass());
-
-    @Getter
-    @Size(max = 5000, message = "Description can't be longer 5000 characters")
-    private String description;
 
     @Getter @Setter
     @NotNull(message = "Release date must not be null") @NotBlank(message = "Release date must not be blank")

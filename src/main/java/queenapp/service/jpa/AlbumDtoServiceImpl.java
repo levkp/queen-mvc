@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import queenapp.domain.Album;
+import queenapp.domain.QueenUser;
 import queenapp.domain.Song;
 import queenapp.exception.EntityNotFoundException;
 import queenapp.presentation.dto.AlbumDto;
 import queenapp.repository.QueenEntityRepository;
+import queenapp.repository.QueenUserRepository;
 import queenapp.service.QueenEntityDtoService;
 
 import java.util.ArrayList;
@@ -19,17 +21,23 @@ import java.util.Optional;
 public class AlbumDtoServiceImpl implements QueenEntityDtoService<AlbumDto> {
     private final QueenEntityRepository<Album> albumRepository;
     private final QueenEntityRepository<Song> songRepository;
+    private final QueenUserRepository userRepository;
 
     @Autowired
-    public AlbumDtoServiceImpl(QueenEntityRepository<Album> albumRepository, QueenEntityRepository<Song> songRepository) {
+    public AlbumDtoServiceImpl(QueenEntityRepository<Album> albumRepository, QueenEntityRepository<Song> songRepository,
+                               QueenUserRepository userRepository) {
         this.albumRepository = albumRepository;
         this.songRepository = songRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
-    public AlbumDto create(AlbumDto dto) {
-         upsertFromDto(new Album(), dto);
-         return dto;
+    public AlbumDto create(AlbumDto dto, String ownerUsername) {
+        QueenUser owner = userRepository.findByUsername(ownerUsername).get();
+        Album a = new Album();
+        a.setOwner(owner);
+        upsertFromDto(a, dto);
+        return dto;
     }
 
     @Override
