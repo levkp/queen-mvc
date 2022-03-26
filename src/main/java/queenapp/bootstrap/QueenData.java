@@ -3,6 +3,7 @@ package queenapp.bootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import queenapp.domain.Album;
@@ -17,6 +18,7 @@ import java.time.YearMonth;
 import java.util.List;
 import java.util.Set;
 
+@Profile("!test")
 @Component
 public class QueenData {
     private final QueenUserRepository userRepository;
@@ -46,12 +48,12 @@ public class QueenData {
         userRepository.create(standard);
         userRepository.create(admin);
 
-        String queenDesc = """
-                The album was influenced by heavy metal and progressive rock. The lyrics are based on a variety of topics, including\s
-                folklore and religion. Lead singer Freddie Mercury wrote five of the ten tracks, lead guitarist Brian May wrote four\s
-                songs (including "Doing All Right", which he co-wrote with Tim Staffell while in the band Smile), and drummer Roger
-                Taylor both wrote and sang "Modern Times Rock and Roll". The final song on the album is a short instrumental version of
-                 "Seven Seas of Rhye", the full version of which would appear on the band's second album, Queen II.""";
+        String queenDesc = "";
+//                The album was influenced by heavy metal and progressive rock. The lyrics are based on a variety of topics, including\s
+//                folklore and religion. Lead singer Freddie Mercury wrote five of the ten tracks, lead guitarist Brian May wrote four\s
+//                songs (including "Doing All Right", which he co-wrote with Tim Staffell while in the band Smile), and drummer Roger
+//                Taylor both wrote and sang "Modern Times Rock and Roll". The final song on the album is a short instrumental version of
+//                 "Seven Seas of Rhye", the full version of which would appear on the band's second album, Queen II.";
 
         Album queen = albumRepository.create(new Album("Queen",  LocalDate.of(1973, 7, 13), queenDesc, standard));
         
@@ -71,10 +73,10 @@ public class QueenData {
             queen.addSong(s);
         });
 
-        String queenIIDesc = """
-                Described as "arguably the heaviest Queen album", Queen II marked the end of the first phase of the band's career.
-                The album combines a heavy rock sound with art rock and progressive rock elements, and has been called "a pillar of grandiose, assaultive hard rock" by the Rock and Roll Hall of Fame.
-                Queen II is not a concept album but a collection of songs with a loose theme running throughout.""";
+        String queenIIDesc = "";
+//                Described as "arguably the heaviest Queen album", Queen II marked the end of the first phase of the band's career.
+//                The album combines a heavy rock sound with art rock and progressive rock elements, and has been called "a pillar of grandiose, assaultive hard rock" by the Rock and Roll Hall of Fame.
+//                Queen II is not a concept album but a collection of songs with a loose theme running throughout.""";
 
 
         Album queenII = albumRepository.create(new Album("Queen II",  LocalDate.of(1974, 3, 8), queenIIDesc, standard));

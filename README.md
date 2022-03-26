@@ -9,6 +9,8 @@ levente.katai-pal@student.kdg.be
 
 I use OpenJDK 17 for development.
 
+Gradle: 7.2
+
 The project depends on the Lombok annotations (e.g. `@Getter` , `@Setter`) library.
 
 For this, in IntelliJ, annotation processing and the bundled Lombok extension need to be enabled.

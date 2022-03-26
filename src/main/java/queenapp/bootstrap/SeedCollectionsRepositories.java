@@ -6,7 +6,7 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-@Profile("dev2")
+@Profile({"!test & dev2"})
 @DependsOn("queenData")
 @Component
 public class SeedCollectionsRepositories implements CommandLineRunner {

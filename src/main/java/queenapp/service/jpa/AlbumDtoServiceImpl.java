@@ -15,6 +15,7 @@ import queenapp.service.QueenEntityDtoService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Profile("jpa")
 @Service
@@ -45,7 +46,7 @@ public class AlbumDtoServiceImpl implements QueenEntityDtoService<AlbumDto> {
         return albumRepository.read()
                 .stream()
                 .map(AlbumDto::fromAlbum)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     @Override

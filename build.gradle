@@ -10,7 +10,6 @@ group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 //compileJava.dependsOn npm_run_build
 
-
 repositories {
 	mavenCentral()
 }
@@ -37,8 +36,19 @@ dependencies {
 
 	implementation 'org.webjars:bootstrap:5.1.2'
 	implementation 'org.webjars:webjars-locator:0.45'
+
+//	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+//	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
 }
 
-test {
+//test {
+//	useJUnitPlatform()
+//	testLogging {
+//		events "failed"
+//		exceptionFormat "full"
+//	}
+//}
+
+tasks.named('test') {
 	useJUnitPlatform()
 }

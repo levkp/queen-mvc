@@ -14,6 +14,7 @@ import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AlbumDto extends QueenEntityDto {
     private final Logger log = LoggerFactory.getLogger(getClass());
@@ -59,6 +60,6 @@ public class AlbumDto extends QueenEntityDto {
                 a.getTitle(),
                 a.getDescription(),
                 a.getRelease().toString(),
-                a.getSongs().stream().map(QueenEntity::getId).toList());
+                a.getSongs().stream().map(QueenEntity::getId).collect(Collectors.toList()));
     }
 }

@@ -6,7 +6,7 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-@Profile("jpa")
+@Profile({"!test & jpa"})
 @Component
 @DependsOn({"persistGenres", "queenData"})
 public class SeedJpaRepositories implements CommandLineRunner {
