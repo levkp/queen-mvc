@@ -36,7 +36,7 @@ public class SongController {
     public String showAllSongs(Model m) {
         m.addAttribute("songs", songService.read());
         log.debug("Returning songs view");
-        return "all_songs";
+        return "songs";
     }
 
     @GetMapping("/add")

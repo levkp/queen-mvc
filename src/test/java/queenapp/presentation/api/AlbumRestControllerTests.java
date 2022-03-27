@@ -1,5 +1,6 @@
 package queenapp.presentation.api;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,11 +8,15 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import queenapp.domain.Album;
 import queenapp.domain.Genre;
+import queenapp.domain.QueenUser;
 import queenapp.domain.Song;
 import queenapp.repository.QueenEntityRepository;
+import queenapp.service.QueenUserService;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -21,10 +26,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
+@ActiveProfiles("test")
 @AutoConfigureMockMvc
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class AlbumRestControllerTests {
-    private final String TEST_TITLE = "Test Album";
+    private final String TEST_UNAME = "test";
 
     @Autowired
     MockMvc mockMvc;
@@ -32,9 +38,19 @@ public class AlbumRestControllerTests {
     @Autowired
     QueenEntityRepository<Album> albumRepository;
 
+    @Autowired
+    QueenUserService userService;
+
+    @BeforeAll
+    void beforeAll() {
+        userService.create(TEST_UNAME, new BCryptPasswordEncoder().encode("test"), true);
+    }
+
     @Test
     public void fetchingAlbumsDoesNotFetchFullSongs() throws Exception {
-        Album a = new Album("My Album", LocalDate.now());
+        QueenUser owner = userService.findByUsername(TEST_UNAME);
+
+        Album a = new Album("My Album", LocalDate.now(), owner);
         a.addSongs(new Song("My Song", 3.2, Set.of(Genre.HARD_ROCK), YearMonth.now(), a));
         albumRepository.create(a);
 
@@ -51,7 +67,4 @@ public class AlbumRestControllerTests {
         mockMvc.perform(get("/api/albums").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
-
-
-
 }
