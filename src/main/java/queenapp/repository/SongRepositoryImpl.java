@@ -1,10 +1,8 @@
-package queenapp.repository.jpa;
+package queenapp.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import queenapp.domain.Song;
-import queenapp.repository.QueenEntityRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -12,7 +10,6 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-@Profile("jpa")
 @Repository
 @Transactional
 public class SongRepositoryImpl implements QueenEntityRepository<Song> {

@@ -5,18 +5,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import queenapp.domain.Album;
-import queenapp.domain.Song;
-import queenapp.service.QueenEntityService;
+import queenapp.presentation.dto.AlbumDto;
+import queenapp.presentation.dto.SongDto;
+import queenapp.service.QueenEntityDtoService;
 
 @Controller
 @RequestMapping("/albums")
 public class  AlbumController {
-    private final QueenEntityService<Album> albumService;
-    private final QueenEntityService<Song> songService;
+    private final QueenEntityDtoService<AlbumDto> albumService;
+    private final QueenEntityDtoService<SongDto> songService;
 
     @Autowired
-    public AlbumController(QueenEntityService<Album> albumService, QueenEntityService<Song> songService) {
+    public AlbumController(QueenEntityDtoService<AlbumDto> albumService, QueenEntityDtoService<SongDto> songService) {
         this.albumService = albumService;
         this.songService = songService;
     }

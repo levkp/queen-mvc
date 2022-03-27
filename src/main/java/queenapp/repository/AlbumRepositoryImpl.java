@@ -1,11 +1,9 @@
-package queenapp.repository.jpa;
+package queenapp.repository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import queenapp.domain.Album;
-import queenapp.repository.QueenEntityRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -13,7 +11,6 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-@Profile("jpa")
 @Repository
 @Transactional
 public class AlbumRepositoryImpl implements QueenEntityRepository<Album> {

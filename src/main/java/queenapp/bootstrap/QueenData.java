@@ -3,6 +3,8 @@ package queenapp.bootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -20,7 +22,8 @@ import java.util.Set;
 
 @Profile("!test")
 @Component
-public class QueenData {
+@DependsOn("persistGenres")
+public class QueenData implements CommandLineRunner {
     private final QueenUserRepository userRepository;
     private final QueenEntityRepository<Album> albumRepository;
     private final QueenEntityRepository<Song> songRepository;
@@ -28,19 +31,22 @@ public class QueenData {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    public QueenData(QueenUserRepository userRepository, QueenEntityRepository<Album> albumRepository, QueenEntityRepository<Song> songRepository) {
+    public QueenData(QueenUserRepository userRepository, QueenEntityRepository<Album> albumRepository,
+                     QueenEntityRepository<Song> songRepository) {
         this.userRepository = userRepository;
         this.albumRepository = albumRepository;
         this.songRepository = songRepository;
     }
 
-    public void seed() {
+    @Override
+    public void run(String... args) {
+        seed();
+    }
+
+    private void seed() {
         log.debug("Seeding database");
 
         BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
-
-//        $2a$10$PXi6GGA2YJCHVf7OSZW5suzT5J2nTi72ZhrT4lT1EU4HhEQgxopzu
-//        $2a$10$LqLqgrrWBlA1M3tvwtFPn.yV9D/Bl2XW3cB.Sm047Gu8xkXDZbIRm
 
         QueenUser standard = new QueenUser("standard", bcrypt.encode("standard"),false);
         QueenUser admin = new QueenUser("admin", bcrypt.encode("admin"),true);

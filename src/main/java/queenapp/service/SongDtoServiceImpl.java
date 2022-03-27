@@ -1,35 +1,43 @@
-package queenapp.service.jpa;
+package queenapp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
+import queenapp.domain.QueenUser;
 import queenapp.domain.Song;
 import queenapp.exception.EntityNotFoundException;
 import queenapp.presentation.dto.SongDto;
 import queenapp.repository.QueenEntityRepository;
-import queenapp.service.QueenEntityDtoService;
+import queenapp.repository.QueenUserRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-@Profile("jpa")
 @Service
 public class SongDtoServiceImpl implements QueenEntityDtoService<SongDto> {
-    private final QueenEntityRepository<Song> repository;
+    private final QueenEntityRepository<Song> songRepository;
+    private final QueenUserRepository userRepository;
 
     @Autowired
-    public SongDtoServiceImpl(QueenEntityRepository<Song> repository) {
-        this.repository = repository;
+    public SongDtoServiceImpl(QueenEntityRepository<Song> repository, QueenUserRepository userRepository) {
+        this.songRepository = repository;
+        this.userRepository = userRepository;
     }
 
     @Override
     public SongDto create(SongDto songDto, String ownerUsername) {
+        QueenUser owner = userRepository.findByUsername(ownerUsername).get();
+
+        // Todo
         return null;
     }
 
     @Override
     public List<SongDto> read() {
-        return null;
+        return songRepository.read()
+                .stream()
+                .map(SongDto::fromSong)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -44,7 +52,7 @@ public class SongDtoServiceImpl implements QueenEntityDtoService<SongDto> {
 
     @Override
     public SongDto findById(int id) {
-        Optional<Song> o = repository.findById(id);
+        Optional<Song> o = songRepository.findById(id);
         if (o.isEmpty()) throw new EntityNotFoundException(Song.class, id);
         return SongDto.fromSong(o.get());
     }

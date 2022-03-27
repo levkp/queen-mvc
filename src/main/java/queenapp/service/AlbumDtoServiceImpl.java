@@ -1,7 +1,6 @@
-package queenapp.service.jpa;
+package queenapp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import queenapp.domain.Album;
 import queenapp.domain.QueenUser;
@@ -10,14 +9,12 @@ import queenapp.exception.EntityNotFoundException;
 import queenapp.presentation.dto.AlbumDto;
 import queenapp.repository.QueenEntityRepository;
 import queenapp.repository.QueenUserRepository;
-import queenapp.service.QueenEntityDtoService;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Profile("jpa")
 @Service
 public class AlbumDtoServiceImpl implements QueenEntityDtoService<AlbumDto> {
     private final QueenEntityRepository<Album> albumRepository;

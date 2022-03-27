@@ -1,16 +1,13 @@
-package queenapp.service.jpa;
+package queenapp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import queenapp.domain.Album;
 import queenapp.exception.EntityNotFoundException;
 import queenapp.repository.QueenEntityRepository;
-import queenapp.service.QueenEntityService;
 
 import java.util.List;
 
-@Profile("jpa")
 @Service
 public class AlbumServiceImpl implements QueenEntityService<Album> {
     private final QueenEntityRepository<Album> repository;
