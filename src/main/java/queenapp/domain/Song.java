@@ -2,6 +2,7 @@ package queenapp.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 import queenapp.util.YearMonthDateAttributeConverter;
 
 import javax.persistence.*;
@@ -22,6 +23,7 @@ public class Song extends QueenEntity {
 
     // Todo: this should be a Set too
     @Getter
+    @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
     @Access(value = AccessType.PROPERTY)
     @ElementCollection(targetClass = Integer.class)
     @JoinTable(name = "song_genre", joinColumns = @JoinColumn(name = "id"))
@@ -44,7 +46,8 @@ public class Song extends QueenEntity {
         setGenres(genres);
         this.finishedRecording = finishedRecording;
         this.album = album;
-        this.owner = album.getOwner(); // No problem if null
+        // Todo
+        this.owner = album == null ? null : album.getOwner(); // No problem if null
     }
 
     public void setAlbum(Album album) {
@@ -55,6 +58,13 @@ public class Song extends QueenEntity {
     public void setGenres(Set<Genre> genres) {
         this.genres = genres;
         genres.forEach(g -> genreOrdinals.add(g.ordinal()));
+    }
+
+    public void setOwner(QueenUser owner) {
+        if (album == null || album.getOwner().equals(owner)) {
+            this.owner = owner;
+        }
+        // Todo: what to do if they are not equal?
     }
 
     public void setGenreOrdinals(List<Integer> genreOrdinals) {

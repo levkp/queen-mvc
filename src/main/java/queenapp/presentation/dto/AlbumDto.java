@@ -47,6 +47,11 @@ public class AlbumDto extends QueenEntityDto {
         this.id = id;
     }
 
+    public AlbumDto(int id, String title, String description, String release, List<Integer> songIds, String ownerName) {
+        this(id, title, description, release, songIds);
+        this.ownerName = ownerName;
+    }
+
     // Todo: why does parsed release get included in response bodies?!
     public LocalDate getParsedRelease() {
         log.debug(String.format("Parsing %s to LocalDate", release));
@@ -64,6 +69,7 @@ public class AlbumDto extends QueenEntityDto {
                 a.getTitle(),
                 a.getDescription(),
                 a.getRelease().toString(),
-                a.getSongs().stream().map(QueenEntity::getId).collect(Collectors.toList()));
+                a.getSongs().stream().map(QueenEntity::getId).collect(Collectors.toList()),
+                a.getOwner().getUsername());
     }
 }

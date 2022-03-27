@@ -18,7 +18,7 @@ public class Album extends QueenEntity {
     private LocalDate release;
 
     @Getter
-    @OneToMany(mappedBy = "album", cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "album", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     private final List<Song> songs = new ArrayList<>();
 
     public Album() { }
@@ -41,6 +41,11 @@ public class Album extends QueenEntity {
     public Album(String title, LocalDate release, String description, QueenUser owner) {
         this(title, release, description);
         this.owner = owner;
+    }
+
+    public void setOwner(QueenUser owner) {
+        this.owner = owner;
+        songs.forEach(s -> s.setOwner(owner));
     }
 
     public void addSong(Song s) {

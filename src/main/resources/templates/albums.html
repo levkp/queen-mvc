@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:lang="${lang}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:include="~{fragments/base_header :: base_header (page_title=#{title.albums})}"> </th:block>
     <script defer th:src="@{/js/bundle-albums.js}"></script>
@@ -14,12 +14,6 @@
         <div class="row mb-5">
             <button class="q-topbar-btn btn btn-dark" id="add-album">
                 Add new
-                <span class="bi bi-plus-square"></span>
-            </button>
-
-            <button class="q-topbar-btn btn btn-danger">
-                Delete all
-                <span class="bi bi-trash"></span>
             </button>
         </div>
 
@@ -32,6 +26,7 @@
                         <th th:text="#{label.release}"></th>
                         <th th:text="#{label.number_of_songs}"></th>
                         <th th:text="#{label.action}"></th>
+                        <th th:text="Owner"></th>
                     </tr>
                 </thead>
 
@@ -48,10 +43,12 @@
                                 </button>
 
                                 <button type="button" class="q-delete btn btn-danger"
+                                        th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')} or ${ownerName} == ${album.ownerName}"
                                         th:value="${album.id}" th:text="#{label.delete}">
                                 </button>
                             </div>
                         </td>
+                        <td th:text="${album.ownerName}"></td>
                     </tr>
                 </tbody>
             </table>
@@ -72,8 +69,8 @@
                                         <div class="mb-3">
                                             <label for="title" class="form-label fs-4" th:text="#{label.title}"></label>
 
-                                            <input type="text" id="title" class="form-control" name="title" minlength="4"
-                                                   maxlength="30" required>
+                                            <input type="text" id="title" class="form-control" name="title"
+                                                   minlength="4" maxlength="30" required>
                                         </div>
 
                                         <div class="mb-3">

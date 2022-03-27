@@ -23,7 +23,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.OK))
                   .and()
                   .authorizeRequests()
-                        .antMatchers("/", "/register", "/login", "/api/**/*")
+                        .antMatchers("/", "/register", "/login")
+                            .permitAll()
+                        .antMatchers(HttpMethod.GET, "/api/**/*")
                             .permitAll()
                         .regexMatchers(HttpMethod.GET, ".+\\.(css|js|map|woff2?|jpg|png|ico)(\\?.*)?")
                             .permitAll()
@@ -35,9 +37,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                             .permitAll()
                   .and()
                   .logout()
-                        .permitAll()
-                  .and()
-                  .csrf().disable();
+                        .permitAll();
+//                  .and()
+//                  .csrf().disable();
           // @formatter:on
     }
 

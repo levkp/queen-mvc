@@ -21,48 +21,30 @@ Build, Execution, Deployment - Annotation Processors - Enable annotation process
 The Gradle task `bootRun` will first run `npm run build` to compile frontend resources, then it will start the Spring 
 application.
     
-The application works with 2 kinds of Spring profiles:
-
-### Data sources
+The application works with the following Spring profiles:
 
 `prod` makes use of the PostgreSQL database running on localhost
 
 `dev` makes use of the embedded HyperSQL database
 
-`dev2` makes use of Java collections
-
-### Method of CRUD operations
-
-`jpa` uses the Jakarta Persistence API
-
-**`jpa_rep` and `jdbc` are not present in this implementation.**
-
-For example, to use HyperSQL with JPA, this line needs to be set in the application.properties file:
-
-`spring.profiles.active=prod,jpa`
-
-If `dev2` is active, there is obviously no need to set a second profile.
+`test` disables the initial data seeding
 
 ## Domain
 The project's entities are based on the early years of the rock band Queen.
 
-| Album       | Song              | Concert       |
-| ----------- | ----------------- | ------------- |
-| title       | title             | name          |
-| description | length            | attendance    |
-| release     | genres            | location      |
-| songs       | finishedRecording | date          |
-|             | album             | playlist      |
+| Album        | Song             |
+|--------------|-------------------|
+| title        | title             |
+| description  | length            |
+| release      | genres            |
+| songs        | finishedRecording |
+|              | album             |
 
 An album has several songs, but a song only belongs to one album. 
 
 A song has several genres. Genre is an enumeration.
 
-A concert's playlist consists of multiple songs, and a song can be played 
-on several concerts.
-
-**Concert was removed from the project for Programming 2.3 to make the relationships a bit easier to work with.**
-So, now there is a many-to-many relationship between Song and Genre (if it makes sense to say that about an enum) and a
+So, there is a many-to-many relationship between Song and Genre (if it makes sense to say that about an enum) and a
 one-to many relationship between Album and Song.
 
 ## Assignments for week 1
@@ -187,3 +169,26 @@ Taylor both wrote and sang "Modern Times Rock and Roll". The final song on the a
 
 After submitting, click the details button to see all attributes of the album.
 
+## Assignments for week 4/5
+
+There are two user logins: admin and standard. The password for both users is 'queen'.
+
+The Spring security roles for these two profiles are `ROLE_ADMIN` and `ROLE_STANDARD`.
+
+### Overview of permissions
+
+| Action             | Unauthenticated | Standard | Admin |
+|--------------------|-----------------|----------| ----- |
+| Create via API/web | no              | yes      | yes   |
+| Read via API       | all             | all      | all   |
+| Update via API/web | no              | only own | all   |
+| Delete via API/web | no              | only own | all   |
+| Read via web       | no              | all      | all   |
+| Access admin page  | no              | no       | yes   |
+
+Unauthenticated users can only access the following pages: `/`, `/login` and `/register`.
+
+When an authenticated user creates a new entity, they become the owner of it. They can only delete and update
+their own entities. 
+
+## Assignments for week 6

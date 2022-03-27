@@ -23,7 +23,7 @@ public class SongDto extends QueenEntityDto {
     public double length;
 
     @Getter @Setter
-    public int albumId;
+    public Integer albumId;
 
     @Getter @Setter
     @NotNull(message = "Song should have at least 1 genre")
@@ -50,7 +50,8 @@ public class SongDto extends QueenEntityDto {
     }
 
     public static SongDto fromSong(Song s) {
+        // Todo nulls
         return new SongDto(s.getId(), s.getTitle(), s.getDescription(), s.getFinishedRecording().toString(),
-                s.getLength(), s.getAlbum().getId(), s.getGenreOrdinals(), s.genresToString());
+                s.getLength(), s.getAlbum() == null ? -1 : s.getAlbum().getId(), s.getGenreOrdinals(), s.genresToString());
     }
 }

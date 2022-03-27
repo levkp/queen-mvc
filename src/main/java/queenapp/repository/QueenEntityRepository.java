@@ -19,6 +19,9 @@ public interface QueenEntityRepository<T extends QueenEntity> {
     }
 
     default Optional<T> findByTitle(String title) {
-        return null;
+        return Optional.empty();
+    }
+    default void deleteAll() {
+
     }
 }

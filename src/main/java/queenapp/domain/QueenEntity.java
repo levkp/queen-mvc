@@ -25,7 +25,7 @@ public abstract class QueenEntity {
     protected String description;
 
     // Todo: should this be optional?
-    @Getter @Setter
+    @Getter
     @ManyToOne @JoinColumn(name = "owner_id")
     protected QueenUser owner;
 }

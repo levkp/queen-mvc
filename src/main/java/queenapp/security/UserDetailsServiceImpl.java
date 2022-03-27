@@ -29,7 +29,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         try {
             QueenUser user = service.findByUsername(username);
             List<GrantedAuthority> authorities = new ArrayList<>();
-            authorities.add(new SimpleGrantedAuthority(user.isAdmin() ? "ROLE_ADMIN" : "ROLE_USER"));
+            authorities.add(new SimpleGrantedAuthority(user.isAdmin() ? "ROLE_ADMIN" : "ROLE_STANDARD"));
             return new User(user.getUsername(), user.getSecret(), authorities);
         } catch (EntityNotFoundException e) {
             throw new UsernameNotFoundException("User '" + username + "' not found");

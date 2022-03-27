@@ -18,4 +18,7 @@ public abstract class QueenEntityDto {
     @Getter @Setter
     @Size(max = 5000, message = "Description can't be longer than 5000 characters")
     protected String description;
+
+    @Getter @Setter
+    protected String ownerName;
 }

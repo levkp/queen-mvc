@@ -13,7 +13,6 @@ public class HomeController {
 
     @GetMapping
     public String home() {
-
         return "home/home";
     }
 
@@ -23,7 +22,6 @@ public class HomeController {
         mav.setViewName("home/register");
         return mav;
     }
-
 
     @GetMapping("/login")
     public ModelAndView login(ModelAndView mav) {

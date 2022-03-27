@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <th:block th:include="~{fragments/base_header :: base_header (page_title='Secret Page')}"> </th:block>
+    <script defer th:src="@{/js/bundle-admin.js}"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div th:insert="~{fragments/navbar :: navbar}"></div>
+        </div>
+
+        <div class="row">
+            <button id="delete-all" class="q-topbar-btn btn btn-danger">
+                Delete all
+                <span class="bi bi-trash"></span>
+            </button>
+        </div>
+    </div>
+</body>
+</html>

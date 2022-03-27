@@ -20,21 +20,12 @@ for (let button of deleteButtons) {
 async function deleteAlbum(event) {
     let id = event.target.value;
 
-    // await axios.delete(`/api/albums/${id}`)
-    //     .then((response) => {
-    //         console.log(response);
-    //         document.getElementById(`album-${id}`).remove();
-    //     })
-    //     .catch((error) => {
-    //         console.error(error);
-    //         showErrorModal("Error while deleting album", error.toString())
-    //     });
+    const headers = {};
+    headers[csrfHeader] = csrfToken;
 
     await fetch(`/api/albums/${id}`, {
         method: "DELETE",
-        headers: {
-            "X-XSRF-TOKEN": csrfToken,
-        }
+        headers
     }).then(response => {
         if (response.status === 200) {
             document.getElementById(`album-${id}`).remove();
@@ -72,13 +63,13 @@ newAlbumForm.onsubmit = function(event) {
     createAlbumModal.hide();
     const fd = new FormData(newAlbumForm);
 
+    const headers = {};
+    headers[csrfHeader] = csrfToken;
+    headers["Content-Type"] = "application/json";
 
     fetch('/api/albums', {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "X-XSRF-TOKEN": csrfToken,
-        },
+        headers,
         body: JSON.stringify({
             "title": fd.get("title"),
             "release": fd.get("release"),
@@ -115,70 +106,6 @@ newAlbumForm.onsubmit = function(event) {
 
     return false; // To prevent onsubmit triggering a page refresh
 }
-
-
-
-// cancelNewAlbumModal.onclick = hideNewAlbumModal
-// addAlbumButton.onclick = showNewAlbumModal
-// newAlbumForm.onsubmit = submitNewAlbum
-//
-// function showNewAlbumModal() {
-//     albumCreatorModal.style.display = "block";
-// }
-//
-// function hideNewAlbumModal() {
-//     albumCreatorModal.style.display = "none";
-// }
-//
-// // Todo: urgent: NetworkError???
-//  function submitNewAlbum() {
-//     const fd = new FormData(document.getElementById("new-album-form"));
-//
-//     fetch('/api/albums', {
-//         method: "POST",
-//         headers: {
-//             "Content-Type": "application/json"
-//         },
-//         body: JSON.stringify({
-//             "title": fd.get("title"),
-//             "release": fd.get("release"),
-//             "description": fd.get("description").toString(),
-//             "songIds": fd.getAll("song-ids")
-//         })
-//     }).then(response => {
-//          if (response.status === 200) {
-//              response.json().then(data => {
-//                  let rows = albumsTable.rows;
-//                  let newRow = rows[rows.length - 1].cloneNode(true);
-//                  let actionButtons = newRow.getElementsByTagName("button");
-//
-//                  newRow.id = `album-${data.id}`;
-//                  newRow.children[0].innerText = data.id;
-//                  newRow.children[1].innerText = data.title;
-//                  newRow.children[2].innerText = data.release;
-//                  newRow.children[3].innerText = data.songIds.length;
-//
-//                  actionButtons[0].value = data.id;
-//                  actionButtons[0].onclick = showReadAlbumModal;
-//                  actionButtons[1].value = data.id;
-//                  actionButtons[1].onclick = showNewAlbumModal;
-//                  actionButtons[2].value = data.id;
-//                  actionButtons[2].onclick = deleteAlbum;
-//
-//                  albumsTable.append(newRow);
-//
-//                  console.log(newRow);
-//              });
-//
-//          } else {
-//              console.log(response);
-//          }
-//      })
-//
-//
-//      hideNewAlbumModal();
-//     return false; // To prevent onsubmit triggering a page refresh
-// }
 
 // Update
 const editTitleButton = document.getElementById("edit-title");

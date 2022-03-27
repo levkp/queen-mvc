@@ -54,4 +54,17 @@ public class AlbumRepositoryImpl implements QueenEntityRepository<Album> {
                 .getResultList()
                 .get(0));
     }
+
+    @Override
+    public void deleteAll() {
+        for(Album a : read()) {
+            delete(a);
+        }
+
+        // Todo
+//        manager.createNativeQuery("truncate table song_genre and commit;").executeUpdate();
+//        manager.createQuery("delete from Song s where s.album is not null").executeUpdate();
+//        manager.createQuery("delete from Album").executeUpdate();
+//        System.out.println("Done");
+    }
 }

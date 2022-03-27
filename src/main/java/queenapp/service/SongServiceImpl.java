@@ -29,14 +29,14 @@ public class SongServiceImpl implements QueenEntityService<Song> {
     }
 
     @Override
-    public Song update(Song s) {
-        return repository.update(s);
-    }
-
-    @Override
     public Song findById(int id) {
         Optional<Song> o = repository.findById(id);
         if (o.isEmpty()) throw new EntityNotFoundException("Unable to find song with id " + id);
         return o.get();
+    }
+
+    @Override
+    public void deleteAll() {
+
     }
 }
