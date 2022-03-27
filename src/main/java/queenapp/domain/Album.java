@@ -47,6 +47,10 @@ public class Album extends QueenEntity {
         songs.add(s);
     }
 
+    public void addSongs(Song... s) {
+        songs.addAll(List.of(s));
+    }
+
     public String getGenresAsString() {
         HashSet<Genre> genres = new HashSet<>();
         songs.forEach(s -> genres.addAll(s.getGenres()));
