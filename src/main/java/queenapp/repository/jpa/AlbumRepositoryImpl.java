@@ -49,4 +49,12 @@ public class AlbumRepositoryImpl implements QueenEntityRepository<Album> {
     public Optional<Album> findById(int id) {
         return Optional.ofNullable(manager.find(Album.class, id));
     }
+
+    @Override
+    public Optional<Album> findByTitle(String title) {
+        return Optional.ofNullable((Album) manager.createQuery("select a from Album a where a.title =:title")
+                .setParameter("title", title)
+                .getResultList()
+                .get(0));
+    }
 }

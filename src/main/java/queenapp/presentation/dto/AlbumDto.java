@@ -31,10 +31,14 @@ public class AlbumDto extends QueenEntityDto {
         log.debug("Default constructor invoked");
     }
 
-    public AlbumDto(String title, String description, String release, List<Integer> songIds) {
+    public AlbumDto(String title, String release) {
         this.title = title;
-        this.description = description;
         this.release = release;
+    }
+
+    public AlbumDto(String title, String description, String release, List<Integer> songIds) {
+        this(title, release);
+        this.description = description;
         this.songIds = songIds;
     }
 

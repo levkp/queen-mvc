@@ -90,4 +90,11 @@ public class AlbumDtoServiceImpl implements QueenEntityDtoService<AlbumDto> {
         if (o.isEmpty()) throw new EntityNotFoundException(Album.class, id);
         return AlbumDto.fromAlbum(o.get());
     }
+
+    @Override
+    public AlbumDto findByTitle(String title) {
+        Optional<Album> o = albumRepository.findByTitle(title);
+        if (o.isEmpty()) throw new EntityNotFoundException();
+        return AlbumDto.fromAlbum(o.get());
+    }
 }

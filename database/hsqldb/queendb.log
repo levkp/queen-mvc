@@ -1,23 +1,25 @@
-/*C9*/SET SCHEMA PUBLIC
+/*C12*/SET SCHEMA PUBLIC
 drop table if exists album CASCADE 
+drop table if exists app_user CASCADE 
 drop table if exists genre CASCADE 
 drop table if exists song CASCADE 
 drop table if exists song_genre CASCADE 
-drop table if exists user CASCADE 
 drop sequence entity_pk_seq if exists
 drop sequence hibernate_sequence if exists
 create sequence entity_pk_seq start with 1 increment by 1
 create sequence hibernate_sequence start with 1 increment by 1
-create table album (id integer not null, description varchar(5000), release date not null, title varchar(30) not null, primary key (id))
+create table album (id integer not null, description varchar(5000), title varchar(30) not null, owner_id bigint, release date not null, primary key (id))
+create table app_user (id bigint not null, is_admin boolean not null, secret varchar(255) not null, username varchar(255) not null, primary key (id))
 create table genre (id integer not null, name varchar(255) not null, primary key (id))
-create table song (id integer not null, description varchar(5000), finished_recording timestamp not null, length double not null, title varchar(30) not null, album_id integer, primary key (id))
+create table song (id integer not null, description varchar(5000), title varchar(30) not null, owner_id bigint, finished_recording timestamp not null, length double not null, album_id integer, primary key (id))
 create table song_genre (id integer not null, genre_ordinals integer)
-create table user (id bigint not null, is_admin boolean not null, secret varchar(255) not null, username varchar(255) not null, primary key (id))
 alter table album add constraint UK_3a47omptijvdn5qupc38c4dfi unique (title)
+alter table app_user add constraint UK_3k4cplvh82srueuttfkwnylq0 unique (username)
 alter table genre add constraint UK_ctffrbu4484ft8dlsa5vmqdka unique (name)
 alter table song add constraint UK_901hm98fbktx31qydca5xntn4 unique (title)
-alter table user add constraint UK_sb8bbouer5wak8vyiiy4pf2bx unique (username)
+alter table album add constraint FK_dr2e6i6cc0ga4srnhj4ts04yh foreign key (owner_id) references app_user
 alter table song add constraint FKrcjmk41yqj3pl3iyii40niab0 foreign key (album_id) references album
+alter table song add constraint FK_hlw6f1o62mgmp9p6qwff8skgg foreign key (owner_id) references app_user
 alter table song_genre add constraint FKf3rf9h261vlifohtmrqvm437l foreign key (id) references song
 INSERT INTO GENRE VALUES(0,'Art rock')
 INSERT INTO GENRE VALUES(1,'Avant pop')
@@ -29,105 +31,14 @@ INSERT INTO GENRE VALUES(6,'Power pop')
 INSERT INTO GENRE VALUES(7,'Progressive rock')
 INSERT INTO GENRE VALUES(8,'Soft rock')
 COMMIT
-INSERT INTO USER VALUES(1,FALSE,'$2a$10$PXi6GGA2YJCHVf7OSZW5suzT5J2nTi72ZhrT4lT1EU4HhEQgxopzu','standard')
+INSERT INTO APP_USER VALUES(1,FALSE,'$2a$10$ZO36Pdu/KySApXatNWC/0O4LQSfj8njKPOS7NVz8pS6QmwgzfUAAq','test')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 2
 COMMIT
-INSERT INTO USER VALUES(2,TRUE,'$2a$10$LqLqgrrWBlA1M3tvwtFPn.yV9D/Bl2XW3cB.Sm047Gu8xkXDZbIRm','admin')
-ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 3
-COMMIT
-INSERT INTO ALBUM VALUES(1,'The album was influenced by heavy metal and progressive rock. The lyrics are based on a variety of topics, including \u000afolklore and religion. Lead singer Freddie Mercury wrote five of the ten tracks, lead guitarist Brian May wrote four \u000asongs (including "Doing All Right", which he co-wrote with Tim Staffell while in the band Smile), and drummer Roger\u000aTaylor both wrote and sang "Modern Times Rock and Roll". The final song on the album is a short instrumental version of\u000a "Seven Seas of Rhye", the full version of which would appear on the band''s second album, Queen II.','1973-07-13','Queen')
+INSERT INTO ALBUM VALUES(1,NULL,'Test Album',1,'2022-03-27')
 ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 2
 COMMIT
-INSERT INTO SONG VALUES(2,NULL,'1972-11-01 00:00:00.000000',3.47E0,'Keep Yourself Alive',1)
-INSERT INTO SONG_GENRE VALUES(2,6)
-INSERT INTO SONG_GENRE VALUES(2,3)
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 3
+DELETE FROM ALBUM WHERE ID=1
 COMMIT
-INSERT INTO SONG VALUES(3,NULL,'1971-08-01 00:00:00.000000',4.09E0,'Doing All Right',1)
-INSERT INTO SONG_GENRE VALUES(3,7)
-INSERT INTO SONG_GENRE VALUES(3,3)
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 4
-COMMIT
-INSERT INTO SONG VALUES(4,NULL,'1971-09-01 00:00:00.000000',5.41E0,'Great King Rat',1)
-INSERT INTO SONG_GENRE VALUES(4,4)
-INSERT INTO SONG_GENRE VALUES(4,3)
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 5
-COMMIT
-INSERT INTO SONG VALUES(5,NULL,'1971-10-01 00:00:00.000000',4.07E0,'My Fairy King',1)
-INSERT INTO SONG_GENRE VALUES(5,5)
-INSERT INTO SONG_GENRE VALUES(5,7)
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 6
-COMMIT
-INSERT INTO ALBUM VALUES(6,'Described as "arguably the heaviest Queen album", Queen II marked the end of the first phase of the band''s career.\u000aThe album combines a heavy rock sound with art rock and progressive rock elements, and has been called "a pillar of grandiose, assaultive hard rock" by the Rock and Roll Hall of Fame.\u000aQueen II is not a concept album but a collection of songs with a loose theme running throughout.','1974-03-08','Queen II')
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 7
-COMMIT
-INSERT INTO SONG VALUES(7,NULL,'1973-08-01 00:00:00.000000',1.12E0,'Procession',6)
-INSERT INTO SONG_GENRE VALUES(7,7)
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 8
-COMMIT
-INSERT INTO SONG VALUES(8,NULL,'1973-08-01 00:00:00.000000',6.14E0,'Father to Son',6)
-INSERT INTO SONG_GENRE VALUES(8,4)
-INSERT INTO SONG_GENRE VALUES(8,3)
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 9
-COMMIT
-INSERT INTO SONG VALUES(9,NULL,'1974-02-01 00:00:00.000000',4.34E0,'White Queen (As It Began)',6)
-INSERT INTO SONG_GENRE VALUES(9,4)
-INSERT INTO SONG_GENRE VALUES(9,2)
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 10
-COMMIT
-INSERT INTO SONG VALUES(10,NULL,'1974-02-01 00:00:00.000000',4.23E0,'Some Day One Day',6)
-INSERT INTO SONG_GENRE VALUES(10,4)
-INSERT INTO SONG_GENRE VALUES(10,2)
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 11
-COMMIT
-INSERT INTO SONG VALUES(11,NULL,'1974-02-01 00:00:00.000000',4.02E0,'The Loser in the End',6)
-INSERT INTO SONG_GENRE VALUES(11,2)
-INSERT INTO SONG_GENRE VALUES(11,3)
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 12
-COMMIT
-INSERT INTO ALBUM VALUES(12,NULL,'1974-11-08','Sheer Heart Attack')
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 13
-COMMIT
-INSERT INTO SONG VALUES(13,NULL,'1974-10-01 00:00:00.000000',5.11E0,'Brighton Rock',12)
-INSERT INTO SONG_GENRE VALUES(13,3)
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 14
-COMMIT
-INSERT INTO SONG VALUES(14,NULL,'1974-08-01 00:00:00.000000',3.0E0,'Killer Queen',12)
-INSERT INTO SONG_GENRE VALUES(14,0)
-INSERT INTO SONG_GENRE VALUES(14,2)
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 15
-COMMIT
-INSERT INTO SONG VALUES(15,NULL,'1974-08-01 00:00:00.000000',3.18E0,'Flick of the Wrist',12)
-INSERT INTO SONG_GENRE VALUES(15,3)
-INSERT INTO SONG_GENRE VALUES(15,4)
-INSERT INTO SONG_GENRE VALUES(15,2)
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 16
-COMMIT
-INSERT INTO ALBUM VALUES(16,NULL,'1978-11-10','Jazz')
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 17
-COMMIT
-INSERT INTO SONG VALUES(17,NULL,'1978-10-01 00:00:00.000000',5.11E0,'Mustapha',16)
-INSERT INTO SONG_GENRE VALUES(17,3)
-INSERT INTO SONG_GENRE VALUES(17,7)
-INSERT INTO SONG_GENRE VALUES(17,0)
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 18
-COMMIT
-INSERT INTO SONG VALUES(18,NULL,'1978-09-01 00:00:00.000000',3.0E0,'Fat Bottomed Girls',16)
-INSERT INTO SONG_GENRE VALUES(18,3)
-INSERT INTO SONG_GENRE VALUES(18,2)
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 19
-COMMIT
-INSERT INTO SONG VALUES(19,NULL,'1978-10-01 00:00:00.000000',3.18E0,'Jealousy',16)
-INSERT INTO SONG_GENRE VALUES(19,8)
-INSERT INTO SONG_GENRE VALUES(19,3)
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 20
-COMMIT
-DISCONNECT
-/*C10*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C11*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C12*/SET SCHEMA PUBLIC
 DISCONNECT
 /*C13*/SET SCHEMA PUBLIC
 DISCONNECT
@@ -142,145 +53,8 @@ DISCONNECT
 /*C18*/SET SCHEMA PUBLIC
 DISCONNECT
 /*C19*/SET SCHEMA PUBLIC
-drop table if exists album CASCADE 
-drop table if exists genre CASCADE 
-drop table if exists song CASCADE 
-drop table if exists song_genre CASCADE 
-drop table if exists user CASCADE 
-drop sequence entity_pk_seq if exists
-drop sequence hibernate_sequence if exists
-create sequence entity_pk_seq start with 1 increment by 1
-create sequence hibernate_sequence start with 1 increment by 1
-create table album (id integer not null, description varchar(5000), release date not null, title varchar(30) not null, primary key (id))
-create table genre (id integer not null, name varchar(255) not null, primary key (id))
-create table song (id integer not null, description varchar(5000), finished_recording timestamp not null, length double not null, title varchar(30) not null, album_id integer, primary key (id))
-create table song_genre (id integer not null, genre_ordinals integer)
-create table user (id bigint not null, is_admin boolean not null, secret varchar(255) not null, username varchar(255) not null, primary key (id))
-alter table album add constraint UK_3a47omptijvdn5qupc38c4dfi unique (title)
-alter table genre add constraint UK_ctffrbu4484ft8dlsa5vmqdka unique (name)
-alter table song add constraint UK_901hm98fbktx31qydca5xntn4 unique (title)
-alter table user add constraint UK_sb8bbouer5wak8vyiiy4pf2bx unique (username)
-alter table song add constraint FKrcjmk41yqj3pl3iyii40niab0 foreign key (album_id) references album
-alter table song_genre add constraint FKf3rf9h261vlifohtmrqvm437l foreign key (id) references song
-INSERT INTO GENRE VALUES(0,'Art rock')
-INSERT INTO GENRE VALUES(1,'Avant pop')
-INSERT INTO GENRE VALUES(2,'Glam rock')
-INSERT INTO GENRE VALUES(3,'Hard rock')
-INSERT INTO GENRE VALUES(4,'Heavy metal')
-INSERT INTO GENRE VALUES(5,'Opera')
-INSERT INTO GENRE VALUES(6,'Power pop')
-INSERT INTO GENRE VALUES(7,'Progressive rock')
-INSERT INTO GENRE VALUES(8,'Soft rock')
-COMMIT
-INSERT INTO USER VALUES(1,FALSE,'$2a$10$PXi6GGA2YJCHVf7OSZW5suzT5J2nTi72ZhrT4lT1EU4HhEQgxopzu','standard')
-ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 2
-COMMIT
-INSERT INTO USER VALUES(2,TRUE,'$2a$10$LqLqgrrWBlA1M3tvwtFPn.yV9D/Bl2XW3cB.Sm047Gu8xkXDZbIRm','admin')
-ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 3
-COMMIT
-INSERT INTO ALBUM VALUES(1,'The album was influenced by heavy metal and progressive rock. The lyrics are based on a variety of topics, including \u000afolklore and religion. Lead singer Freddie Mercury wrote five of the ten tracks, lead guitarist Brian May wrote four \u000asongs (including "Doing All Right", which he co-wrote with Tim Staffell while in the band Smile), and drummer Roger\u000aTaylor both wrote and sang "Modern Times Rock and Roll". The final song on the album is a short instrumental version of\u000a "Seven Seas of Rhye", the full version of which would appear on the band''s second album, Queen II.','1973-07-13','Queen')
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 2
-COMMIT
-INSERT INTO SONG VALUES(2,NULL,'1972-11-01 00:00:00.000000',3.47E0,'Keep Yourself Alive',1)
-INSERT INTO SONG_GENRE VALUES(2,6)
-INSERT INTO SONG_GENRE VALUES(2,3)
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 3
-COMMIT
-INSERT INTO SONG VALUES(3,NULL,'1971-08-01 00:00:00.000000',4.09E0,'Doing All Right',1)
-INSERT INTO SONG_GENRE VALUES(3,7)
-INSERT INTO SONG_GENRE VALUES(3,3)
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 4
-COMMIT
-INSERT INTO SONG VALUES(4,NULL,'1971-09-01 00:00:00.000000',5.41E0,'Great King Rat',1)
-INSERT INTO SONG_GENRE VALUES(4,4)
-INSERT INTO SONG_GENRE VALUES(4,3)
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 5
-COMMIT
-INSERT INTO SONG VALUES(5,NULL,'1971-10-01 00:00:00.000000',4.07E0,'My Fairy King',1)
-INSERT INTO SONG_GENRE VALUES(5,5)
-INSERT INTO SONG_GENRE VALUES(5,7)
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 6
-COMMIT
-INSERT INTO ALBUM VALUES(6,'Described as "arguably the heaviest Queen album", Queen II marked the end of the first phase of the band''s career.\u000aThe album combines a heavy rock sound with art rock and progressive rock elements, and has been called "a pillar of grandiose, assaultive hard rock" by the Rock and Roll Hall of Fame.\u000aQueen II is not a concept album but a collection of songs with a loose theme running throughout.','1974-03-08','Queen II')
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 7
-COMMIT
-INSERT INTO SONG VALUES(7,NULL,'1973-08-01 00:00:00.000000',1.12E0,'Procession',6)
-INSERT INTO SONG_GENRE VALUES(7,7)
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 8
-COMMIT
-INSERT INTO SONG VALUES(8,NULL,'1973-08-01 00:00:00.000000',6.14E0,'Father to Son',6)
-INSERT INTO SONG_GENRE VALUES(8,4)
-INSERT INTO SONG_GENRE VALUES(8,3)
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 9
-COMMIT
-INSERT INTO SONG VALUES(9,NULL,'1974-02-01 00:00:00.000000',4.34E0,'White Queen (As It Began)',6)
-INSERT INTO SONG_GENRE VALUES(9,4)
-INSERT INTO SONG_GENRE VALUES(9,2)
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 10
-COMMIT
-INSERT INTO SONG VALUES(10,NULL,'1974-02-01 00:00:00.000000',4.23E0,'Some Day One Day',6)
-INSERT INTO SONG_GENRE VALUES(10,4)
-INSERT INTO SONG_GENRE VALUES(10,2)
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 11
-COMMIT
-INSERT INTO SONG VALUES(11,NULL,'1974-02-01 00:00:00.000000',4.02E0,'The Loser in the End',6)
-INSERT INTO SONG_GENRE VALUES(11,2)
-INSERT INTO SONG_GENRE VALUES(11,3)
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 12
-COMMIT
-INSERT INTO ALBUM VALUES(12,NULL,'1974-11-08','Sheer Heart Attack')
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 13
-COMMIT
-INSERT INTO SONG VALUES(13,NULL,'1974-10-01 00:00:00.000000',5.11E0,'Brighton Rock',12)
-INSERT INTO SONG_GENRE VALUES(13,3)
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 14
-COMMIT
-INSERT INTO SONG VALUES(14,NULL,'1974-08-01 00:00:00.000000',3.0E0,'Killer Queen',12)
-INSERT INTO SONG_GENRE VALUES(14,0)
-INSERT INTO SONG_GENRE VALUES(14,2)
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 15
-COMMIT
-INSERT INTO SONG VALUES(15,NULL,'1974-08-01 00:00:00.000000',3.18E0,'Flick of the Wrist',12)
-INSERT INTO SONG_GENRE VALUES(15,4)
-INSERT INTO SONG_GENRE VALUES(15,3)
-INSERT INTO SONG_GENRE VALUES(15,2)
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 16
-COMMIT
-INSERT INTO ALBUM VALUES(16,NULL,'1978-11-10','Jazz')
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 17
-COMMIT
-INSERT INTO SONG VALUES(17,NULL,'1978-10-01 00:00:00.000000',5.11E0,'Mustapha',16)
-INSERT INTO SONG_GENRE VALUES(17,0)
-INSERT INTO SONG_GENRE VALUES(17,3)
-INSERT INTO SONG_GENRE VALUES(17,7)
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 18
-COMMIT
-INSERT INTO SONG VALUES(18,NULL,'1978-09-01 00:00:00.000000',3.0E0,'Fat Bottomed Girls',16)
-INSERT INTO SONG_GENRE VALUES(18,3)
-INSERT INTO SONG_GENRE VALUES(18,2)
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 19
-COMMIT
-INSERT INTO SONG VALUES(19,NULL,'1978-10-01 00:00:00.000000',3.18E0,'Jealousy',16)
-INSERT INTO SONG_GENRE VALUES(19,8)
-INSERT INTO SONG_GENRE VALUES(19,3)
-ALTER SEQUENCE PUBLIC.ENTITY_PK_SEQ RESTART WITH 20
-COMMIT
 DISCONNECT
 /*C20*/SET SCHEMA PUBLIC
 DISCONNECT
 /*C21*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C22*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C23*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C24*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C25*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C26*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C27*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C28*/SET SCHEMA PUBLIC
 DISCONNECT

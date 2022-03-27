@@ -10,4 +10,7 @@ public interface QueenEntityDtoService<T extends QueenEntityDto> {
     T updateById(int id, T t);
     void deleteById(int id);
     T findById(int id);
+    default T findByTitle(String title) {
+        return null;
+    }
 }

@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 
 public abstract class QueenEntityDto {
     @Getter @Setter
-    protected int id;
+    protected Integer id;
 
     @Getter @Setter
     @NotNull(message = "Title is mandatory")

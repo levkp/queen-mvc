@@ -18,7 +18,7 @@ public class Album extends QueenEntity {
     private LocalDate release;
 
     @Getter
-    @OneToMany(mappedBy = "album", cascade = {CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "album", cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
     private final List<Song> songs = new ArrayList<>();
 
     public Album() { }
