@@ -8,7 +8,7 @@ plugins {
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
-//compileJava.dependsOn npm_run_build
+compileJava.dependsOn npm_run_build
 
 repositories {
 	mavenCentral()
