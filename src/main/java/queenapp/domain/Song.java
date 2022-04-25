@@ -40,7 +40,7 @@ public class Song extends QueenEntity {
 
     protected Song() { }
 
-    public Song(String title, double length, Set<Genre> genres, YearMonth finishedRecording, Album album) {
+    public Song(java.lang.String title, double length, Set<Genre> genres, YearMonth finishedRecording, Album album) {
         this.title = title;
         this.length = length;
         setGenres(genres);
@@ -74,15 +74,15 @@ public class Song extends QueenEntity {
                 .collect(Collectors.toSet());
     }
 
-    public String genresToString() {
+    public java.lang.String genresToString() {
         StringJoiner sj = new StringJoiner(", ");
         genres.forEach(g -> sj.add(g.readable()));
         return sj.toString();
     }
 
     @Override
-    public String toString() {
-        return String.format("Title: %-25s │ Length: %d:%d │ Genres: %-35s │ Album: %-20s │ Finished recording: %s",
+    public java.lang.String toString() {
+        return java.lang.String.format("Title: %-25s │ Length: %d:%d │ Genres: %-35s │ Album: %-20s │ Finished recording: %s",
                 title, (int)length, (int)(length % 1 * 10), genresToString(), album.getTitle(), finishedRecording.toString());
     }
 }

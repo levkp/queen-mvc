@@ -69,10 +69,12 @@ public class SongController {
 
         if (a != null) {
             a.addSong(s);
-            albumService.create(a);
+            // Todo
+            albumService.create(a, null);
         }
 
-        songService.create(s);
+        // Todo
+        songService.create(s, null);
 
         return "redirect:/songs";
     }

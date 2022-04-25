@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class AlbumRestControllerTests {
-    private final String TEST_UNAME = "test";
+    private final java.lang.String TEST_UNAME = "test";
 
     @Autowired
     MockMvc mockMvc;

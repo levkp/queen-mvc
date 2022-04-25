@@ -2,6 +2,7 @@ package queenapp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import queenapp.domain.QueenUser;
 import queenapp.domain.Song;
 import queenapp.exception.EntityNotFoundException;
 import queenapp.repository.QueenEntityRepository;
@@ -13,13 +14,17 @@ import java.util.Optional;
 public class SongServiceImpl implements QueenEntityService<Song> {
     private final QueenEntityRepository<Song> repository;
 
+    private final QueenUserService userService;
+
     @Autowired
-    public SongServiceImpl(QueenEntityRepository<Song> repository) {
+    public SongServiceImpl(QueenEntityRepository<Song> repository, QueenUserService userService) {
         this.repository = repository;
+        this.userService = userService;
     }
 
     @Override
-    public Song create(Song s) {
+    public Song create(Song s, String ownerUsername) {
+        s.setOwner(userService.findByUsername(ownerUsername));
         return repository.create(s);
     }
 
@@ -31,7 +36,7 @@ public class SongServiceImpl implements QueenEntityService<Song> {
     @Override
     public Song findById(int id) {
         Optional<Song> o = repository.findById(id);
-        if (o.isEmpty()) throw new EntityNotFoundException("Unable to find song with id " + id);
+        if (o.isEmpty()) throw new EntityNotFoundException(Song.class, id);
         return o.get();
     }
 

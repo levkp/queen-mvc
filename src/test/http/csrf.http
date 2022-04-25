@@ -1,0 +1,11 @@
+POST http://localhost:8080/api/albums HTTP/1.1
+Content-Type: application/json
+Cookie: JSESSIONID=99E8E81713AAE78774D7D54BD759E8BB
+X-CSRF-TOKEN: f39b09cb-d08c-4b6c-b81b-f0c1d0b7f4bd
+
+{
+  "title": "Queen III",
+  "release": "1973-07-13",
+  "description": "not null description",
+  "songIds": [  ]
+}

@@ -16,11 +16,11 @@ public class QueenUserServiceImpl implements QueenUserService {
     }
 
     @Override
-    public QueenUser create(String username, String secret, boolean isAdmin) {
+    public QueenUser create(java.lang.String username, java.lang.String secret, boolean isAdmin) {
         return repository.create(new QueenUser(username, secret, isAdmin));
     }
 
-    public QueenUser findByUsername(String username) {
+    public QueenUser findByUsername(java.lang.String username) {
         return repository.findByUsername(username).orElseThrow(
                 EntityNotFoundException::new
         );

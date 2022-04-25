@@ -22,7 +22,7 @@ public class QueenUserRepositoryImpl implements QueenUserRepository {
     }
 
     @Override
-    public Optional<QueenUser> findByUsername(String username) {
+    public Optional<QueenUser> findByUsername(java.lang.String username) {
         return Optional.ofNullable((QueenUser)manager
                 .createQuery("select u from QueenUser u where u.username like :username")
                 .setParameter("username", username)

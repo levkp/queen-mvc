@@ -21,7 +21,8 @@ public class AlbumServiceImpl implements QueenEntityService<Album> {
     }
 
     @Override
-    public Album create(Album a) {
+    public Album create(Album a, String ownerUsername) {
+        a.setOwner(userService.findByUsername(ownerUsername));
         return repository.create(a);
     }
 
@@ -35,7 +36,7 @@ public class AlbumServiceImpl implements QueenEntityService<Album> {
     @Override
     public Album findById(int id) {
         return repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Unable to find album with id " + id));
+                .orElseThrow(() -> new EntityNotFoundException(Album.class, id));
     }
 
     @Override
@@ -44,10 +45,15 @@ public class AlbumServiceImpl implements QueenEntityService<Album> {
     }
 
     @Override
-    public void updateOwner(Album a, String username) {
+    public void updateOwner(Album a, java.lang.String username) {
         QueenUser newOwner = userService.findByUsername(username);
         a.setOwner(newOwner);
         repository.update(a);
         // Todo should I update each song too?
+    }
+
+    @Override
+    public void delete(Album a) {
+        repository.delete(a);
     }
 }

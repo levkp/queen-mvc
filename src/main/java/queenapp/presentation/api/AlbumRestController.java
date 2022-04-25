@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import queenapp.domain.Album;
 import queenapp.exception.InvalidDtoException;
 import queenapp.presentation.dto.AlbumDto;
+import queenapp.presentation.dto.QueenEntityDtoMapper;
 import queenapp.service.QueenEntityDtoService;
 import queenapp.service.QueenEntityService;
 
@@ -20,34 +21,39 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/albums")
 public class AlbumRestController {
+    private final QueenEntityService<Album> service;
     private final QueenEntityDtoService<AlbumDto> albumDtoService;
-    private final QueenEntityService<Album> albumService;
+    private final QueenEntityDtoMapper<AlbumDto, Album> mapper;
 
     @Autowired
     public AlbumRestController(QueenEntityDtoService<AlbumDto> albumDtoService,
-                               QueenEntityService<Album> albumService) {
+                               QueenEntityService<Album> service,
+                               QueenEntityDtoMapper<AlbumDto, Album> mapper) {
         this.albumDtoService = albumDtoService;
-        this.albumService = albumService;
+        this.service = service;
+        this.mapper = mapper;
     }
 
     @GetMapping
-    public ResponseEntity<List<AlbumDto>> readAll() {
-        List<AlbumDto> albums = albumDtoService.read();
+    public ResponseEntity<List<AlbumDto>> findAll() {
+        List<AlbumDto> albums = service.read()
+                .stream()
+                .map(mapper::toDto)
+                .toList();
         return albums.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(albums);
     }
 
     @GetMapping("{id}")
     public ResponseEntity<AlbumDto> findById(@PathVariable int id) {
-        return ResponseEntity.ok(albumDtoService.findById(id));
+        return ResponseEntity.ok(mapper.toDto(service.findById(id)));
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> deleteById(HttpServletRequest request,
-                                           @PathVariable int id,
+    public ResponseEntity<Void> deleteById(HttpServletRequest request, @PathVariable int id,
                                            @AuthenticationPrincipal UserDetails user) {
-        AlbumDto dto = albumDtoService.findById(id);
-        if (dto.getOwnerName().equals(user.getUsername()) || request.isUserInRole("ROLE_ADMIN")) {
-            albumDtoService.deleteById(id);
+        Album a = service.findById(id);
+        if (a.getOwner().getUsername().equals(user.getUsername()) || request.isUserInRole("ROLE_ADMIN")) {
+            service.delete(a);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
@@ -56,15 +62,17 @@ public class AlbumRestController {
     @DeleteMapping
     public ResponseEntity<Void> deleteAll(HttpServletRequest request) {
         if (request.isUserInRole("ROLE_ADMIN")) {
-            albumService.deleteAll();
+            service.deleteAll();
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
+    // Todo: remove DtoService here
     @PutMapping("{id}")
     public ResponseEntity<Void> updateById(@PathVariable int id, @RequestBody @Valid AlbumDto dto, BindingResult br) {
         if (br.hasErrors()) throw new InvalidDtoException(br);
+
         albumDtoService.updateById(id, dto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -73,6 +81,8 @@ public class AlbumRestController {
     public ResponseEntity<AlbumDto> create(@RequestBody @Valid AlbumDto dto, BindingResult br,
                                            @AuthenticationPrincipal UserDetails user) {
         if (br.hasErrors()) throw new InvalidDtoException(br);
+
+
         albumDtoService.create(dto, user.getUsername());
         return ResponseEntity.ok(dto);
     }

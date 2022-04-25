@@ -39,7 +39,7 @@ public class QueenData implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) {
+    public void run(java.lang.String... args) {
         seed();
     }
 
@@ -54,7 +54,7 @@ public class QueenData implements CommandLineRunner {
         userRepository.create(standard);
         userRepository.create(admin);
 
-        String queenDesc = "";
+        java.lang.String queenDesc = "";
 //                The album was influenced by heavy metal and progressive rock. The lyrics are based on a variety of topics, including\s
 //                folklore and religion. Lead singer Freddie Mercury wrote five of the ten tracks, lead guitarist Brian May wrote four\s
 //                songs (including "Doing All Right", which he co-wrote with Tim Staffell while in the band Smile), and drummer Roger
@@ -79,7 +79,7 @@ public class QueenData implements CommandLineRunner {
             queen.addSong(s);
         });
 
-        String queenIIDesc = "";
+        java.lang.String queenIIDesc = "";
 //                Described as "arguably the heaviest Queen album", Queen II marked the end of the first phase of the band's career.
 //                The album combines a heavy rock sound with art rock and progressive rock elements, and has been called "a pillar of grandiose, assaultive hard rock" by the Rock and Roll Hall of Fame.
 //                Queen II is not a concept album but a collection of songs with a loose theme running throughout.""";

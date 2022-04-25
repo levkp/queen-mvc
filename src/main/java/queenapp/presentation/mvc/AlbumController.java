@@ -16,6 +16,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/albums")
 public class  AlbumController {
+
+    // Todo: replace dto services
     private final QueenEntityDtoService<AlbumDto> albumDtoService;
     private final QueenEntityDtoService<SongDto> songDtoService;
 
@@ -28,10 +30,12 @@ public class  AlbumController {
 
     @GetMapping
     public String showAll(@AuthenticationPrincipal UserDetails user, Model m) {
+
         List<SongDto> songs = songDtoService.read()
                 .stream()
                 .filter(dto -> dto.getAlbumId() == -1)
                 .toList();
+
 
         m.addAttribute("albums", albumDtoService.read());
         m.addAttribute("songs", songs);

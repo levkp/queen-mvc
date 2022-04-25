@@ -30,7 +30,7 @@ public class AlbumDtoServiceImpl implements QueenEntityDtoService<AlbumDto> {
     }
 
     @Override
-    public AlbumDto create(AlbumDto dto, String ownerUsername) {
+    public AlbumDto create(AlbumDto dto, java.lang.String ownerUsername) {
         QueenUser owner = userRepository.findByUsername(ownerUsername).get();
         Album a = new Album();
         a.setOwner(owner);

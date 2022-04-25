@@ -15,11 +15,11 @@ public class QueenUser {
 
     @Getter @Setter
     @Column(nullable = false, unique = true)
-    private String username;
+    private java.lang.String username;
 
     @Getter @Setter
     @Column(nullable = false)
-    private String secret;
+    private java.lang.String secret;
 
     @Column(nullable = false)
     @Getter

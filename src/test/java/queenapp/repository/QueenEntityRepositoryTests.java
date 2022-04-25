@@ -22,8 +22,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class QueenEntityRepositoryTests {
-    private final String TEST_TITLE = "Test Album";
-    private final String TEST_UNAME = "test";
+    private final java.lang.String TEST_TITLE = "Test Album";
+    private final java.lang.String TEST_UNAME = "test";
 
     @Autowired
     QueenUserService userService;

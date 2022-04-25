@@ -25,7 +25,7 @@ public class SongDtoServiceImpl implements QueenEntityDtoService<SongDto> {
     }
 
     @Override
-    public SongDto create(SongDto songDto, String ownerUsername) {
+    public SongDto create(SongDto songDto, java.lang.String ownerUsername) {
         QueenUser owner = userRepository.findByUsername(ownerUsername).get();
 
         // Todo

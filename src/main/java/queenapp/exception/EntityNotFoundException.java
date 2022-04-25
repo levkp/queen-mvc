@@ -6,10 +6,6 @@ public class EntityNotFoundException extends RuntimeException {
         super("Unable to find " + c.getSimpleName() + " with id " + id);
     }
 
-    public EntityNotFoundException(String message) {
-        super(message);
-    }
-
     public EntityNotFoundException() {
 
     }
