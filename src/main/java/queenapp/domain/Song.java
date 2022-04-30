@@ -29,7 +29,7 @@ public class Song extends QueenEntity {
     @JoinTable(name = "song_genre", joinColumns = @JoinColumn(name = "id"))
     private List<Integer> genreOrdinals = new ArrayList<>();
 
-    @Getter
+    @Getter @Setter
     @Column(name = "finished_recording", nullable = false)
     @Convert(converter = YearMonthDateAttributeConverter.class)
     private YearMonth finishedRecording;
@@ -40,7 +40,7 @@ public class Song extends QueenEntity {
 
     protected Song() { }
 
-    public Song(java.lang.String title, double length, Set<Genre> genres, YearMonth finishedRecording, Album album) {
+    public Song(String title, double length, Set<Genre> genres, YearMonth finishedRecording, Album album) {
         this.title = title;
         this.length = length;
         setGenres(genres);
@@ -74,15 +74,15 @@ public class Song extends QueenEntity {
                 .collect(Collectors.toSet());
     }
 
-    public java.lang.String genresToString() {
+    public String genresToString() {
         StringJoiner sj = new StringJoiner(", ");
         genres.forEach(g -> sj.add(g.readable()));
         return sj.toString();
     }
 
     @Override
-    public java.lang.String toString() {
-        return java.lang.String.format("Title: %-25s │ Length: %d:%d │ Genres: %-35s │ Album: %-20s │ Finished recording: %s",
+    public String toString() {
+        return String.format("Title: %-25s │ Length: %d:%d │ Genres: %-35s │ Album: %-20s │ Finished recording: %s",
                 title, (int)length, (int)(length % 1 * 10), genresToString(), album.getTitle(), finishedRecording.toString());
     }
 }

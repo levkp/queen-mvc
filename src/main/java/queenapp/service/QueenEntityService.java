@@ -6,15 +6,14 @@ import queenapp.domain.QueenUser;
 import java.util.List;
 
 public interface QueenEntityService<T extends QueenEntity> {
-    T create(T t, String ownerUsername);
-    List<T> read();
+    List<T> findAll();
     T findById(int id);
     void deleteAll();
-    default void updateOwner(T a, String ownerUsername) {
+    void delete(T t);
 
-    }
+    void updateOwner(T t, String ownerUsername);
 
-    default void delete(T t) {
+    default void updateOwner(T t, QueenUser owner) {
 
     }
 

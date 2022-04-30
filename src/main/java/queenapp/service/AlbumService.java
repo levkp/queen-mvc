@@ -1,10 +1,14 @@
 package queenapp.service;
 
 import queenapp.domain.Album;
-import queenapp.domain.Song;
+import queenapp.presentation.dto.AlbumDto;
+import queenapp.service.QueenEntityService;
 
 import java.util.List;
 
 public interface AlbumService extends QueenEntityService<Album> {
-    Album create(Album a, List<Song> tracklist, String ownerUsername);
+    AlbumDto createFromDto(AlbumDto dto, String ownerUsername);
+    AlbumDto updateFromDto(AlbumDto dto, String ownerUsername);
+
+
 }

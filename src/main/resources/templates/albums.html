@@ -93,30 +93,30 @@
                                     </div>
 
                                     <div class="col">
-                                        <label class="form-label fs-4" for="song-list-btn"
-                                               th:text="#{label.select_songs}">
-                                        </label>
+<!--                                        <label class="form-label fs-4" for="song-list-btn"-->
+<!--                                               th:text="#{label.select_songs}">-->
+<!--                                        </label>-->
 
                                         <div>
-                                            <button type="button" class="btn btn-warning mb-2" id="song-list-btn"
-                                                    th:text="'Click to see ' + ${songs.size} + ' songs'">
-                                            </button>
+<!--                                            <button type="button" class="btn btn-warning mb-2" id="song-list-btn"-->
+<!--                                                    th:text="'Click to see ' + ${songs.size} + ' songs'">-->
+<!--                                            </button>-->
 
-                                            <p class="mt-1 text-danger"
-                                               th:if="${songs.size} == 0" th:text="#{label.no_songs_found}">
-                                            </p>
+<!--                                            <p class="mt-1 text-danger"-->
+<!--                                               th:if="${songs.size} == 0" th:text="#{label.no_songs_found}">-->
+<!--                                            </p>-->
                                         </div>
 
                                         <div id="song-list">
-                                            <div class="form-check" id="song-select"
-                                                 th:each="song : ${songs}">
-                                                <input type="checkbox" class="form-check-input" name="song-ids"
-                                                       th:value="${song.id}" th:id="'song-' + ${song.id}">
+<!--                                            <div class="form-check" id="song-select"-->
+<!--                                                 th:each="song : ${songs}">-->
+<!--                                                <input type="checkbox" class="form-check-input" name="song-ids"-->
+<!--                                                       th:value="${song.id}" th:id="'song-' + ${song.id}">-->
 
-                                                <label class="form-check-label mb-1"
-                                                       th:text="${song.title}" th:for="'song-' + ${song.id}">
-                                                </label>
-                                            </div>
+<!--                                                <label class="form-check-label mb-1"-->
+<!--                                                       th:text="${song.title}" th:for="'song-' + ${song.id}">-->
+<!--                                                </label>-->
+<!--                                            </div>-->
                                         </div>
                                     </div>
                                 </div>

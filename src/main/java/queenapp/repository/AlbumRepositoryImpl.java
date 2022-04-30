@@ -1,9 +1,10 @@
 package queenapp.repository;
 
+import queenapp.domain.Album;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-import queenapp.domain.Album;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,8 +28,13 @@ public class AlbumRepositoryImpl implements QueenEntityRepository<Album> {
     }
 
     @Override
-    public List<Album> read() {
+    public List<Album> findAll() {
         return manager.createQuery("select a from Album a").getResultList();
+    }
+
+    @Override
+    public Optional<Album> findById(int id) {
+        return Optional.ofNullable(manager.find(Album.class, id));
     }
 
     @Override
@@ -39,32 +45,15 @@ public class AlbumRepositoryImpl implements QueenEntityRepository<Album> {
 
     @Override
     public void delete(Album a) {
+        log.debug("Deleting album " + a.getTitle());
         manager.remove(manager.contains(a) ? a : manager.merge(a));
     }
 
     @Override
-    public Optional<Album> findById(int id) {
-        return Optional.ofNullable(manager.find(Album.class, id));
-    }
-
-    @Override
-    public Optional<Album> findByTitle(String title) {
-        return Optional.ofNullable((Album) manager.createQuery("select a from Album a where a.title =:title")
-                .setParameter("title", title)
-                .getResultList()
-                .get(0));
-    }
-
-    @Override
     public void deleteAll() {
-        for(Album a : read()) {
+        // Todo: what is a better way to do this?
+        for(Album a : findAll()) {
             delete(a);
         }
-
-        // Todo
-//        manager.createNativeQuery("truncate table song_genre and commit;").executeUpdate();
-//        manager.createQuery("delete from Song s where s.album is not null").executeUpdate();
-//        manager.createQuery("delete from Album").executeUpdate();
-//        System.out.println("Done");
     }
 }

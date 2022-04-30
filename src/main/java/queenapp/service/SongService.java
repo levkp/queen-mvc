@@ -1,7 +1,11 @@
 package queenapp.service;
 
 import queenapp.domain.Song;
+import queenapp.presentation.dto.SongDto;
 
 public interface SongService extends QueenEntityService<Song> {
-    Song create(Song s, int albumId, String ownerUsername);
+    SongDto createFromDto(SongDto dto, String ownerUsername);
+    SongDto updateFromDto(SongDto dto, String ownerUsername);
+
+
 }

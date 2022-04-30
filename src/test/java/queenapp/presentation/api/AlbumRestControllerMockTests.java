@@ -54,7 +54,7 @@ public class AlbumRestControllerMockTests {
 
     @Test
     void fetchingAlbumsReturnsNoContentIfThereAreNone() throws Exception {
-        given(service.read()).willReturn(new ArrayList<>());
+        given(service.findAll()).willReturn(new ArrayList<>());
 
         mvc.perform(get("/api/albums")
                 .accept(MediaType.APPLICATION_JSON))

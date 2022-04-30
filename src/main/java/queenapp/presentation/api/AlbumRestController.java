@@ -11,8 +11,7 @@ import queenapp.domain.Album;
 import queenapp.exception.InvalidDtoException;
 import queenapp.presentation.dto.AlbumDto;
 import queenapp.presentation.dto.QueenEntityDtoMapper;
-import queenapp.service.QueenEntityDtoService;
-import queenapp.service.QueenEntityService;
+import queenapp.service.AlbumService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -21,22 +20,18 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/albums")
 public class AlbumRestController {
-    private final QueenEntityService<Album> service;
-    private final QueenEntityDtoService<AlbumDto> albumDtoService;
+    private final AlbumService service;
     private final QueenEntityDtoMapper<AlbumDto, Album> mapper;
 
     @Autowired
-    public AlbumRestController(QueenEntityDtoService<AlbumDto> albumDtoService,
-                               QueenEntityService<Album> service,
-                               QueenEntityDtoMapper<AlbumDto, Album> mapper) {
-        this.albumDtoService = albumDtoService;
+    public AlbumRestController(AlbumService service, QueenEntityDtoMapper<AlbumDto, Album> mapper) {
         this.service = service;
         this.mapper = mapper;
     }
 
     @GetMapping
     public ResponseEntity<List<AlbumDto>> findAll() {
-        List<AlbumDto> albums = service.read()
+        List<AlbumDto> albums = service.findAll()
                 .stream()
                 .map(mapper::toDto)
                 .toList();
@@ -54,7 +49,7 @@ public class AlbumRestController {
         Album a = service.findById(id);
         if (a.getOwner().getUsername().equals(user.getUsername()) || request.isUserInRole("ROLE_ADMIN")) {
             service.delete(a);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
@@ -63,27 +58,25 @@ public class AlbumRestController {
     public ResponseEntity<Void> deleteAll(HttpServletRequest request) {
         if (request.isUserInRole("ROLE_ADMIN")) {
             service.deleteAll();
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
-    // Todo: remove DtoService here
     @PutMapping("{id}")
-    public ResponseEntity<Void> updateById(@PathVariable int id, @RequestBody @Valid AlbumDto dto, BindingResult br) {
+    public ResponseEntity<AlbumDto> updateById(@PathVariable int id, @RequestBody @Valid AlbumDto dto, BindingResult br,
+                                               @AuthenticationPrincipal UserDetails user) {
         if (br.hasErrors()) throw new InvalidDtoException(br);
-
-        albumDtoService.updateById(id, dto);
-        return new ResponseEntity<>(HttpStatus.OK);
+        dto.setId(id);
+        service.updateFromDto(dto, user.getUsername());
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<AlbumDto> create(@RequestBody @Valid AlbumDto dto, BindingResult br,
                                            @AuthenticationPrincipal UserDetails user) {
         if (br.hasErrors()) throw new InvalidDtoException(br);
-
-
-        albumDtoService.create(dto, user.getUsername());
-        return ResponseEntity.ok(dto);
+        service.createFromDto(dto, user.getUsername());
+        return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
 }

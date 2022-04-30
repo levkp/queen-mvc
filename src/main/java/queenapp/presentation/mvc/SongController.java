@@ -34,7 +34,7 @@ public class SongController {
 
     @GetMapping
     public String showAllSongs(Model m) {
-        m.addAttribute("songs", songService.read());
+        m.addAttribute("songs", songService.findAll());
         log.debug("Returning songs view");
         return "songs";
     }
@@ -42,7 +42,7 @@ public class SongController {
     @GetMapping("/add")
     public String addSong(Model m) {
         m.addAttribute("genres", Genre.values());
-        m.addAttribute("albums", albumService.read());
+        m.addAttribute("albums", albumService.findAll());
         m.addAttribute("song", new SongDto());
 
         return "add_song";
@@ -54,7 +54,7 @@ public class SongController {
             log.error("Error while adding song");
             br.getAllErrors().forEach(e -> log.error(e.toString()));
             m.addAttribute("genres", Genre.values());
-            m.addAttribute("albums", albumService.read());
+            m.addAttribute("albums", albumService.findAll());
             return "add_song";
         }
 
@@ -70,11 +70,11 @@ public class SongController {
         if (a != null) {
             a.addSong(s);
             // Todo
-            albumService.create(a, null);
+//            albumService.create(a, null);
         }
 
         // Todo
-        songService.create(s, null);
+//        songService.create(s, null);
 
         return "redirect:/songs";
     }

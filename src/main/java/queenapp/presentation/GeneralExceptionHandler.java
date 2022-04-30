@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import queenapp.exception.EntityNotFoundException;
 import queenapp.exception.InvalidDtoException;
+import queenapp.exception.OwnershipException;
 
 import java.util.List;
 
@@ -26,5 +27,10 @@ public class GeneralExceptionHandler {
     @ExceptionHandler(InvalidDtoException.class)
     public ResponseEntity<List<String>> handleInvalidDto(InvalidDtoException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessages());
+    }
+
+    @ExceptionHandler(OwnershipException.class)
+    public ResponseEntity<String> handleOwnerShipException(OwnershipException e) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
     }
 }

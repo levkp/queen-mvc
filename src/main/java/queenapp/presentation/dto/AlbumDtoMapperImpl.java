@@ -11,22 +11,27 @@ import java.time.format.DateTimeParseException;
 @Component
 public class AlbumDtoMapperImpl implements QueenEntityDtoMapper<AlbumDto, Album> {
     @Override
-    public Album fromDto(AlbumDto dto) {
-        return new Album(
-                dto.getTitle(),
-                parseRelease(dto.getRelease()),
-                dto.getDescription());
+    public Album fromDto(AlbumDto dto, Album a) {
+        a.setTitle(dto.getTitle());
+        a.setRelease(parseRelease(dto.getRelease()));
+        a.setDescription(dto.description);
+        return a;
+    }
+
+    @Override
+    public AlbumDto toDto(AlbumDto dto, Album a) {
+        dto.setId(a.getId());
+        dto.setTitle(a.getTitle());
+        dto.setDescription(a.getDescription());
+        dto.setRelease(a.getRelease().toString());
+        dto.setSongIds(a.getSongs().stream().map(QueenEntity::getId).toList());
+        dto.setOwnerName(a.getOwner().getUsername());
+        return dto;
     }
 
     @Override
     public AlbumDto toDto(Album a) {
-        return new AlbumDto(
-                a.getId(),
-                a.getTitle(),
-                a.getDescription(),
-                a.getRelease().toString(),
-                a.getSongs().stream().map(QueenEntity::getId).toList(),
-                a.getOwner().getUsername());
+        return toDto(new AlbumDto(), a);
     }
 
     private LocalDate parseRelease(String release) {

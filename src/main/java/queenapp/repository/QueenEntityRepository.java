@@ -7,21 +7,9 @@ import java.util.Optional;
 
 public interface QueenEntityRepository<T extends QueenEntity> {
     T create(T t);
-    List<T> read();
+    List<T> findAll();
     Optional<T> findById(int id);
-
-    default T update(T t) {
-        return t;
-    }
-
-    default void delete(T t) {
-
-    }
-
-    default Optional<T> findByTitle(String title) {
-        return Optional.empty();
-    }
-    default void deleteAll() {
-
-    }
+    T update(T t);
+    void delete(T t);
+    void deleteAll();
 }

@@ -23,22 +23,22 @@ public class Album extends QueenEntity {
 
     public Album() { }
 
-    public Album(java.lang.String title, LocalDate release) {
+    public Album(String title, LocalDate release) {
         this.title = title;
         this.release = release;
     }
 
-    public Album(java.lang.String title, LocalDate release, java.lang.String description) {
+    public Album(String title, LocalDate release, String description) {
         this(title, release);
         this.description = description;
     }
 
-    public Album(java.lang.String title, LocalDate release, QueenUser owner) {
+    public Album(String title, LocalDate release, QueenUser owner) {
         this(title, release);
         this.owner = owner;
     }
 
-    public Album(java.lang.String title, LocalDate release, java.lang.String description, QueenUser owner) {
+    public Album(String title, LocalDate release, String description, QueenUser owner) {
         this(title, release, description);
         this.owner = owner;
     }
@@ -56,7 +56,7 @@ public class Album extends QueenEntity {
         songs.addAll(List.of(s));
     }
 
-    public java.lang.String getGenresAsString() {
+    public String getGenresAsString() {
         HashSet<Genre> genres = new HashSet<>();
         songs.forEach(s -> genres.addAll(s.getGenres()));
 

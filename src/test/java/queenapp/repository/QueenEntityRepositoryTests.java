@@ -22,14 +22,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class QueenEntityRepositoryTests {
-    private final java.lang.String TEST_TITLE = "Test Album";
-    private final java.lang.String TEST_UNAME = "test";
+    private final String TEST_TITLE = "Test Album";
+    private final String TEST_UNAME = "test";
 
     @Autowired
     QueenUserService userService;
 
     @Autowired
-    QueenEntityRepository<Album> albumRepository;
+    QueenEntityRepository<Album> sut;
 
     @BeforeAll
     void beforeAll() {
@@ -39,31 +39,22 @@ public class QueenEntityRepositoryTests {
     @BeforeEach
     void beforeEach() {
         QueenUser owner = userService.findByUsername(TEST_UNAME);
-        albumRepository.create(new Album(TEST_TITLE, LocalDate.now(), owner));
+        sut.create(new Album(TEST_TITLE, LocalDate.now(), owner));
     }
 
     @Test
     void albumTitleIsUnique() {
         assertThrows(DataIntegrityViolationException.class, () ->
-            albumRepository.create(new Album(TEST_TITLE, LocalDate.now()))
+            sut.create(new Album(TEST_TITLE, LocalDate.now()))
         );
     }
 
     @Test
     void albumReleaseIsNotNullable() {
         assertThrows(DataIntegrityViolationException.class, () ->
-                albumRepository.create(new Album("My Album", null))
+                sut.create(new Album("My Album", null))
         );
     }
 
-    @Test
-    void creatingAlbumCanSetOwner() {
-        assertNotNull(albumRepository.findByTitle(TEST_TITLE).get().getOwner());
-    }
 
-    @Test
-    void deletingAlbumDoesNotDeleteOwner() {
-        albumRepository.delete(albumRepository.findByTitle(TEST_TITLE).get());
-        assertNotNull(userService.findByUsername(TEST_UNAME));
-    }
 }
