@@ -15,8 +15,6 @@ import queenapp.repository.QueenEntityRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-import static queenapp.security.AdminSessionVerifier.isAdminSession;
-
 @Service
 public class AlbumServiceImpl implements AlbumService {
     private final QueenUserService userService;
@@ -38,17 +36,18 @@ public class AlbumServiceImpl implements AlbumService {
     @Override
     public AlbumDto createFromDto(AlbumDto dto, String ownerUsername) {
         QueenUser owner = userService.findByUsername(ownerUsername);
-        upsertFromDto(new Album(), dto, owner);
+        Album a = new Album();
+        a.setOwner(owner);
+        upsertFromDto(a, dto, owner);
         return dto;
     }
 
     @Override
     public AlbumDto updateFromDto(AlbumDto dto, String ownerUsername) {
-        boolean isAdminSession = isAdminSession();
         QueenUser owner = userService.findByUsername(ownerUsername);
         Album a = findById(dto.getId());
 
-        if (!isAdminSession && !a.getOwner().equals(owner)) {
+        if (!owner.isAdmin() && !a.getOwner().equals(owner)) {
             throw new OwnershipException(Album.class, dto.getId());
         }
 
@@ -57,7 +56,6 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     private void upsertFromDto(Album a, AlbumDto dto, QueenUser user) {
-        boolean isAdminSession = isAdminSession();
         List<Song> playlist  = new ArrayList<>();
         albumMapper.fromDto(dto, a);
 
@@ -67,7 +65,7 @@ public class AlbumServiceImpl implements AlbumService {
             if (s.getAlbum() != null) {
                 throw new SongAlreadyInAlbumException(s.getId());
             }
-            if (!isAdminSession && s.getOwner() != null && !s.getOwner().equals(user)) {
+            if (!user.isAdmin() && s.getOwner() != null && !s.getOwner().equals(user)) {
                 throw new OwnershipException(Song.class, id);
             }
 
@@ -102,8 +100,6 @@ public class AlbumServiceImpl implements AlbumService {
         albumRepository.delete(a);
     }
 
-
-
     @Override
     public void updateOwner(Album a, String username) {
         updateOwner(a, userService.findByUsername(username));
@@ -112,7 +108,7 @@ public class AlbumServiceImpl implements AlbumService {
     // Todo
     @Override
     public void updateOwner(Album a, QueenUser owner) {
-        if (isAdminSession()) {
+        if (owner.isAdmin()) {
             a.setOwner(owner);
         }
         /*

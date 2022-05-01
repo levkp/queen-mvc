@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import queenapp.exception.EntityNotFoundException;
 import queenapp.exception.InvalidDtoException;
 import queenapp.exception.OwnershipException;
+import queenapp.exception.SongAlreadyInAlbumException;
 
 import java.util.List;
 
@@ -30,7 +31,12 @@ public class GeneralExceptionHandler {
     }
 
     @ExceptionHandler(OwnershipException.class)
-    public ResponseEntity<String> handleOwnerShipException(OwnershipException e) {
+    public ResponseEntity<String> handleOwnership(OwnershipException e) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+    }
+
+    @ExceptionHandler(SongAlreadyInAlbumException.class)
+    public ResponseEntity<String> handleSongAlreadyInAlbum(SongAlreadyInAlbumException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 }

@@ -27,42 +27,34 @@ async function deleteAlbum(event) {
         method: "DELETE",
         headers
     }).then(response => {
-        if (response.status === 200) {
+        if (response.status === 204) {
             document.getElementById(`album-${id}`).remove();
         } else {
             console.error(response);
-            showErrorModal("Error while deleting album", response.toString());
+            showErrorModal("Album wasn't deleted", response.body);
         }
     })
 }
 
 
-
 // Create
-//
-// let newAlbumModal = new Modal({
-//     el: document.getElementById("new-album-modal")
-// }).show();
-
-const newAlbumForm = document.getElementById("create-album-form");
-const addAlbumButton = document.getElementById("add-album");
+const newAlbumForm = document.getElementById("new-album-form");
+const newAlbumButton = document.getElementById("add-album");
 const albumsTable = document.getElementById("albums-table");
 
-let createAlbumModal = new Modal({
-   el: document.getElementById("create-album-modal")
+let newAlbumModal = new Modal({
+   el: document.getElementById("new-album-modal")
 });
 
-addAlbumButton.onclick = function() {
-    createAlbumModal.show();
+newAlbumButton.onclick = function() {
+    newAlbumModal.show();
 }
 
 newAlbumForm.onsubmit = function(event) {
     event.preventDefault();
+    newAlbumModal.hide();
 
-    console.log("Submitting new album...");
-    createAlbumModal.hide();
     const fd = new FormData(newAlbumForm);
-
     const headers = {};
     headers[csrfHeader] = csrfToken;
     headers["Content-Type"] = "application/json";
@@ -77,7 +69,7 @@ newAlbumForm.onsubmit = function(event) {
             "songIds": fd.getAll("song-ids")
         })
     }).then(response => {
-        if (response.status === 200) {
+        if (response.status === 201) {
             response.json().then(data => {
                 let tableRows = albumsTable.rows;
                 let newRow = tableRows[tableRows.length - 1].cloneNode(true);
@@ -100,7 +92,7 @@ newAlbumForm.onsubmit = function(event) {
             })
         } else {
             console.error(response);
-            showErrorModal("Error while creating album!", response.toString());
+            showErrorModal("Album wasn't created", response.body);
         }
     })
 

@@ -32,7 +32,7 @@ public class SongDtoMapperImpl implements QueenEntityDtoMapper<SongDto, Song> {
 
     @Override
     public SongDto toDto(Song s) {
-        return null;
+        return toDto(new SongDto(), s);
     }
 
     private YearMonth parseFinishedRecording(String finishedRecording) {

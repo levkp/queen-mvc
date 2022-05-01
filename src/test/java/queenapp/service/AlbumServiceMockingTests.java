@@ -32,7 +32,6 @@ public class AlbumServiceMockingTests {
     void createFromDtoShouldCreateAlbum() {
         // Arrange
         int songId = 1;
-
         var song = new Song("My Song", 1.0, new HashSet<>(), YearMonth.now(), null);
         var dto = new AlbumDto("My Album", "Test description", "2022-04-30", List.of(songId));
         given(songService.findById(songId)).willReturn(song);

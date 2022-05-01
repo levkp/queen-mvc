@@ -11,6 +11,8 @@ import queenapp.presentation.dto.QueenEntityDtoMapper;
 import queenapp.presentation.dto.SongDto;
 import queenapp.service.SongService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/songs")
 public class SongRestController {
@@ -21,6 +23,15 @@ public class SongRestController {
     public SongRestController(SongService service, QueenEntityDtoMapper<SongDto, Song> mapper) {
         this.service = service;
         this.mapper = mapper;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<SongDto>> findAll() {
+        List<SongDto> songs = service.findAll()
+                .stream()
+                .map(mapper::toDto)
+                .toList();
+        return songs.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(songs);
     }
 
     @GetMapping("{id}")

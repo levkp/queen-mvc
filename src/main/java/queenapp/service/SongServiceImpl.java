@@ -15,8 +15,6 @@ import queenapp.repository.QueenEntityRepository;
 import java.util.List;
 import java.util.Optional;
 
-import static queenapp.security.AdminSessionVerifier.isAdminSession;
-
 @Service
 public class SongServiceImpl implements SongService {
     private final QueenUserService userService;
@@ -55,12 +53,11 @@ public class SongServiceImpl implements SongService {
     }
 
     private void upsertFromDto(Song s, SongDto dto, QueenUser user) {
-        boolean isAdminSession = isAdminSession();
         mapper.fromDto(dto, s);
 
         Album a = albumService.findById(dto.getAlbumId());
 
-        if (!isAdminSession && a.getOwner() != null && !a.getOwner().equals(s.getOwner())) {
+        if (!user.isAdmin() && a.getOwner() != null && !a.getOwner().equals(s.getOwner())) {
             throw new OwnershipException(Album.class, a.getId());
         }
 
@@ -84,7 +81,7 @@ public class SongServiceImpl implements SongService {
     // Todo
     @Override
     public void updateOwner(Song s, QueenUser owner) {
-        if (isAdminSession()) {
+        if (owner.isAdmin()) {
             s.setOwner(owner);
             repository.update(s);
         }
