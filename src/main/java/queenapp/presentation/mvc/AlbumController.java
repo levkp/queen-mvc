@@ -43,6 +43,7 @@ public class  AlbumController {
                 .stream()
                 .map(albumMapper::toDto)
                 .toList();
+        // Todo: no need to retrieve all songs for this view
         List<SongDto> songs = songService.findAll()
                 .stream()
                 .filter(s -> s.getAlbum() == null)

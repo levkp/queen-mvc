@@ -38,16 +38,20 @@ public class Song extends QueenEntity {
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER) @JoinColumn(name = "album_id")
     private Album album;
 
-    protected Song() { }
+    public Song() { }
 
     public Song(String title, double length, Set<Genre> genres, YearMonth finishedRecording, Album album) {
-        this.title = title;
-        this.length = length;
+        this(title, length, finishedRecording);
         setGenres(genres);
-        this.finishedRecording = finishedRecording;
         this.album = album;
         // Todo
         this.owner = album == null ? null : album.getOwner(); // No problem if null
+    }
+
+    public Song(String title, double length, YearMonth finishedRecording) {
+        this.title = title;
+        this.length = length;
+        this.finishedRecording = finishedRecording;
     }
 
     public void setAlbum(Album album) {

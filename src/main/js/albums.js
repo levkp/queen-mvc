@@ -83,8 +83,6 @@ newAlbumForm.onsubmit = function(event) {
 
                 actionButtons[0].value = data.id;
                 actionButtons[0].onclick = readAlbum
-                // actionButtons[1].value = data.id;
-                // actionButtons[1].onclick = showNewAlbumModal;
                 actionButtons[1].value = data.id;
                 actionButtons[1].onclick = deleteAlbum;
 
@@ -101,7 +99,6 @@ newAlbumForm.onsubmit = function(event) {
 
 // Update
 const editTitleButton = document.getElementById("edit-title");
-
 const editReleaseButton = document.getElementById("edit-release");
 const editTracklistButton = document.getElementById("edit-tracklist");
 const editDescButton = document.getElementById("edit-desc");
@@ -127,8 +124,6 @@ function showSubmitEditButton() {
 }
 
 
-
-
 // Read
 const readButtons = document.getElementsByClassName("q-read");
 const readAlbumModal = document.getElementById("read-album-modal")
@@ -149,14 +144,11 @@ function readAlbum(event) {
         }).then(response => {
             if (response.status === 200) {
                 response.json().then(async data => {
-                       console.log(data);
 
                     document.getElementById("album-title").innerText = data.title;
                     document.getElementById("album-release").innerText = data.release;
                     document.getElementById("album-length").innerText = data.length;
                     document.getElementById("album-desc").innerText = data.description;
-
-                    console.log("Fetching songs for album");
 
                     let songs = [];
 

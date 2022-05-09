@@ -9,50 +9,52 @@
         <div class="row">
             <div th:insert="~{fragments/navbar :: navbar}"></div>
         </div>
-        <div class="row">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th th:text="#{label.title}"></th>
-                    <th th:text="#{label.length}"></th>
-                    <th th:text="#{label.genres}"></th>
-                    <th th:text="#{label.finished_recording}"></th>
-                    <th th:text="#{label.action}"></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="song, iter : ${songs}" th:with="i=0">
-                    <td th:text="${iter.index + 1}">0</td>
-                    <td th:text="${song.title}">Title</td>
-                    <td th:text="${song.length}">Length</td>
-                    <td th:text="${song.genresToString()}">Genres</td>
-                    <td th:text="${song.finishedRecording}">Finished recording</td>
-                    <td>
-                        <div class="btn-group" role="group">
-                            <a th:href="'/songs/' + ${song.id}">
-                                <button type="button" class="btn btn-warning">
-                                    <span th:text="#{label.details}"></span>
-                                </button>
-                            </a>
-    <!--                            <button type="button" class="btn btn-dark">-->
-    <!--                                <span th:text="#{label.edit}"></span>-->
-    <!--                                <i class="bi bi-pencil"></i>-->
-    <!--                            </button>-->
-    <!--                            <button type="button" class="btn btn-danger">-->
-    <!--                                <span th:text="#{label.delete}"></span>-->
-    <!--                                <i class="bi bi-trash"></i>-->
-    <!--                            </button>-->
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+
         <div class="row mb-5">
             <a href="/songs/add">
                 <button type="button" class="q-add-new-btn btn btn-dark" th:text="#{label.add}"></button>
             </a>
+        </div>
+
+        <div class="row">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th th:text="#{label.title}"></th>
+                        <th th:text="#{label.length}"></th>
+                        <th th:text="#{label.genres}"></th>
+                        <th th:text="#{label.finished_recording}"></th>
+                        <th th:text="#{label.action}"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="song, iter : ${songs}" th:with="i=0">
+                        <td th:text="${iter.index + 1}">0</td>
+                        <td th:text="${song.title}">Title</td>
+                        <td th:text="${song.length} + ' mins'">Length</td>
+                        <td th:text="${song.genresToString}">Genres</td>
+                        <td th:text="${song.recorded}">Finished recording</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a th:href="'/songs/' + ${song.id}">
+                                    <button type="button" class="btn btn-warning">
+                                        <span th:text="#{label.details}"></span>
+                                    </button>
+                                </a>
+        <!--                            <button type="button" class="btn btn-dark">-->
+        <!--                                <span th:text="#{label.edit}"></span>-->
+        <!--                                <i class="bi bi-pencil"></i>-->
+        <!--                            </button>-->
+        <!--                            <button type="button" class="btn btn-danger">-->
+        <!--                                <span th:text="#{label.delete}"></span>-->
+        <!--                                <i class="bi bi-trash"></i>-->
+        <!--                            </button>-->
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </body>

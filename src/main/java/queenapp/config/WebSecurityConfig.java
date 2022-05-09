@@ -16,7 +16,6 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
           // @formatter:off
           http
                   .httpBasic()
@@ -44,9 +43,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }

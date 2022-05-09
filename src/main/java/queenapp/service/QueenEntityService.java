@@ -10,12 +10,4 @@ public interface QueenEntityService<T extends QueenEntity> {
     T findById(int id);
     void deleteAll();
     void delete(T t);
-
-    void updateOwner(T t, String ownerUsername);
-
-    default void updateOwner(T t, QueenUser owner) {
-
-    }
-
-
 }

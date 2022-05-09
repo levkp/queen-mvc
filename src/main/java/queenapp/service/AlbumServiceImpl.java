@@ -34,25 +34,21 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
-    public AlbumDto createFromDto(AlbumDto dto, String ownerUsername) {
+    public void createFromDto(AlbumDto dto, String ownerUsername) {
         QueenUser owner = userService.findByUsername(ownerUsername);
         Album a = new Album();
         a.setOwner(owner);
         upsertFromDto(a, dto, owner);
-        return dto;
     }
 
     @Override
-    public AlbumDto updateFromDto(AlbumDto dto, String ownerUsername) {
+    public void updateFromDto(AlbumDto dto, String ownerUsername) {
         QueenUser owner = userService.findByUsername(ownerUsername);
         Album a = findById(dto.getId());
-
         if (!owner.isAdmin() && !a.getOwner().equals(owner)) {
             throw new OwnershipException(Album.class, dto.getId());
         }
-
         upsertFromDto(a, dto, owner);
-        return dto;
     }
 
     private void upsertFromDto(Album a, AlbumDto dto, QueenUser user) {
@@ -80,6 +76,7 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
+//    @Transactional
     public List<Album> findAll() {
         return albumRepository.findAll();
     }
@@ -100,31 +97,5 @@ public class AlbumServiceImpl implements AlbumService {
         albumRepository.delete(a);
     }
 
-    @Override
-    public void updateOwner(Album a, String username) {
-        updateOwner(a, userService.findByUsername(username));
-    }
-
-    // Todo
-    @Override
-    public void updateOwner(Album a, QueenUser owner) {
-        if (owner.isAdmin()) {
-            a.setOwner(owner);
-        }
-        /*
-        else {
-            if (a.getOwner() == null) {
-                a.setOwner(owner);
-
-            } else {
-                throw new MissingOwnershipException(Album.class, a.getId());
-            }
-        }
-        */
-
-        // Todo should I update each song too?
-//        a.getSongs().forEach(s -> songService.updateOwner(s, owner));
-        albumRepository.update(a);
-    }
 
 }

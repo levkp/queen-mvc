@@ -20,7 +20,7 @@ public class SongServiceImpl implements SongService {
     private final QueenUserService userService;
     private final QueenEntityService<Album> albumService;
     private final QueenEntityRepository<Song> repository;
-    private final QueenEntityDtoMapper<SongDto, Song> mapper;
+    private final QueenEntityDtoMapper<SongDto, Song> songMapper;
 
     @Autowired
     public SongServiceImpl(QueenUserService userService,
@@ -30,7 +30,7 @@ public class SongServiceImpl implements SongService {
         this.repository = repository;
         this.albumService = albumService;
         this.userService = userService;
-        this.mapper = mapper;
+        this.songMapper = mapper;
     }
 
     @Override
@@ -39,22 +39,21 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public SongDto createFromDto(SongDto dto, String ownerUsername) {
+    public void createFromDto(SongDto dto, String ownerUsername) {
         QueenUser owner = userService.findByUsername(ownerUsername);
-
-        return null;
+        Song s = new Song();
+        s.setOwner(owner);
+        upsertFromDto(s, dto, owner);
     }
 
     @Override
-    public SongDto updateFromDto(SongDto dto, String ownerUsername) {
+    public void updateFromDto(SongDto dto, String ownerUsername) {
 
 
-        return null;
     }
 
     private void upsertFromDto(Song s, SongDto dto, QueenUser user) {
-        mapper.fromDto(dto, s);
-
+        songMapper.fromDto(dto, s);
         Album a = albumService.findById(dto.getAlbumId());
 
         if (!user.isAdmin() && a.getOwner() != null && !a.getOwner().equals(s.getOwner())) {
@@ -70,40 +69,6 @@ public class SongServiceImpl implements SongService {
 
 
     @Override
-    public void updateOwner(Song s, String ownerUsername) {
-        updateOwner(s, userService.findByUsername(ownerUsername));
-    }
-
-
-
-
-
-    // Todo
-    @Override
-    public void updateOwner(Song s, QueenUser owner) {
-        if (owner.isAdmin()) {
-            s.setOwner(owner);
-            repository.update(s);
-        }
-        /*
-        else {
-            if (s.getOwner() == null) {
-                if (s.getAlbum() == null || s.getAlbum().getOwner().equals(owner)) {
-                    s.setOwner(owner);
-                    repository.update(s);
-                } else {
-                    throw new MissingOwnershipException(Song.class, s.getId());
-                }
-            } else {
-                if (!s.getOwner().equals(owner)) {
-                    throw new MissingOwnershipException(Song.class, s.getId());
-                }
-            }
-        }
-        */
-    }
-
-    @Override
     public void delete(Song s) {
         repository.delete(s);
     }
@@ -113,7 +78,8 @@ public class SongServiceImpl implements SongService {
         QueenUser owner = userService.findByUsername(ownerUsername);
 
         if (s.getOwner() != null) {
-            updateOwner(s, owner);
+            s.setOwner(owner);
+//            updateOwner(s, owner);
         }
 
         Album a = albumService.findById(albumId);
@@ -122,8 +88,6 @@ public class SongServiceImpl implements SongService {
 
         return repository.create(s);
     }
-
-
 
     @Override
     public Song findById(int id) {

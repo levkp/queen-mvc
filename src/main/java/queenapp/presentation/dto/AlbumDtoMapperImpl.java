@@ -8,6 +8,7 @@ import queenapp.exception.InvalidDtoException;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.HashSet;
 
 @Component
 public class AlbumDtoMapperImpl implements QueenEntityDtoMapper<AlbumDto, Album> {
@@ -26,6 +27,13 @@ public class AlbumDtoMapperImpl implements QueenEntityDtoMapper<AlbumDto, Album>
         dto.setDescription(a.getDescription());
         dto.setRelease(a.getRelease().toString());
         dto.setSongIds(a.getSongs().stream().map(QueenEntity::getId).toList());
+
+        for(var song : a.getSongs()) {
+
+        }
+
+        // Todo
+        dto.setLength(a.length());
 
         // Todo
         QueenUser owner = a.getOwner();

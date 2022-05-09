@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import queenapp.domain.Song;
 import queenapp.presentation.dto.QueenEntityDtoMapper;
 import queenapp.presentation.dto.SongDto;
+import queenapp.service.QueenEntityService;
 import queenapp.service.SongService;
 
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/songs")
 public class SongRestController {
-    private final SongService service;
+    private final QueenEntityService<Song> service;
     private final QueenEntityDtoMapper<SongDto, Song> mapper;
 
     @Autowired

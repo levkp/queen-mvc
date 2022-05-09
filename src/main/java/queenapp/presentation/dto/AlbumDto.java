@@ -13,7 +13,9 @@ import javax.validation.constraints.NotNull;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class AlbumDto extends QueenEntityDto {
@@ -22,6 +24,12 @@ public class AlbumDto extends QueenEntityDto {
     @Getter @Setter
     @NotNull(message = "Release date must not be null") @NotBlank(message = "Release date must not be blank")
     private String release;
+
+    @Getter
+    private final Set<String> genres = new HashSet<>();
+
+    @Getter @Setter
+    private double length;
 
     @Getter @Setter
     @NotNull(message = "Song ids must not be null")

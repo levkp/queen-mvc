@@ -27,15 +27,18 @@ public class QueenData implements CommandLineRunner {
     private final QueenUserRepository userRepository;
     private final QueenEntityRepository<Album> albumRepository;
     private final QueenEntityRepository<Song> songRepository;
-
+    private final BCryptPasswordEncoder bcrypt;
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    public QueenData(QueenUserRepository userRepository, QueenEntityRepository<Album> albumRepository,
-                     QueenEntityRepository<Song> songRepository) {
+    public QueenData(QueenUserRepository userRepository,
+                     QueenEntityRepository<Album> albumRepository,
+                     QueenEntityRepository<Song> songRepository,
+                     BCryptPasswordEncoder bcrypt) {
         this.userRepository = userRepository;
         this.albumRepository = albumRepository;
         this.songRepository = songRepository;
+        this.bcrypt = bcrypt;
     }
 
     @Override
@@ -45,8 +48,6 @@ public class QueenData implements CommandLineRunner {
 
     private void seed() {
         log.debug("Seeding database");
-
-        BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
 
         QueenUser standard = new QueenUser("standard", bcrypt.encode("standard"),false);
         QueenUser admin = new QueenUser("admin", bcrypt.encode("admin"),true);
