@@ -78,15 +78,10 @@ public class Song extends QueenEntity {
                 .collect(Collectors.toSet());
     }
 
+
     public String genresToString() {
         StringJoiner sj = new StringJoiner(", ");
         genres.forEach(g -> sj.add(g.readable()));
         return sj.toString();
-    }
-
-    @Override
-    public String toString() {
-        return String.format("Title: %-25s │ Length: %d:%d │ Genres: %-35s │ Album: %-20s │ Finished recording: %s",
-                title, (int)length, (int)(length % 1 * 10), genresToString(), album.getTitle(), finishedRecording.toString());
     }
 }

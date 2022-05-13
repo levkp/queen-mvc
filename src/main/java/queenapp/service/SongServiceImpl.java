@@ -54,15 +54,16 @@ public class SongServiceImpl implements SongService {
 
     private void upsertFromDto(Song s, SongDto dto, QueenUser user) {
         songMapper.fromDto(dto, s);
-        Album a = albumService.findById(dto.getAlbumId());
 
-        if (!user.isAdmin() && a.getOwner() != null && !a.getOwner().equals(s.getOwner())) {
-            throw new OwnershipException(Album.class, a.getId());
+        if (dto.getId() != null) {
+            Album a = albumService.findById(dto.getAlbumId());
+            if (!user.isAdmin() && a.getOwner() != null && !a.getOwner().equals(s.getOwner())) {
+                throw new OwnershipException(Album.class, a.getId());
+            }
+            a.addSong(s);
+            s.setAlbum(a);
         }
 
-        // Todo
-        a.addSong(s);
-        s.setAlbum(a);
 
         repository.update(s);
     }

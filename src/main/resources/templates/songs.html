@@ -34,7 +34,7 @@
                         <td th:text="${song.title}">Title</td>
                         <td th:text="${song.length} + ' mins'">Length</td>
                         <td th:text="${song.genresToString}">Genres</td>
-                        <td th:text="${song.recorded}">Finished recording</td>
+                        <td th:text="${song.getFinishedRecording}">Finished recording</td>
                         <td>
                             <div class="btn-group" role="group">
                                 <a th:href="'/songs/' + ${song.id}">
