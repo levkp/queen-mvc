@@ -6,6 +6,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -43,6 +44,7 @@ public class AlbumRestControllerIntegrationTests {
     @Autowired
     QueenUserService userService;
 
+
     @BeforeAll
     void beforeAll() {
         userService.create(ADMIN, "secret", true);
@@ -77,6 +79,7 @@ public class AlbumRestControllerIntegrationTests {
             .andExpect(jsonPath("$..songIds").isNotEmpty());
     }
 
+    // Todo: why is this 403??
     @Test
     @WithUserDetails(ADMIN)
     @DisplayName("Deleting all as admin gets no content and the number of albums is 0")

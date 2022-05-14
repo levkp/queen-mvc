@@ -31,6 +31,7 @@ public class AlbumServiceMockingTests {
         // Arrange
         int id = 1;
         var album = new Album();
+        album.setId(id);
         given(albumRepository.findById(id)).willReturn(Optional.of(album));
 
         // Act
@@ -44,7 +45,7 @@ public class AlbumServiceMockingTests {
     @DisplayName("Retrieving by non-existing id throws EntityNotFoundException")
     void findByNonExistingId() {
         // Arrange
-        int id = 1;
+        int id = 123;
         given(albumRepository.findById(id)).willReturn(Optional.empty());
 
         // Act & Assert

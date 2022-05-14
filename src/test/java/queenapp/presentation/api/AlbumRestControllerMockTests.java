@@ -1,6 +1,5 @@
 package queenapp.presentation.api;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,14 +10,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import queenapp.presentation.dto.AlbumDto;
 import queenapp.service.AlbumService;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -34,7 +32,7 @@ public class AlbumRestControllerMockTests {
     @MockBean
     AlbumService service;
 
-    // Todo: why does this call return 400 when authenticated, and why 200 when not?
+    // Todo: why does this call return 400 when authenticated, and why 200 when not?! Expected is 201
     @Test
     @DisplayName("Creating new album with valid DTO returns 201 Created and the album data")
     @WithMockUser("tester")

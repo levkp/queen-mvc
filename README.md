@@ -177,29 +177,6 @@ The Spring security roles for these two profiles are `ROLE_ADMIN` and `ROLE_STAN
 
 ### Overview of permissions
 
-<table>
-    <thead>
-        <td><b>Action</b></td>
-        <td><b>Unauthenticated</b></td>
-        <td>Standard</td>
-        <td>Admin</td>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Create via API/web</td>
-            <td>no</td>
-            <td>yes</td>
-            <td>yes</td>
-        </tr>
-        <tr>
-            <td>Read via API</td>        
-            <td>all</td>
-            <td>all</td>
-            <td>all</td>
-        </tr>
-    </tbody>
-</table>
-
 | Action             | Unauthenticated | Standard | Admin |
 |--------------------|-----------------|----------| ----- |
 | Create via API/web | no              | yes      | yes   |
@@ -215,3 +192,18 @@ When an authenticated user creates a new entity, they become the owner of it. Th
 their own entities. 
 
 ## Assignments for week 6
+
+## Assignment for week 8
+
+Code coverage:
+
+![](coverage.png)
+
+All test can be run with `./gradlew check`. It will output 2 failing tests out of the 14 in total.
+
+Test classes containing
+
+- mocking tests: `AlbumRestControllerMockTests`, `SongRestControllerMockTests`
+- verify test: `createFromDto()` in `AlbumRestControllerMockTests`
+- role verification test: 3 deletingAll methods in `AlbumRestControllerIntegrationTests`
+

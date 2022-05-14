@@ -81,8 +81,9 @@ public class SongRestControllerMockTests {
     @DisplayName("Fetching an existing song returns 200 OK and the song data")
     void fetchingSongOk() throws Exception {
         // Arrange
-        int id = 0;
+        int id = 1;
         var song = new Song("My Song", 3.0, YearMonth.now());
+        song.setId(id);
         given(service.findById(id)).willReturn(song);
 
         // Act & Assert
