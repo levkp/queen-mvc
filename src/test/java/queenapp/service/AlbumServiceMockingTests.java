@@ -1,52 +1,53 @@
 package queenapp.service;
 
-import org.mockito.Mock;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import queenapp.domain.Album;
-import queenapp.domain.QueenUser;
-import queenapp.domain.Song;
-import queenapp.presentation.dto.AlbumDto;
-import queenapp.repository.QueenEntityRepository;
-
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
+import queenapp.domain.Album;
+import queenapp.exception.EntityNotFoundException;
+import queenapp.repository.QueenEntityRepository;
 
-import java.time.YearMonth;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
 
 @SpringBootTest
+@ActiveProfiles("test")
 public class AlbumServiceMockingTests {
     @Autowired
     AlbumService sut;
-
-    // Has to be a real service, because there is a foreign key constraint between the album and app_user tables
-    @Autowired
-    QueenUserService userService;
-
-    @MockBean
-    QueenEntityService<Song> songService;
 
     @MockBean
     QueenEntityRepository<Album> albumRepository;
 
     @Test
-    void createFromDto() {
+    @DisplayName("Retrieving by existing id returns album")
+    void findByExistingId() {
         // Arrange
-        var dto = new AlbumDto("My Album", "My description", YearMonth.now().toString(), List.of(1));
-
-//        given(songService.findById(1)).wil?
+        int id = 1;
+        var album = new Album();
+        given(albumRepository.findById(id)).willReturn(Optional.of(album));
 
         // Act
-        sut.createFromDto(dto, "standard");
+        var returned = sut.findById(id);
 
         // Assert
+        assertEquals(id, returned.getId());
+    }
+
+    @Test
+    @DisplayName("Retrieving by non-existing id throws EntityNotFoundException")
+    void findByNonExistingId() {
+        // Arrange
+        int id = 1;
+        given(albumRepository.findById(id)).willReturn(Optional.empty());
+
+        // Act & Assert
+        assertThrows(EntityNotFoundException.class, () -> sut.findById(id));
     }
 }

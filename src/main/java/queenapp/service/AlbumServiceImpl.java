@@ -34,16 +34,16 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
-    public void createFromDto(AlbumDto dto, String ownerUsername) {
-        QueenUser owner = userService.findByUsername(ownerUsername);
+    public void createFromDto(AlbumDto dto) {
+        QueenUser owner = userService.findByUsername(dto.getOwnerName());
         Album a = new Album();
         a.setOwner(owner);
         upsertFromDto(a, dto, owner);
     }
 
     @Override
-    public void updateFromDto(AlbumDto dto, String ownerUsername) {
-        QueenUser owner = userService.findByUsername(ownerUsername);
+    public void updateFromDto(AlbumDto dto) {
+        QueenUser owner = userService.findByUsername(dto.getOwnerName());
         Album a = findById(dto.getId());
         if (!owner.isAdmin() && !a.getOwner().equals(owner)) {
             throw new OwnershipException(Album.class, dto.getId());
@@ -76,7 +76,6 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
-//    @Transactional
     public List<Album> findAll() {
         return albumRepository.findAll();
     }

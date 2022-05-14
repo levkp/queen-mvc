@@ -68,7 +68,8 @@ public class AlbumRestController {
                                                @AuthenticationPrincipal UserDetails user) {
         if (br.hasErrors()) throw new InvalidDtoException(br);
         dto.setId(id);
-        service.updateFromDto(dto, user.getUsername());
+        dto.setOwnerName(user.getUsername());
+        service.updateFromDto(dto);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
@@ -76,7 +77,8 @@ public class AlbumRestController {
     public ResponseEntity<AlbumDto> create(@RequestBody @Valid AlbumDto dto, BindingResult br,
                                            @AuthenticationPrincipal UserDetails user) {
         if (br.hasErrors()) throw new InvalidDtoException(br);
-        service.createFromDto(dto, user.getUsername());
+        dto.setOwnerName(user.getUsername());
+        service.createFromDto(dto);
         return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
 }

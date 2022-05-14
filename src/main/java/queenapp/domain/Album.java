@@ -50,11 +50,7 @@ public class Album extends QueenEntity {
     public void addSong(Song s) {
         songs.add(s);
     }
-
-    public void addSongs(Song... s) {
-        songs.addAll(List.of(s));
-    }
-
+    
     public String getGenresAsString() {
         HashSet<Genre> genres = new HashSet<>();
         songs.forEach(s -> genres.addAll(s.getGenres()));
@@ -64,8 +60,7 @@ public class Album extends QueenEntity {
 
         return sj.toString();
     }
-
-    // Todo: this is too complicated for what it is, replace length with Duration in Song?
+    
     public double length() {
         int minutes = 0;
         double seconds = 0;
@@ -78,7 +73,6 @@ public class Album extends QueenEntity {
         }
 
         result = minutes + seconds / 60;
-
         return (double) Math.round(result * 100) / 100;
     }
 }

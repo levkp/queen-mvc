@@ -1,64 +1,61 @@
-//package queenapp.presentation.api;
-//
-//import org.junit.jupiter.api.Test;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-//import org.springframework.boot.test.context.SpringBootTest;
-//import org.springframework.boot.test.mock.mockito.MockBean;
-//import org.springframework.http.MediaType;
-//import org.springframework.test.context.ActiveProfiles;
-//import org.springframework.test.web.servlet.MockMvc;
-//import queenapp.domain.Album;
-//import queenapp.exception.EntityNotFoundException;
-//import queenapp.service.AlbumService;
-//import queenapp.service.QueenEntityService;
-//
-//import java.time.LocalDate;
-//import java.util.ArrayList;
-//
-//import static org.mockito.BDDMockito.given;
-//import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
-//import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-//
-//@SpringBootTest
-//@AutoConfigureMockMvc
-//@ActiveProfiles("test")
-//public class AlbumRestControllerMockTests {
-//    @Autowired
-//    private MockMvc mvc;
-//
-//    @MockBean
-//    private AlbumService service;
-//
-//    @Test
-//    void fetchingExistingAlbumReturnsOk() throws Exception {
-//        LocalDate release = LocalDate.now();
-//        Album a = new Album("Test Album", release);
-//        given(service.findById(398)).willReturn(a);
-//
-//        mvc.perform(get("/api/albums/{id}", 398)
-//                    .accept(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isOk())
-//                .andExpect(header().string(CONTENT_TYPE, MediaType.APPLICATION_JSON.toString()))
-//                .andExpect(jsonPath("$.body").value(release));
-//    }
-//
-//    @Test
-//    void fetchingNonExistingAlbumReturnsNotFound() throws Exception {
-//        given(service.findById(398)).willThrow(EntityNotFoundException.class);
-//
-//        mvc.perform(get("/api/albums/{id}", 398)
-//                    .accept(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isNotFound());
-//    }
-//
-//    @Test
-//    void fetchingAlbumsReturnsNoContentIfThereAreNone() throws Exception {
-//        given(service.findAll().size());
-//
-//        mvc.perform(get("/api/albums")
-//                .accept(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isNoContent());
-//    }
-//}
+package queenapp.presentation.api;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.servlet.MockMvc;
+import queenapp.presentation.dto.AlbumDto;
+import queenapp.service.AlbumService;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@SpringBootTest
+@AutoConfigureMockMvc
+@ActiveProfiles("test")
+public class AlbumRestControllerMockTests {
+    @Autowired
+    MockMvc mvc;
+
+    @MockBean
+    AlbumService service;
+
+    // Todo: why does this call return 400 when authenticated, and why 200 when not?
+    @Test
+    @DisplayName("Creating new album with valid DTO returns 201 Created and the album data")
+    @WithMockUser("tester")
+    void createFromDto() throws Exception {
+        // Arrange
+        var title = "My album";
+        var dto = new AlbumDto(title, "1979-06");
+        String requestBody = new GsonBuilder().create().toJson(dto);
+
+        // Act & Assert
+        mvc.perform(post("/api/albums", dto)
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isNoContent())
+                .andExpect(jsonPath("$.title").value(title));
+
+        ArgumentCaptor<AlbumDto> captor = ArgumentCaptor.forClass(AlbumDto.class);
+        verify(service).createFromDto(captor.capture());
+
+        var capturedDto = captor.getValue();
+        assertEquals(capturedDto.getOwnerName(), "tester");
+    }
+}

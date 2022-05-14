@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/songs")
 public class SongRestController {
-    private final QueenEntityService<Song> service;
+    private final SongService service;
     private final QueenEntityDtoMapper<SongDto, Song> mapper;
 
     @Autowired

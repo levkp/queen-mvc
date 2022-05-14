@@ -80,7 +80,7 @@ public class AlbumRestControllerIntegrationTests {
     @Test
     @WithUserDetails(ADMIN)
     @DisplayName("Deleting all as admin gets no content and the number of albums is 0")
-    void deletingAllGetsNoContentIfUserIsAdmin() throws Exception {
+    void deletingAllAsAdmin() throws Exception {
         // Act & Assert
         mockMvc.perform(delete("/api/albums"))
                 .andExpect(status().isNoContent());
@@ -90,13 +90,12 @@ public class AlbumRestControllerIntegrationTests {
     @Test
     @WithUserDetails(STANDARD)
     @DisplayName("Deleting all as standard gets forbidden and the number of albums does not change")
-    void deletingAllStandard() throws Exception {
+    void deletingAllAsStandard() throws Exception {
         // Act & Assert
         mockMvc.perform(delete("/api/albums"))
                 .andExpect(status().isForbidden());
-        assertTrue(albumRepository.findAll().size() > 0);
+        assertEquals(albumRepository.findAll().size(), numberOfAlbumsBefore);
     }
-
 
     @Test
     @DisplayName("Deleting all as unauthenticated gets forbidden and the number of albums does not change")
@@ -106,12 +105,4 @@ public class AlbumRestControllerIntegrationTests {
                 .andExpect(status().isForbidden());
         assertEquals(albumRepository.findAll().size(), numberOfAlbumsBefore);
     }
-
-
-
-//    @Test
-//    void fetchingAlbumsGetsNoContentIfThereAreNone() throws Exception {
-//        mockMvc.perform(get("/api/albums").accept(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isNoContent());
-//    }
 }
