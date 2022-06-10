@@ -22,6 +22,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -85,7 +86,8 @@ public class AlbumRestControllerIntegrationTests {
     @DisplayName("Deleting all as admin gets no content and the number of albums is 0")
     void deletingAllAsAdmin() throws Exception {
         // Act & Assert
-        mockMvc.perform(delete("/api/albums"))
+        mockMvc.perform(delete("/api/albums")
+                        .with(csrf()))
                 .andExpect(status().isNoContent());
         assertEquals(albumRepository.findAll().size(), 0);
     }
@@ -95,7 +97,8 @@ public class AlbumRestControllerIntegrationTests {
     @DisplayName("Deleting all as standard gets forbidden and the number of albums does not change")
     void deletingAllAsStandard() throws Exception {
         // Act & Assert
-        mockMvc.perform(delete("/api/albums"))
+        mockMvc.perform(delete("/api/albums")
+                        .with(csrf()))
                 .andExpect(status().isForbidden());
         assertEquals(albumRepository.findAll().size(), numberOfAlbumsBefore);
     }

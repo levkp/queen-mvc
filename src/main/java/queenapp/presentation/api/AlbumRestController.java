@@ -1,5 +1,7 @@
 package queenapp.presentation.api;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,8 @@ import java.util.List;
 public class AlbumRestController {
     private final AlbumService service;
     private final QueenEntityDtoMapper<AlbumDto, Album> mapper;
+
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     public AlbumRestController(AlbumService service, QueenEntityDtoMapper<AlbumDto, Album> mapper) {
@@ -56,6 +60,11 @@ public class AlbumRestController {
 
     @DeleteMapping
     public ResponseEntity<Void> deleteAll(HttpServletRequest request) {
+        logger.debug("Received delete all request");
+        logger.debug(request.getUserPrincipal().toString());
+        logger.debug(String.valueOf(request.isUserInRole("ROLE_ADMIN")));
+
+
         if (request.isUserInRole("ROLE_ADMIN")) {
             service.deleteAll();
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
